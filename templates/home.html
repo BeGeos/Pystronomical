@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+</head>
+<body>
+<div>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+{% endif %}
+    <h1>
+        This is the homepage - Welcome {{ name }}
+    </h1>
+    {% if user.is_authenticated %}
+        <div>
+            <button><a href="user/create-auth-key/">Create Key</a></button>
+        </div>
+    {% endif %}
+    {% if keys %}
+        {% for key in keys %}
+        <div>
+            <p>This is your api key</p>
+            <h3>API KEY: {{ key.key }}</h3>
+            <button><a href="/user/delete-auth-key/{{ key.key }}">Delete Key</a></button>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Security</title>
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+    <h3>Insert security code Here</h3>
+    <input type="text" placeholder="6-digit-code" name="security_code">
+    <button type="submit">Submit</button>
+</form>
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</body>
+</html>
