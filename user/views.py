@@ -1,22 +1,16 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth import update_session_auth_hash
 from .models import UserStatus, User, AuthKeys, SecurityCodes, Recovery
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, EmailUpdateForm
 import requests, string, random
 from datetime import datetime, timedelta
-from ..Pystronomical.env import secret_keys
+from Pystronomical.env import secret_keys
 
 
-# Create your views here.
-def home(request):
-    keys = AuthKeys.objects.filter(user_id=request.user)
-    context = {
-        'keys': keys,
-        'name': request.user.username
-    }
-    return render(request, 'home.html', context)
-
+# Create your views here
 
 # Main functions to talk to API for database updates
 def put_request(user_id, api_key, exp):
@@ -52,7 +46,31 @@ def security_code_generator(num=6):
     return int(code)
 
 
+def ext_generator(num=24):
+    alphabet = string.ascii_letters
+    extension = ''
+    for _ in range(num):
+        extension += random.choice(alphabet)
+    return extension
+
+
 # Main website views
+def home(request):
+    if request.user.is_authenticated:
+        keys = AuthKeys.objects.filter(user_id=request.user)
+        for key in keys:
+            if key.expiration_date <= datetime.now().timestamp():
+                delete_request(request.user.id, key)
+                key.delete()
+    else:
+        keys = None
+    context = {
+        'keys': keys,
+        'name': request.user.username
+    }
+    return render(request, 'home.html', context)
+
+
 def create_user_view(request):
     if request.user.is_authenticated:
         return redirect('homepage')
@@ -74,10 +92,9 @@ def create_user_view(request):
             # TODO send email with verification code
             messages.success(request, f'Thanks {username}! Your account was created successfully')
             return redirect('homepage')
-        else:
-            print(form.errors.as_json())
-        messages.error(request, 'Account not created')
-        return redirect('verification')
+
+        messages.error(request, form.errors)
+        return redirect('create-user')
 
 
 def create_auth_key(request):
@@ -117,8 +134,8 @@ def verification(request):
             ssc = SecurityCodes.objects.filter(user_id=request.user.id, code=security_code).first()
 
             if ssc:
-                print('code exists')
-                print(request.user.id)
+                # print('code exists')
+                # print(request.user.id)
                 if ssc.expiration_date <= datetime.utcnow().timestamp():
                     ssc.delete()
                     messages.info(request, 'This code has expired')
@@ -133,3 +150,104 @@ def verification(request):
             return redirect('verification')
     return HttpResponse('login required')
 
+
+def new_code_request(request):
+    if request.user.is_authenticated:
+        if request.user.userstatus.confirmed:
+            messages.info(request, 'You are already a confirmed user')
+            return redirect('homepage')
+
+        security_code = SecurityCodes.objects.filter(user_id=request.user).first()
+        if security_code:
+            security_code.delete()
+        new_code = security_code_generator()
+        exp = datetime.now() + timedelta(seconds=600)
+        ssc = SecurityCodes.objects.create(user_id=request.user, code=new_code,
+                                           expiration_date=int(exp.timestamp()))
+        # TODO send email with new verification code
+        messages.success(request, 'A new code was sent. Please, check your email!')
+        return redirect('verification')
+    return redirect('login')
+
+
+def recovery_password(request):
+    if request.user.is_authenticated:
+        email = request.user.email
+        messages.info(request, f'A message was sent to {email} to reset the password')
+        return redirect('homepage')
+    else:
+        if request.method == 'POST':
+            base_url = 'http://localhost:8000/account/recovery/'
+            email = request.POST.get('email')
+            user = User.objects.filter(email=email).first()
+            if not user:
+                messages.error(request, 'This email address does not exist')
+                return redirect('homepage')
+            recovery_check = Recovery.objects.filter(user_id=user).first()
+            if recovery_check:
+                recovery_check.delete()
+            url_code = ext_generator(16)
+            exp = datetime.now() + timedelta(days=1)
+            recovery_link = Recovery.objects.create(user_id=user, url_code=url_code,
+                                                    expiration_date=int(exp.timestamp()))
+            link = base_url + url_code
+            # TODO send email with link
+            messages.success(request, f'An email was sent to {email} with the recovery link')
+            messages.info(request, f'This is your link: {link}')
+            return redirect('homepage')
+        return render(request, 'pass-recovery.html')
+
+
+def new_password(request, slug):
+    code = get_object_or_404(Recovery, url_code=slug)
+    now = datetime.now().timestamp()
+    user = User.objects.get(id=code.user_id.id)
+    if code.expiration_date <= now:
+        code.delete()
+        messages.error(request, 'Link is expired')
+        return redirect('homepage')
+    form = SetPasswordForm(user)
+
+    if request.method == 'POST':
+        user = User.objects.get(id=code.user_id.id)
+        form = SetPasswordForm(user=user, data=request.POST)
+
+        if form.is_valid():
+            form.save()
+            code.delete()
+            messages.success(request, f'Password was changed successfully for {user.username}')
+            return redirect('login')
+        else:
+            messages.info(request, form.errors)
+            messages.error(request, 'Please correct the error')
+            return redirect('new-password', slug=slug)
+    return render(request, 'pass-recovery-form.html', context={'form': form, 'username': user.username})
+
+
+def update_email(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            form = EmailUpdateForm()
+            return render(request, 'update-email.html', context={'form': form})
+        else:
+            return redirect('login')
+    if request.method == 'POST':
+        form = EmailUpdateForm(request.POST)
+        if form.is_valid():
+            user = User.objects.get(pk=request.user.id)
+            if user.userstatus.confirmed:
+                status = UserStatus.objects.get(user_id=user)
+                status.confirmed = False
+                status.save()
+            auth_key = user.auth.first()
+            if auth_key:
+                delete_request(request.user.id, auth_key.key)
+                auth_key.delete()
+            user.email = form.cleaned_data.get('email')
+            user.save()
+
+            messages.success(request, f'Email was changed successfully for {request.user.username}')
+            return redirect('homepage')
+        else:
+            messages.error(request, form.errors)
+            return redirect('update-email')

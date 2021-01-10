@@ -9,3 +9,10 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+
+class EmailUpdateForm(forms.Form):
+    email = forms.EmailField(label='new email address')
+
+    class Meta:
+        model = User

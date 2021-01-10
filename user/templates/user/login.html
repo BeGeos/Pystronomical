@@ -6,6 +6,11 @@
 </head>
 <body>
     <div>
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
         <form method="POST">
             {% csrf_token %}
             <fieldset >
@@ -14,6 +19,9 @@
             </fieldset>
             <div class="form-group">
                 <button type="submit">Login</button>
+            </div>
+            <div>
+                <small><a href="{% url 'recovery-password' %}">Forgot your password?</a></small>
             </div>
         </form>
     </div>
