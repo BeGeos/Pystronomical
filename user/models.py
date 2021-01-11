@@ -17,6 +17,7 @@ class AuthKeys(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='auth')
     key = models.CharField(max_length=24, null=False)
     expiration_date = models.IntegerField(null=False)
+    active = models.BooleanField(default=True)
 
     def __repr__(self):
         return self.key

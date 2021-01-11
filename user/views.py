@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.forms import SetPasswordForm
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from .models import UserStatus, User, AuthKeys, SecurityCodes, Recovery
 from .forms import UserRegisterForm, EmailUpdateForm
@@ -9,8 +11,6 @@ import requests, string, random
 from datetime import datetime, timedelta
 from Pystronomical.env import secret_keys
 
-
-# Create your views here
 
 # Main functions to talk to API for database updates
 def put_request(user_id, api_key, exp):
@@ -29,11 +29,39 @@ def delete_request(user_id, api_key):
     return r.status_code
 
 
+def update_auth_status(user_id, api_key, status):
+    url = 'http://localhost:5000/astropy/api/update-auth-status'
+    payload = {'admin key': secret_keys['ADMIN_KEY'], 'user id': user_id,
+               'api key': api_key, 'status': status}
+    r = requests.put(url, data=payload)
+    return r.status_code
+
+
+# Callback from astropy API -- update user call count
+@csrf_exempt
+def update_call_count(request):
+    if request.method != 'POST':
+        return JsonResponse({'status': 405, 'message': 'Method not allowed'}, status=405)
+
+    ADMIN_KEY = request.POST.get('ADMIN_KEY')
+    if ADMIN_KEY != secret_keys['ADMIN_KEY']:
+        return JsonResponse({'status': 403, 'message': 'Unauthorised'}, status=403)
+
+    user_id = request.POST.get('user_id')
+    user = User.objects.get(pk=user_id)
+    status = UserStatus.objects.get(user_id=user)
+    if status.calls == 0:
+        return JsonResponse({'calls': 0})
+    status.calls -= 1
+    status.save()
+    return JsonResponse({'calls': status.calls})
+
+
 # Key/codes generators
 def key_generator(num=24):
     alphanumeric = string.ascii_letters + string.digits
     key = ''
-    for _ in range(1, num + 1):
+    for _ in range(num):
         key += random.choice(alphanumeric)
     return key
 
@@ -113,7 +141,10 @@ def create_auth_key(request):
             put_request(new_key.user_id.id, new_key.key, new_key.expiration_date)  # Create a new one in API db
             messages.success(request, 'Key created successfully!')
             return redirect('homepage')
-    return HttpResponse('redirect to login page/or confirm')
+        messages.error(request, f'{user.username} is not yet confirmed. Please follow verification steps to '
+                                f'request an authorisation key')
+        return redirect('homepage')
+    return redirect('login')
 
 
 def delete_auth_key(request, slug):
@@ -134,8 +165,6 @@ def verification(request):
             ssc = SecurityCodes.objects.filter(user_id=request.user.id, code=security_code).first()
 
             if ssc:
-                # print('code exists')
-                # print(request.user.id)
                 if ssc.expiration_date <= datetime.utcnow().timestamp():
                     ssc.delete()
                     messages.info(request, 'This code has expired')
@@ -143,12 +172,17 @@ def verification(request):
                 status = UserStatus.objects.filter(user_id=request.user).first()
                 status.confirmed = True
                 status.save()
+                auth_key = AuthKeys.objects.filter(user_id=request.user).first()
+                if auth_key:
+                    update_auth_status(request.user.id, auth_key.key, True)
+                    auth_key.active = True
+                    auth_key.save()
                 ssc.delete()
                 messages.success(request, 'Thank you, you are now a verified user and can ask for api keys')
                 return redirect('homepage')
             messages.error(request, 'The code is not valid')
             return redirect('verification')
-    return HttpResponse('login required')
+    return redirect('login')
 
 
 def new_code_request(request):
@@ -166,7 +200,7 @@ def new_code_request(request):
                                            expiration_date=int(exp.timestamp()))
         # TODO send email with new verification code
         messages.success(request, 'A new code was sent. Please, check your email!')
-        return redirect('verification')
+        return redirect('homepage')
     return redirect('login')
 
 
@@ -235,16 +269,26 @@ def update_email(request):
         form = EmailUpdateForm(request.POST)
         if form.is_valid():
             user = User.objects.get(pk=request.user.id)
+            ssc = SecurityCodes.objects.filter(user_id=user).first()
+            if ssc:
+                ssc.delete()
+            new_ssc = security_code_generator()
+            exp = datetime.now() + timedelta(seconds=600)
+            user_ssc = SecurityCodes.objects.create(user_id=user, code=new_ssc,
+                                                    expiration_date=int(exp.timestamp()))
             if user.userstatus.confirmed:
                 status = UserStatus.objects.get(user_id=user)
                 status.confirmed = False
                 status.save()
             auth_key = user.auth.first()
             if auth_key:
-                delete_request(request.user.id, auth_key.key)
-                auth_key.delete()
+                update_auth_status(request.user.id, auth_key.key, False)
+                auth_key.active = False
+                auth_key.save()
             user.email = form.cleaned_data.get('email')
             user.save()
+
+            # TODO send email with new ss_code
 
             messages.success(request, f'Email was changed successfully for {request.user.username}')
             return redirect('homepage')
