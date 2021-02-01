@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <title>Profile</title>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,600;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %} " />
+  </head>
+  <body>
+    <navbar>
+      <div class="nav">
+        <div class="nav-logo">
+          <img src="{% static 'img/Logo.svg' %}" alt="Logo" height="70" />
+        </div>
+        <div class="nav-links">
+            <ul>
+            <li><a href="{% url 'homepage' %}">Home</a></li>
+            <li><a href="{% url 'explore' %}">Explore</a></li>
+            <li><a href="{% url 'how-to-observe' %}">How to Observe</a></li>
+            <li><a href="api.html">API</a></li>
+          </ul>
+
+        </div>
+        <div class="nav-user">
+          {% if request.user.is_authenticated %}
+            <ul>
+            <li><a class="login-user" href="{% url 'main-profile' %}">{{ request.user.username }}</a></li>
+            <li><a class="sign-up" href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+            {% else %}
+          <ul>
+            <li><a class="login-user" href="{% url 'login' %}">Login</a></li>
+            <li><a class="sign-up" href="{% url 'create-user' %}">Sign Up</a></li>
+          </ul>
+            {% endif %}
+        </div>
+      </div>
+    </navbar>
+
+    <main class="profile">
+        {% if messages %}
+    {% for message in messages %}
+    <div>{{ message }}</div>
+    {% endfor %}
+
+    {% endif %}
+      <div class="sidebar">
+        <div class="sidebar-menu">
+          <h2><i>Account</i></h2>
+          <ul>
+            <li><a href="{% url 'verification' %}">Confirm Account</a></li>
+            <li><a href="{% url 'update-password-profile' %}">Change Password</a></li>
+            <li><a href="change-email.html">Change Email Address</a></li>
+            <li><a href="{% url 'main-profile' %}">API key</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr />
+      {% block content %}
+        {% endblock %}
+      <hr />
+      <div class="user-stats">
+        <h1>
+          Hey <bold><i>{{ request.user.username }}</i></bold>
+        </h1>
+        <p>It's good to see you are back!</p>
+        <h3>
+          <bold>Username: <br /></bold>{{ request.user.username }}
+        </h3>
+        <h3>
+          <bold>Email Address: <br /></bold>{{ request.user.email }}
+        </h3>
+        <h3>
+            {% if request.user.userstatus.confirmed %}
+            <bold>Confirmed: <br /></bold>Yes
+            {% else %}
+            <bold>Confirmed: <br /></bold>No
+            {% endif %}
+        </h3>
+        <h3>
+          <bold>Created at: <br /></bold>{{ request.user.date_joined|date:'d-m-Y' }}
+        </h3>
+      </div>
+      <!-- <div class="profile-svg">
+        <img src="img/user-profile.svg" alt="user-account" height="300" />
+      </div> -->
+    </main>
+    <footer class="login-footer">
+      <div class="bottom-footer">
+        <div class="resources">
+          <p>@Pystronomical</p>
+
+          <a href="">Resources</a>
+        </div>
+        <div class="top-footer">
+          <a href=""><img src="{% static 'img/twitter.svg' %}" height="23" /></a>
+          <a href=""><img src="{% static 'img/github.svg' %}" alt="@BeGeos" height="23" /></a>
+          <a href=""
+            ><img src="{% static 'img/facebook.svg' %}" alt="@BeGeos" height="23"
+          /></a>
+          <a href=""
+            ><img src="{% static 'img/instagram.svg' %}" alt="@BeGeos" height="23"
+          /></a>
+          <a href=""><img src="{% static 'img/youtube.svg' %}" alt="@BeGeos" height="23" /></a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

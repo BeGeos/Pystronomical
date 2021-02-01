@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
 from django.contrib import messages
+from django.core.mail import send_mail
 from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
@@ -10,6 +11,9 @@ from .forms import UserRegisterForm, EmailUpdateForm
 import requests, string, random
 from datetime import datetime, timedelta
 from Pystronomical.env import secret_keys
+from Pystronomical.functions import verification_email, recovery_email
+import smtplib
+from email.message import EmailMessage
 
 
 # Main functions to talk to API for database updates
@@ -71,7 +75,7 @@ def security_code_generator(num=6):
     code = ''
     for _ in range(num):
         code += random.choice(numbers)
-    return int(code)
+    return code
 
 
 def ext_generator(num=24):
@@ -82,47 +86,155 @@ def ext_generator(num=24):
     return extension
 
 
-# Main website views
-def home(request):
-    if request.user.is_authenticated:
-        keys = AuthKeys.objects.filter(user_id=request.user)
-        for key in keys:
-            if key.expiration_date <= datetime.now().timestamp():
-                delete_request(request.user.id, key)
-                key.delete()
+# User registration logic
+def is_username_valid(username):
+    """Check whether or not the given username already exists in the database"""
+    user = User.objects.filter(username=username).first()
+    if user:
+        return False
     else:
-        keys = None
-    context = {
-        'keys': keys,
-        'name': request.user.username
-    }
-    return render(request, 'home.html', context)
+        return True
+
+
+def is_password_valid(password1, password2):
+    """Check if both passwords provided are identical"""
+    if password1 != password2:
+        return False
+    return True
+
+
+# Parameters for sending emails
+EMAIL_ADDRESS = secret_keys['EMAIL_ADDRESS']
+EMAIL_PASS = secret_keys['EMAIL_PASSWORD']
+
+
+# Send confirmation emails
+def verify_email(user, security_code):
+    message = verification_email(user.username, security_code)
+    subject = '[Pystronomical] - Please confirm you email address'
+    sender = secret_keys['EMAIL_ADDRESS']
+    email = user.email
+    send_mail(subject=subject, message=message, recipient_list=[email], from_email=sender)
+    return
+
+
+def recovery_password_email(user, link):
+    message = recovery_email(user.username, link)
+    subject = '[Pystronomical] - Reset your password'
+    sender = secret_keys['EMAIL_ADDRESS']
+    email = user.email
+    send_mail(subject=subject, message=message, recipient_list=[email], from_email=sender)
+
+
+# Main website views
+def landing_page(request):
+    if request.user.is_authenticated:
+        return redirect('homepage')
+
+    return render(request, 'landing-page.html')
+
+
+def how_to_view(request):
+    return render(request, 'how-to-observe.html')
+
+
+def explore_view(request):
+    if request.method == 'POST':
+        star = request.POST.get('star')
+        return redirect('star-detail', s=star)
+    return render(request, 'explore.html')
+
+
+def single_constellation(request, constellation):
+    if request.method == 'POST':
+        star = request.POST.get('star')
+        return redirect('star-detail', s=star)
+    context = {'constellation': constellation}
+    return render(request, 'single-constellation.html', context)
+
+
+def single_star(request, s):
+    if request.method == 'POST':
+        star = request.POST.get('star')
+        return redirect('star-detail', s=star)
+    if request.method == 'GET':
+        city = request.GET.get('city')
+        if city:
+            context = {'city': city, 'star': s}
+            return render(request, 'single-star.html', context)
+        context = {'star': s}
+        return render(request, 'single-star.html', context)
+
+
+def login_user_view(request):
+    if request.user.is_authenticated:
+        return redirect('homepage')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('homepage')
+        else:
+            messages.error(request, 'pp')
+    return render(request, 'login.html')
+
+
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+        messages.success(request, 'You have Logged Out successfully!')
+        return redirect('homepage')
+    return redirect(request, 'homepage')
+
+
+def home(request):
+    return render(request, 'homepage.html')
 
 
 def create_user_view(request):
     if request.user.is_authenticated:
         return redirect('homepage')
     if request.method == 'GET':
-        form = UserRegisterForm()
-        context = {'form': form}
-        return render(request, 'create-user.html', context)
+        return render(request, 'create-user.html')
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            user = User.objects.filter(username=username).first()
-            UserStatus.objects.create(user_id=user)
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        if is_username_valid(username) and is_password_valid(password1, password2):
+            new_user = User.objects.create_user(username, email, password1)
+            # user = User.objects.filter(username=username).first()
+            UserStatus.objects.create(user_id=new_user)
             security_code = security_code_generator()
             exp = datetime.now() + timedelta(seconds=600)
-            sc = SecurityCodes.objects.create(user_id=user, code=security_code,
+            sc = SecurityCodes.objects.create(user_id=new_user, code=security_code,
                                               expiration_date=int(exp.timestamp()))
-            # TODO send email with verification code
+
+            # send_email_verification(new_user, security_code)
+            verify_email(new_user, security_code)
             messages.success(request, f'Thanks {username}! Your account was created successfully')
             return redirect('homepage')
+        else:
+            if not is_username_valid(username):
+                messages.info(request, 'Username already exists')
+            if not is_password_valid(password1, password2):
+                messages.info(request, 'Passwords do not coincide')
+            return redirect('create-user')
 
-        messages.error(request, form.errors)
-        return redirect('create-user')
+
+def profile_view(request):
+    if request.user.is_authenticated:
+        keys = AuthKeys.objects.filter(user_id=request.user).first()
+        if not keys:
+            keys = None
+
+        context = {'key': keys}
+        return render(request, 'main-profile.html', context)
+        pass
+    return redirect('login')
 
 
 def create_auth_key(request):
@@ -140,10 +252,10 @@ def create_auth_key(request):
 
             put_request(new_key.user_id.id, new_key.key, new_key.expiration_date)  # Create a new one in API db
             messages.success(request, 'Key created successfully!')
-            return redirect('homepage')
+            return redirect('main-profile')
         messages.error(request, f'{user.username} is not yet confirmed. Please follow verification steps to '
                                 f'request an authorisation key')
-        return redirect('homepage')
+        return redirect('main-profile')
     return redirect('login')
 
 
@@ -152,7 +264,7 @@ def delete_auth_key(request, slug):
     delete_request(key.user_id.id, key.key)
     key.delete()
     messages.success(request, 'Key was deleted successfully!')
-    return redirect('homepage')
+    return redirect('main-profile')
 
 
 def verification(request):
@@ -160,9 +272,9 @@ def verification(request):
         if request.method == 'GET':
             return render(request, 'security-code.html')
         if request.method == 'POST':
-            security_code = request.POST.get('security_code')
-            print(security_code)
-            ssc = SecurityCodes.objects.filter(user_id=request.user.id, code=security_code).first()
+            security_code = request.POST.get('security code')
+            # print(security_code)
+            ssc = SecurityCodes.objects.filter(user_id=request.user, code=security_code).first()
 
             if ssc:
                 if ssc.expiration_date <= datetime.utcnow().timestamp():
@@ -179,7 +291,7 @@ def verification(request):
                     auth_key.save()
                 ssc.delete()
                 messages.success(request, 'Thank you, you are now a verified user and can ask for api keys')
-                return redirect('homepage')
+                return redirect('main-profile')
             messages.error(request, 'The code is not valid')
             return redirect('verification')
     return redirect('login')
@@ -189,7 +301,7 @@ def new_code_request(request):
     if request.user.is_authenticated:
         if request.user.userstatus.confirmed:
             messages.info(request, 'You are already a confirmed user')
-            return redirect('homepage')
+            return redirect('main-profile')
 
         security_code = SecurityCodes.objects.filter(user_id=request.user).first()
         if security_code:
@@ -198,17 +310,19 @@ def new_code_request(request):
         exp = datetime.now() + timedelta(seconds=600)
         ssc = SecurityCodes.objects.create(user_id=request.user, code=new_code,
                                            expiration_date=int(exp.timestamp()))
-        # TODO send email with new verification code
+        verify_email(request.user, ssc)
         messages.success(request, 'A new code was sent. Please, check your email!')
-        return redirect('homepage')
+        return redirect('verification')
     return redirect('login')
+
+
+def update_password_profile(request):
+    return render(request, 'update-pass-profile.html')
 
 
 def recovery_password(request):
     if request.user.is_authenticated:
-        email = request.user.email
-        messages.info(request, f'A message was sent to {email} to reset the password')
-        return redirect('homepage')
+        return redirect('update-password-profile')
     else:
         if request.method == 'POST':
             base_url = 'http://localhost:8000/account/recovery/'
@@ -216,7 +330,7 @@ def recovery_password(request):
             user = User.objects.filter(email=email).first()
             if not user:
                 messages.error(request, 'This email address does not exist')
-                return redirect('homepage')
+                return redirect('recovery-password')
             recovery_check = Recovery.objects.filter(user_id=user).first()
             if recovery_check:
                 recovery_check.delete()
@@ -225,9 +339,11 @@ def recovery_password(request):
             recovery_link = Recovery.objects.create(user_id=user, url_code=url_code,
                                                     expiration_date=int(exp.timestamp()))
             link = base_url + url_code
-            # TODO send email with link
+
+            # send_password_recovery(user, link)
+            recovery_password_email(user, link)
             messages.success(request, f'An email was sent to {email} with the recovery link')
-            messages.info(request, f'This is your link: {link}')
+            # messages.info(request, f'This is your link: {link}')
             return redirect('homepage')
         return render(request, 'pass-recovery.html')
 

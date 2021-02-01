@@ -1,0 +1,29 @@
+{% extends 'base-profile.html' %}
+{% block content %}
+<div class="central-menu">
+        <div class="central-info">
+          <h1>Change Password</h1>
+          <div class="confirm-form">
+            <form method="POST">
+                {% csrf_token %}
+              <input
+                type="password"
+                name="old-password"
+                placeholder="Old Password"
+              />
+              <input
+                type="password"
+                name="new-password"
+                placeholder="New Password"
+              />
+              <input
+                type="password"
+                name="confirm-new"
+                placeholder="Confirm New Password"
+              />
+              <button type="submit">Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+{% endblock %}

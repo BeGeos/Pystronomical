@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <title>Pystronomical</title>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,600;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <section class="index">
+      <img src="{% static 'img/index-svg.svg' %}" alt="sky" width="80%" />
+      <button class="start-explore">
+        <a href="{% url 'homepage' %}">Start Exploring</a>
+      </button>
+      <div class="access-index">
+        <li><a href="{% url 'login' %}" class="login-index">Login</a></li>
+        <li>
+          <button class="signup-btn">
+            <a href="signup.html">Signup</a>
+          </button>
+        </li>
+      </div>
+      <div class="index-description">
+        <h1><i>Pystronomical</i></h1>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere quam
+          vero dolorum ipsam deleniti est explicabo officia expedita commodi
+          culpa nisi similique eveniet itaque recusandae obcaecati quibusdam
+          tenetur animi adipisci reprehenderit, qui inventore? Error cupiditate
+          sint earum soluta, vel eos! Et vel voluptates libero quod placeat
+          accusamus iste numquam officiis!
+        </p>
+      </div>
+    </section>
+  </body>
+</html>

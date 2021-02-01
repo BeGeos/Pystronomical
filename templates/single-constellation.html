@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <title>Explore</title>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,600;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <navbar>
+      <div class="nav">
+        <div class="nav-logo">
+          <img src="{% static 'img/Logo.svg' %}" alt="Logo" height="70" />
+        </div>
+        <div class="nav-links">
+          <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="explore.html" class="active">Explore</a></li>
+            <li><a href="{% url 'how-to-observe' %}">How to Observe</a></li>
+            <li><a href="api.html">API</a></li>
+          </ul>
+        </div>
+        <div class="nav-user">
+          {% if request.user.is_authenticated %}
+            <ul>
+            <li><a class="login-user" href="login.html">{{ request.user.username }}</a></li>
+            <li><a class="sign-up" href="signup.html">Logout</a></li>
+          </ul>
+            {% else %}
+          <ul>
+            <li><a class="login-user" href="login.html">Login</a></li>
+            <li><a class="sign-up" href="signup.html">Sign Up</a></li>
+          </ul>
+            {% endif %}
+        </div>
+      </div>
+    </navbar>
+    <main>
+      <div class="container-page">
+        <div class="general-sidebar">
+          <div class="search-bar">
+            <form class="search-star" action="/explore/star/" method="post">
+              {% csrf_token %}
+              <input type="text" name="star" placeholder="Search for a Star" />
+              <button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-search"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                  />
+                </svg>
+              </button>
+            </form>
+          </div>
+          <div class="help-sidebar">
+            <h2>Constellations</h2>
+            <ul>
+              <li><a href="">Ursa Minor</a></li>
+              <li><a href="">Aries</a></li>
+              <li><a href="">Orion</a></li>
+              <li><a href="">Taurus</a></li>
+              <li><a href="">Andromeda</a></li>
+              <li><a href="">Scorpio</a></li>
+              <li><a href="">Cassiopea</a></li>
+              <li><a href="">Aquarius</a></li>
+              <li><a href="">Canis Major</a></li>
+              <li><a href="">Canis Minor</a></li>
+              <li><a href="">Pegasus</a></li>
+              <li><a href="">Swan</a></li>
+              <li><a href="">Eagle</a></li>
+              <li><a href="">Centaurus</a></li>
+              <li><a href="">Twins</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content">
+          <h1>{{ constellation|title }}</h1>
+          <br />
+          <div class="single-element">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Blanditiis pariatur asperiores exercitationem laborum repellendus
+              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
+              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
+              ipsam a in rerum possimus officia, natus atque minima voluptate
+              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
+              aspernatur quis voluptatum placeat maxime dicta alias velit
+              quibusdam vel assumenda enim asperiores reprehenderit dolore non
+              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
+              exercitationem aperiam sapiente reprehenderit quisquam. Odit
+              aliquid alias, quas numquam sint ut corporis at nemo, facere
+              omnis, libero cupiditate ad! Eveniet amet cupiditate blanditiis?
+            </p>
+            <img src="img/ursa_major.jpg" alt="ursamajor" max-width="400" />
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="bottom-footer">
+          <div class="resources">
+            <p>@Pystronomical</p>
+
+            <a href="">Resources</a>
+          </div>
+          <div class="top-footer">
+            <a href=""><img src="img/twitter.svg" height="23" /></a>
+            <a href=""
+              ><img src="img/github.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/facebook.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/instagram.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/youtube.svg" alt="@BeGeos" height="23"
+            /></a>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

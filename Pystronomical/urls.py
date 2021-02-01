@@ -21,8 +21,11 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('super/', user_views.update_call_count, name='private-API'),
-    path('', user_views.home, name='homepage'),
-    path('login', auth_views.LoginView.as_view(template_name='user/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='user/logout.html'), name='logout'),
-    path('account/', include('user.urls'))
+    path('', user_views.landing_page, name='landing'),
+    path('home/', user_views.home, name='homepage'),
+    path('account/', include('user.urls')),
+    path('how-to-observe/', user_views.how_to_view, name='how-to-observe'),
+    path('explore/', user_views.explore_view, name='explore'),
+    path('explore/constellation/<str:constellation>', user_views.single_constellation, name='constellation-detail'),
+    path('explore/star/<str:s>', user_views.single_star, name='star-detail')
 ]

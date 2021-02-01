@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <title>Home</title>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <navbar>
+      <div class="nav">
+        <div class="nav-logo">
+          <img src="{% static 'img/Logo.svg' %}" alt="Logo" height="70" />
+        </div>
+        <div class="nav-links">
+          <ul>
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="{% url 'explore' %}">Explore</a></li>
+            <li><a href="{% url 'how-to-observe' %}">How to Observe</a></li>
+            <li><a href="api.html">API</a></li>
+          </ul>
+        </div>
+        <div class="nav-user">
+          {% if request.user.is_authenticated %}
+            <ul>
+            <li><a class="login-user" href="{% url 'main-profile' %}">{{ request.user.username }}</a></li>
+            <li><a class="sign-up" href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+            {% else %}
+          <ul>
+            <li><a class="login-user" href="{% url 'login' %}">Login</a></li>
+            <li><a class="sign-up" href="{% url 'create-user' %}">Sign Up</a></li>
+          </ul>
+            {% endif %}
+        </div>
+      </div>
+    </navbar>
+    <main>
+        {% if messages %}
+        {% for message in messages %}
+      <div class="message"><p>{{ message }}</p></div>
+        {% endfor %}
+        {% endif %}
+      <div class="container-main">
+        <div class="img-home">
+          <div class="title">
+            <h1><i>Welcome,</i></h1>
+            <h3><i>Thank you for visiting this website</i></h3>
+            <p>
+              It was made for sky enthusiasts and for beginners who would like
+              to learn and move their first steps into stargazing, and
+              astronomy.
+            </p>
+          </div>
+
+          <img src="{% static 'img/home-svg.svg' %}" alt="study" width="80%" />
+        </div>
+        <div class="page-home">
+          <h1 class="center-title"><i>Did you know?</i></h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+            nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+            volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
+            consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate
+            velit esse molestie consequat, vel illum dolore eu feugiat nulla
+            facilisis at vero eros et accumsan et iusto odio dignissim qui
+            blandit praesent luptatum zzril delenit augue duis dolore te feugait
+            nulla facilisi. Now, before starting to explore the sky it is
+            paramount that you know what a constellations and stars are, plus
+            some technical stuff that will help you in your observation and
+            overall comprehension.
+            <br /><br />
+          </p>
+          <hr />
+          <br />
+          <h2>Constellations</h2>
+          <p>
+            As defined canonically, a constellation is an area of the celestial
+            sphere in which a group of visible stars forms a perceived outline
+            or pattern, typically representing an animal, mythological person or
+            creature, or an inanimate object. The origins of constellations go
+            back in ancient prehistoric time, as well as more recent times, and
+            across cultures. It is not uncommon to see different names for
+            groups of stars in the sky that represent the same constellation in
+            different cultures. For example, the Big Dipper (part of Ursa Major
+            as properly defined) is well known across different cultures where
+            it assumes many names. In western civilisations, among the Greek,
+            for example, it was known as "The Bear", while Latin used to call
+            them "Septem Triones" (the Seven Oxes). Moreover, in Asia it was
+            known as "The Northern Dipper" or elsewhere "The Big Rudder".
+            <br /><br />Nowadays, a big consensus has been reached upon their
+            names, to eliminate confusion and create a standard nomenclature.
+            There is an organisation that is now in charge when it comes to
+            matters of this sort, either identifying new or ancient
+            constellations, and officialise established ones. This organisation
+            is the <b>International Astronomical Union</b>, or IAU. This is
+            quite an important acronim that you are going to see frequently when
+            looking for celestial objects in manuals, books or online. In 1922,
+            they formally accepted the modern list of 88 constellations, as we
+            know now, and traced, few years later, official constellation
+            boundaries that together cover the entire celestial sphere, namely
+            the sky. <br /><br />
+            There is a confusing concept that might buffle some of you.
+            Sometimes you hear constellation, other times asterism. So what is
+            the difference? Is there any? Are they the same thing? Well, yes,
+            but no. <br />
+            A constellation is an official group of stars that has a defined
+            area in the sky and that has been formally accepted. On the other
+            hand, an asterism does not have a formal definition but form a
+            commonly accepted pattern of stars, which represents a part of a
+            constellation (usually, the most recognisable part). For example,
+            the aforementioned <b>Big Dipper</b> has a very well-known shape.
+            Some might see a spoon others a rudder, but what is important is
+            that it is actually not the Ursa Major constellation, it is part of
+            it, probably the most recognisible part of it in the Norther
+            Hemispere, with its 7 bright stars. However, Ursa Major extends well
+            beyond those 7 stars. On average, constellations have between 70 to
+            80 stars, plus other celestial objects some of which are entire
+            galaxies (so-called Messier objects). <br /><br />One thing to
+            remember when observing constellations is that the Earth is
+            "divided" in 2 hemispheres. The Northern Hemisphere covers the
+            surface from the Equator up to the North Pole (latitute N 90°),
+            while the Southern Hemisphere extends from the equator to the South
+            Pole (latitude S 90°). <b>Why is this important?</b> As it is
+            commonly accepted (more or less) the Earth orbits around the Sun, a
+            journey that takes 365 days to be complete, and it also circles
+            around itself, specifically around an axis called, very creatively,
+            the rotation axis. <br />This rotation happens from West to East,
+            which is the reason the Sun appears from the East first. This
+            movement gives us the day, meaning the actual 24 hours that mark a
+            day on Earth. Obviously, this entails various things such as sunrise
+            that starts the hours of daylight, and sunset which in turn
+            introduces the night hours. Now, the reason why we see the Sun
+            "moving", is because we (Earth) rotate around it, and also because
+            we are relatively close to it. <br /><br />
+            In contrast, the Earth doesn't rotate around other stars, and they
+            are also extremely distant. This means that
+            <b>the night sky never changes</b>, at least to the human eye. This
+            creates a divide: constellations that are only visible from the
+            Northern Hemisphere, and others only from the Southern Hemisphere.
+            <br /><br />This shouldn't really be a problem, yes if you leave in
+            Sydney you might never get to see <b>Camelopardalis</b>, as well as
+            a Danish nightcrawler will never be able to see
+            <b>Corona Australis</b>, but I can assure you that there is plenty
+            to see anyway wherever you are in the world. <br /><br />
+            Previously, we talked about stars. It would be better to give a
+            little explanation about what they are, and why they are so
+            important. <br /><br />
+          </p>
+          <hr />
+          <br />
+          <h2>Stars</h2>
+          <p>
+            Let's start from the simplest definition, by the book: a
+            <b>star</b> is an astronomical object consisting of a luminous
+            spheroid of plasma held together by its own gravity. Got it? Well,
+            maybe you did but this is not very clear. So let's rewind it a
+            little bit. <br /><br />
+            I want to start with a fairly good example of a star which can be
+            understood very easily. <b>The Sun</b> is the nearest star to Earth
+            and it is actually the main glue that holds the Solar System
+            together. It protects us from cosmic radiations from outer space,
+            its gravitational pull helps maintaining bigger celestial objects at
+            bay, such as asteroids and potential threats to our planet. When you
+            look at the Sun, not directly of course, which is something you
+            never should do, what do you see? Do you happen to see a yellowish
+            rounded ball traveling through the sky? If so congratulations, you
+            have just seen how stars are. <br /><br />
+            They all have spherical shapes, they are mostly gaseous and have
+            very low densities and what happens when you have something very
+            "soft" around a strong center of gravity? It collapses and form the
+            simplest shape and almost the more convenient in terms of surface
+            energy, namely a sphere. Of course, not every star is perfectly
+            spherical, but in those cases there are other forces acting upon it,
+            for example centrifugal or centripetal forces. Neutron stars rotate
+            around themselves thousands of time a second, so it's understandable
+            they might have a bit of an oblungate shape. However, none of that
+            matters for observation, what does is their <b>size</b>, their
+            <b>color</b> and, more importantly, their <b>brightness</b>, term
+            which is refered to as <b>magnitude</b> when applied to celestial
+            objects. <br /><br />
+            Let's see how and why this 3 aspects are fundamental for
+            observation. You can see more detailed descriptions in the How To
+            Observe section, here I will try to keep it simple and brief.
+            <br /><br />
+            First of all, size affects the way we see different stars. It is
+            quite easy to understand that a bigger object can be seen better,
+            even at greater distances. This is related to their luminosity,
+            which is the amount of energy stars can emit, obviously a bigger
+            surface emits more energy per surface unit. In the night sky there
+            are many visible stars that are very very very far away.
+            Nonetheless, when the sun goes down , there they are, some of them
+            are even the brightest. This is mainly due to their gargantuan size.
+            Take <b>Rigel</b> for example, in the Orion constellation. Rigel is
+            approximately 860 lightyears away from the Solar System, although it
+            is the 7th brightest star in the night sky. This is mainly due to
+            the fact that Rigel is almost 23 times as massive as the Sun and
+            300,000 times as luminous. As you can tell, size matters in this
+            case. <br /><br />
+            Secondly, color. The color is heavily dependent on their chemistry,
+            which means the element stars are consuming, which type of emissions
+            on the visible spectrum. If you are interested you could investigate
+            on what a spectroscopy is. To put it simply, the spectrometer is a
+            tool to understand which elements are present in an object, these
+            elements will let certain radiations pass and absorbe others. Some
+            of this radiations have wavelengths on the visible spectrum. Based
+            on what the object absores and emits, ta dam, we have COLOR. When
+            observing stars in the sky it is quite useful to know what color
+            they have, in technical terms it is called spectral type, which
+            includes a lot of pieces of information other than just the color.
+            Just come back to our favourite star <b>Rigel</b>, it has a spectral
+            type B8. Now, it is not important what it means precisely, just know
+            that a B-type star will appear blueish, depending on the surface
+            temperature of said star. Imagine you are gazing through the night
+            sky, suddendly you see a familiar shape, 3 stars very close to each
+            other forming a sort of a belt (let's face it you need a lot of
+            imagination to enjoy it). Voilà, that's Orion's belt (a common
+            asterism), which means that you are looking at the constellation of
+            Orion (the Giant). You look around and see 2 very bright stars, one
+            is brighter than the other and red, the second is blue. You know
+            Rigel is in there and it is extremely bright, you also know that it
+            emits blueish light, hence it must be the upper left one you saw (in
+            the Southern Hemisphere Orion appears upside down, Rigel would be on
+            the right bottom corner then). That saved you the humiliation to
+            mistake Betelgeuse (the giant's foot) with Rigel (the giant's
+            shoulder). As you can see, color is quite important.
+            <br /><br />Finally, probably the most important aspect to consider
+            when observing the night sky is a star's magnitude. Simply put
+            magnitude indicates a star's brightness, but there are 2 types of
+            magnitude. <b>Absolute Magnitude</b> and <b>Apparent Magnitude</b>.
+            In observation, only the latter is useful. For further explanation,
+            please take a look at the dedicated section (How to Observe -
+            Nomenclature). Magnitude directly relates to how bright, therefore
+            visible, a star is. Although, magnitude is not exclusive of stars,
+            every celestial object has an apparent magnitude, either it emits
+            light, or reflects it. One confusing aspect of this it's that the
+            lower the magnitude, the more visible the object is. This has
+            historical reasons but bear in mind this concept. <br /><br />
+            Magnitude values can be also negative. For example, the Moon has an
+            apparent magnitude of -19. Just to give a little context here, the
+            brightest star in the sky, a part from the Sun, is <b>Sirius</b> (in
+            the Canis Major constellation). Sirius has an apparent magnitude of
+            -1.47. <br /><br />In conclusion, as you can see this subject is
+            extremely complex, deep and there is a ton of things that can be
+            said and studied about it. However, observation is an awesome
+            activity that could just be carried out with a few simple concepts.
+            If you think you are ready to go on and learn how to start observing
+            the sky, get a bit deeper in some of the concepts highligthed in
+            this brief presentation you are welcome to stay on this website and
+            explore all its functionalities thought for keen observers.
+            <br /><br />
+            Thanks, <br />@BeGeos
+          </p>
+        </div>
+      </div>
+      <footer>
+        <div class="bottom-footer">
+          <div class="resources">
+            <p>@Pystronomical</p>
+
+            <a href="">Resources</a>
+            <a href="">Feedback</a>
+          </div>
+          <div class="top-footer">
+            <a href=""><img src="img/twitter.svg" height="23" /></a>
+            <a href=""
+              ><img src="img/github.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/facebook.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/instagram.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/youtube.svg" alt="@BeGeos" height="23"
+            /></a>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

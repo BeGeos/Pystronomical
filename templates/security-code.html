@@ -1,22 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Security</title>
-</head>
-<body>
-<form method="post">
-    {% csrf_token %}
-    <h3>Insert security code Here</h3>
-    <input type="text" placeholder="6-digit-code" name="security_code">
-    <button type="submit">Submit</button>
-</form>
-{% if messages %}
-<ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-</body>
-</html>
+{% extends 'base-profile.html' %}
+        {% block content %}
+      <div class="central-menu">
+        <div class="central-info">
+            {% if request.user.userstatus.confirmed %}
+            <h3>You are already a confirmed user</h3>
+            {% else %}
+            <h1>Confirm Account</h1>
+          <div class="confirm-form">
+            <form method="POST">
+                {% csrf_token %}
+              <input
+                type="text"
+                name="security code"
+                id="security code"
+                placeholder="6-digit-code"
+              />
+              <button type="submit">Verify</button>
+            </form>
+          </div>
+
+          <div class="central-description">
+            <small>
+              Please enter the 6-digit verification code that was sent to your
+              email address. Once confirmed, you will be able to create an api
+              key. If you haven’t received any code, please verify that you
+              provided the correct email address or click here for a new
+              verification code:
+              <a href="{% url 'new-code' %}">Request New Code</a>
+            </small>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+        {% endblock %}

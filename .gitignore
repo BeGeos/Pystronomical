@@ -1,3 +1,5 @@
 env.py
 pystronomical.sqlite3
 .idea
+user/migrations
+Pystronomical/functions.py

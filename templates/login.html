@@ -2,7 +2,7 @@
 {% load static %}
 <html>
   <head>
-    <title>Register</title>
+    <title>Login</title>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,32 +15,38 @@
   </head>
   <body>
     <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+        <h4>{{ message }}</h4>
+        {% endfor %}
+        {% endif %}
+
       <img id="cloud-left" src="{% static 'img/clouds-left.svg' %}" alt="clouds-left" />
       <img id="cloud-right" src="{% static 'img/clouds-right.svg' %}" alt="clouds-right" />
       <div class="form-box">
         <div class="form-header">
           <div class="logo">
             <a href="home.html"
-              ><img src="{% static 'img/Logo.sv' %}g" alt="Py" height="48"
+              ><img src="{% static 'img/Logo.svg' %}" alt="Py" height="48"
             /></a>
           </div>
         </div>
-        <h2><i>Sign Up</i></h2>
+        <h2><i>Login</i></h2>
         <div class="form-field">
-          <form method="POST" autocomplete="off">
-            {% csrf_token %}
-            <input type="text" placeholder="Username" name="username" required maxlength="50">
-              <input type="text" placeholder="Email address" name="email" required>
-              <input type="password" placeholder="Password" name="password1" required>
-              <input type="password" placeholder="Confirm Password" name="password2" required>
-            <button class="form-button" type="submit">Sign Up</button>
+          <form method="POST">
+              {% csrf_token %}
+            <input type="text" placeholder="Username" name="username" required/>
+            <input type="password" placeholder="Password" name="password" required/>
+            <button class="form-button" type="submit">Login</button>
           </form>
         </div>
-
+        <small style="padding: 2px 0; margin-right: 2rem; float: right"
+          ><a href="recover-password.html">Forgot your Password?</a></small
+        >
         <hr style="width: 80%; margin: 0 auto" />
         <small style="float: left; margin: 0.5rem 2rem">
-          Already Have an Account?
-          <a href="{% url 'login' %}"><strong>Login</strong></a> </small
+          Don't Have an Account?
+          <a href="signup.html"><strong>Sign Up</strong></a> </small
         ><br />
         <div class="form-footer">
           <small>@Pystronomical</small>

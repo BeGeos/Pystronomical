@@ -25,7 +25,7 @@ class AuthKeys(models.Model):
 
 class SecurityCodes(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ssc', null=False)
-    code = models.IntegerField(null=False)
+    code = models.CharField(max_length=6, null=False)
     expiration_date = models.IntegerField()
 
     def __repr__(self):
@@ -39,3 +39,29 @@ class Recovery(models.Model):
 
     def __repr__(self):
         return self.url_code
+
+
+class Constellation(models.Model):
+    HEMISPHERES = [('N', 'North'),
+                   ('S', 'South')]
+
+    name = models.CharField(max_length=32, null=False)
+    hemisphere = models.CharField(max_length=2, choices=HEMISPHERES)
+    description = models.TextField()
+
+    def __repr__(self):
+        return self.name
+
+
+class Star(models.Model):
+    constellation_id = models.ForeignKey(Constellation, on_delete=models.SET_NULL, null=True, related_name='star')
+    star = models.CharField(max_length=32)
+    description = models.TextField()
+
+    def __repr__(self):
+        return self.star
+
+
+class Image(models.Model):
+    image = models.ImageField(upload_to='static/images')
+    constellation_id = models.OneToOneField(Constellation, on_delete=models.CASCADE, null=False, blank=False)

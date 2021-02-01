@@ -128,5 +128,15 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'homepage'
-LOGIN_URL = 'login'
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
+
+DEFAULT_FROM_EMAIL = secret_keys['EMAIL_ADDRESS']
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+EMAIL_HOST_USER = secret_keys['EMAIL_ADDRESS']
+EMAIL_HOST_PASSWORD = secret_keys['EMAIL_PASSWORD']
+

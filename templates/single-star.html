@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <title>Explore</title>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <navbar>
+      <div class="nav">
+        <div class="nav-logo">
+          <img src="{% static 'img/Logo.svg' %}" alt="Logo" height="70" />
+        </div>
+        <div class="nav-links">
+          <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="{% url 'explore' %}" class="active">Explore</a></li>
+            <li><a href="how-to.html">How to Observe</a></li>
+            <li><a href="api.html">API</a></li>
+          </ul>
+        </div>
+        <div class="nav-user">
+          {% if request.user.is_authenticated %}
+            <ul>
+            <li><a class="login-user" href="login.html">{{ request.user.username }}</a></li>
+            <li><a class="sign-up" href="signup.html">Logout</a></li>
+          </ul>
+            {% else %}
+          <ul>
+            <li><a class="login-user" href="login.html">Login</a></li>
+            <li><a class="sign-up" href="signup.html">Sign Up</a></li>
+          </ul>
+            {% endif %}
+        </div>
+      </div>
+    </navbar>
+    <main>
+      <div class="container-page">
+        <div class="general-sidebar">
+          <div class="search-bar">
+            <form class="search-star" method="post">
+                {% csrf_token %}
+              <input type="text" name="star" placeholder="Search for a Star" />
+              <button type="submit">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-search"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                  />
+                </svg>
+              </button>
+            </form>
+          </div>
+          <div class="where-to-look">
+            <h2>Where to Look</h2>
+            <form class="where-form">
+              <input type="text" name="city" placeholder="Enter a valid city" />
+              <button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-search"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                  />
+                </svg>
+              </button>
+            </form>
+            <div class="where-to-data">
+                {% if city %}
+                <div class="city-data">
+
+                <h3>{{ city|title }}</h3>
+                <small
+                  ><img src="{% static 'img/arrow-up.svg' %}" height="15" /><img
+                    src="{% static 'img/sun-fill.svg' %}"
+                    height="15"
+                  />
+                  8:35</small
+                >
+                <small
+                  ><img src="{% static 'img/arrow-down.svg' %}" height="15" /><img
+                    src="{% static 'img/sun-fill.svg' %}"
+                    height="15"
+                  />17:45</small
+                >
+              </div>
+
+              <div class="weather">
+                <div class="weather-card">
+                  <img src="http://openweathermap.org/img/wn/01n.png" />
+                  <div class="time-card">
+                    <p>10 PM</p>
+                    <small>Vis: 80%</small>
+                  </div>
+                </div>
+                <div class="weather-card">
+                  <img src="http://openweathermap.org/img/wn/02n.png" />
+                  <div class="time-card">
+                    <p>12 PM</p>
+                    <small>Vis: 35%</small>
+                  </div>
+                </div>
+                <div class="weather-card">
+                  <img src="http://openweathermap.org/img/wn/02n.png" />
+                  <div class="time-card">
+                    <p>2 AM</p>
+                    <small>Vis: 65%</small>
+                  </div>
+                </div>
+                <div class="weather-card">
+                  <img src="http://openweathermap.org/img/wn/01n.png" />
+                  <div class="time-card">
+                    <p>4 AM</p>
+                    <small>Vis: 90%</small>
+                  </div>
+                </div>
+              </div>
+              <div class="star-data">
+                <div class="star-time">
+                  <h3><b>Polaris</b></h3>
+                  <small>
+                    <img src="{% static 'img/arrow-up.svg' %}" height="15" />
+                    <img src="{% static 'img/star-fill.svg' %}" height="15" />
+                    21:30
+                  </small>
+                  <small>
+                    <img src="{% static 'img/star-fill.svg' %}" height="15" />
+                    <img src="{% static 'img/arrow-down.svg' %}" height="15" />
+                    9:30
+                  </small>
+                </div>
+                <p><b>Current Right Ascension:</b> 23h 12m 23s</p>
+                <p><b>Where to look:</b> 11° to the North and 35° to East</p>
+              </div>
+                {% else %}
+                 <small
+                >Based on latitude and longitude, a star can be found in the sky
+                using the principles of right ascension and declination. You
+                could enter a city and discover where to point your telescope
+                from that location.
+              </small>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="content">
+          <h1>{{ star|title }}</h1>
+          <br />
+          <div class="single-element">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Blanditiis pariatur asperiores exercitationem laborum repellendus
+              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
+              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
+              ipsam a in rerum possimus officia, natus atque minima voluptate
+              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
+              aspernatur quis voluptatum placeat maxime dicta alias velit
+              quibusdam vel assumenda enim asperiores reprehenderit dolore non
+              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
+              exercitationem aperiam sapiente reprehenderit quisquam. Odit
+              aliquid alias, quas numquam sint ut corporis at nemo, facere
+              omnis, libero cupiditate ad! Eveniet amet cupiditate blanditiis?
+              <br />
+              <br />
+              <small
+                >Go back to <a href="explore.html">Constellations</a></small
+              >
+            </p>
+
+            <img src="img/ursa_major.jpg" alt="ursamajor" width="400" />
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="bottom-footer">
+          <div class="resources">
+            <p>@Pystronomical</p>
+
+            <a href="">Resources</a>
+          </div>
+          <div class="top-footer">
+            <a href=""><img src="img/twitter.svg" height="23" /></a>
+            <a href=""
+              ><img src="img/github.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/facebook.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/instagram.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/youtube.svg" alt="@BeGeos" height="23"
+            /></a>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <title>Explore</title>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <navbar>
+      <div class="nav">
+        <div class="nav-logo">
+          <img src="{% static 'img/Logo.svg' %}" alt="Logo" height="70" />
+        </div>
+        <div class="nav-links">
+          <ul>
+            <li><a href="{% url 'homepage' %}">Home</a></li>
+            <li><a href="#" class="active">Explore</a></li>
+            <li><a href="{% url 'how-to-observe' %}">How to Observe</a></li>
+            <li><a href="api.html">API</a></li>
+          </ul>
+        </div>
+        <div class="nav-user">
+          {% if request.user.is_authenticated %}
+            <ul>
+            <li><a class="login-user" href="login.html">{{ request.user.username }}</a></li>
+            <li><a class="sign-up" href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+            {% else %}
+          <ul>
+            <li><a class="login-user" href="login.html">Login</a></li>
+            <li><a class="sign-up" href="signup.html">Sign Up</a></li>
+          </ul>
+            {% endif %}
+        </div>
+      </div>
+    </navbar>
+    <main>
+      <div class="container-main">
+        <div class="search-bar-first">
+          <form class="search-star" method="post">
+              {% csrf_token %}
+            <input type="text" name="star" placeholder="Search for a Star" />
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-search"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                />
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <div class="page-content">
+          <h1><i>Constellations</i></h1>
+          <h4>Northern Hemisphere</h4>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Best Seen</th>
+                <th scope="col">Alias</th>
+                  <th scope="col">Min and Max Latitude</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a style="color: black" href="/explore/constellation/ursa major">Ursa Major</a></td>
+                <td>February</td>
+                <td>The greater Bear</td>
+                  <td>-10° to 90°</td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <h4>Southern Hemisphere</h4>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Best Seen</th>
+                <th scope="col">Alias</th>
+                  <th scope="col">Min and Max Latitude</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a style="color: black" href="/explore/constellation/crux">Crux</a></td>
+                <td>February</td>
+                <td>The southern Cross</td>
+                  <td>-10° to 90°</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <footer>
+        <div class="bottom-footer">
+          <div class="resources">
+            <p>@Pystronomical</p>
+
+            <a href="">Resources</a>
+          </div>
+          <div class="top-footer">
+            <a href=""><img src="img/twitter.svg" height="23" /></a>
+            <a href=""
+              ><img src="img/github.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/facebook.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/instagram.svg" alt="@BeGeos" height="23"
+            /></a>
+            <a href=""
+              ><img src="img/youtube.svg" alt="@BeGeos" height="23"
+            /></a>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>
