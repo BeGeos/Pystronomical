@@ -24,7 +24,7 @@
             <li><a href="{% url 'homepage' %}">Home</a></li>
             <li><a href="{% url 'explore' %}">Explore</a></li>
             <li><a href="{% url 'how-to-observe' %}">How to Observe</a></li>
-            <li><a href="api.html">API</a></li>
+            <li><a href="{% url 'api' %}">API</a></li>
           </ul>
 
         </div>
@@ -44,20 +44,21 @@
       </div>
     </navbar>
 
+    <div class="main-wrapper">
+      {% if messages %}
+        {% for message in messages %}
+      <div class="message"><p>{{ message }}</p></div>
+        {% endfor %}
+        {% endif %}
     <main class="profile">
-        {% if messages %}
-    {% for message in messages %}
-    <div>{{ message }}</div>
-    {% endfor %}
 
-    {% endif %}
       <div class="sidebar">
         <div class="sidebar-menu">
           <h2><i>Account</i></h2>
           <ul>
             <li><a href="{% url 'verification' %}">Confirm Account</a></li>
             <li><a href="{% url 'update-password-profile' %}">Change Password</a></li>
-            <li><a href="change-email.html">Change Email Address</a></li>
+            <li><a href="{% url 'update-email-profile' %}">Change Email Address</a></li>
             <li><a href="{% url 'main-profile' %}">API key</a></li>
           </ul>
         </div>
@@ -92,6 +93,7 @@
         <img src="img/user-profile.svg" alt="user-account" height="300" />
       </div> -->
     </main>
+      </div>
     <footer class="login-footer">
       <div class="bottom-footer">
         <div class="resources">

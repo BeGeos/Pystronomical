@@ -82,7 +82,7 @@ li {
 }
 
 .form-field {
-  width: 60%;
+  width: 80%;
   margin: 0 auto;
 }
 
@@ -383,7 +383,7 @@ th {
 }
 
 .confirm-form form {
-  width: 10rem;
+  width: 15rem;
   text-align: center;
   display: flex;
   flex-direction: column;

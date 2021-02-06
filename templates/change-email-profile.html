@@ -1,0 +1,28 @@
+{% extends 'base-profile.html' %}
+{% block content %}
+      <div class="central-menu">
+        <div class="central-info">
+          <h1>Change Email Address</h1>
+          <div class="confirm-form">
+            <form method="POST">
+                {% csrf_token %}
+              <input
+                type="text"
+                name="new-email"
+                placeholder="New Email Address"
+              />
+
+              <button type="submit">Update</button>
+            </form>
+          </div>
+          <div class="central-description">
+            <small>
+              Please remember that a new verification code will be sent to this
+              new address. Until confirmation is received, if you have api keys
+              they will be suspended momentarily.
+            </small>
+          </div>
+        </div>
+      </div>
+{% endblock %}
+

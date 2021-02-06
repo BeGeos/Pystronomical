@@ -41,12 +41,12 @@
           </form>
         </div>
         <small style="padding: 2px 0; margin-right: 2rem; float: right"
-          ><a href="recover-password.html">Forgot your Password?</a></small
+          ><a href="{% url 'recovery-password' %}">Forgot your Password?</a></small
         >
         <hr style="width: 80%; margin: 0 auto" />
         <small style="float: left; margin: 0.5rem 2rem">
           Don't Have an Account?
-          <a href="signup.html"><strong>Sign Up</strong></a> </small
+          <a href="{% url 'create-user' %}"><strong>Sign Up</strong></a> </small
         ><br />
         <div class="form-footer">
           <small>@Pystronomical</small>

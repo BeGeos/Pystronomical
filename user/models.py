@@ -1,15 +1,21 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 
 
 # User related models
+# class User(AbstractUser):
+#     attempts = models.IntegerField(default=5)
+#     calls = models.IntegerField(default=1000)
+#     confirmed = models.BooleanField(default=False)
+
+
 class UserStatus(models.Model):
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
     attempts = models.IntegerField(default=5)
     calls = models.IntegerField(default=1000)
     confirmed = models.BooleanField(default=False)
 
-    def __repr__(self):
+    def __str__(self):
         return f'Status of {self.user_id}'
 
 
@@ -19,7 +25,7 @@ class AuthKeys(models.Model):
     expiration_date = models.IntegerField(null=False)
     active = models.BooleanField(default=True)
 
-    def __repr__(self):
+    def __str__(self):
         return self.key
 
 
@@ -28,7 +34,7 @@ class SecurityCodes(models.Model):
     code = models.CharField(max_length=6, null=False)
     expiration_date = models.IntegerField()
 
-    def __repr__(self):
+    def __str__(self):
         return f'Security code of {self.user_id.username}'
 
 
@@ -37,7 +43,7 @@ class Recovery(models.Model):
     url_code = models.CharField(max_length=24, null=False)
     expiration_date = models.IntegerField()
 
-    def __repr__(self):
+    def __str__(self):
         return self.url_code
 
 
@@ -49,7 +55,7 @@ class Constellation(models.Model):
     hemisphere = models.CharField(max_length=2, choices=HEMISPHERES)
     description = models.TextField()
 
-    def __repr__(self):
+    def __str__(self):
         return self.name
 
 
@@ -58,7 +64,7 @@ class Star(models.Model):
     star = models.CharField(max_length=32)
     description = models.TextField()
 
-    def __repr__(self):
+    def __str__(self):
         return self.star
 
 

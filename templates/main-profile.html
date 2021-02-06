@@ -18,9 +18,9 @@
                 <td>{{ key.key }}</td>
                 <td>{{ key.expiration_date }}</td>
                   {% if key.active %}
-                    <td>Yes</td>
+                    <td>Active</td>
                   {% else %}
-                  <td>No</td>
+                  <td>Not Active</td>
                   {% endif %}
                 <td>
                   <button><a href="{% url 'create-key' %}">Regenerate Key</a></button>
@@ -42,7 +42,7 @@
             <small>
               Api keys enable you to use the astropy API. <br />For more
               information, please visit the dedicated page at this link :
-              <a href="api.html" class="cyan">API</a>
+              <a href="{% url 'api' %}" class="cyan">API</a>
             </small>
           </div>
         </div>

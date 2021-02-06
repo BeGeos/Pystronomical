@@ -128,9 +128,6 @@ def recovery_password_email(user, link):
 
 # Main website views
 def landing_page(request):
-    if request.user.is_authenticated:
-        return redirect('homepage')
-
     return render(request, 'landing-page.html')
 
 
@@ -177,7 +174,7 @@ def login_user_view(request):
             login(request, user)
             return redirect('homepage')
         else:
-            messages.error(request, 'pp')
+            messages.error(request, 'Invalid login credentials')
     return render(request, 'login.html')
 
 
@@ -191,6 +188,10 @@ def logout_view(request):
 
 def home(request):
     return render(request, 'homepage.html')
+
+
+def api_view(request):
+    return render(request, 'api.html')
 
 
 def create_user_view(request):
@@ -317,7 +318,26 @@ def new_code_request(request):
 
 
 def update_password_profile(request):
-    return render(request, 'update-pass-profile.html')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            old_password = request.POST.get('old-password')
+            new_password = request.POST.get('new-password')
+            confirm = request.POST.get('confirm-new')
+            user = authenticate(username=request.user.username, password=old_password)
+            if user is None:
+                messages.info(request, 'The password is not correct')
+                return redirect('update-password-profile')
+            if new_password != confirm:
+                messages.info(request, 'New password does not match')
+                return redirect('update-password-profile')
+
+            user = request.user
+            user.set_password(new_password)
+            user.save()
+            messages.success(request, 'Your password was changed successfully!')
+            return redirect('main-profile')
+        return render(request, 'update-pass-profile.html')
+    return redirect('login')
 
 
 def recovery_password(request):
@@ -345,45 +365,44 @@ def recovery_password(request):
             messages.success(request, f'An email was sent to {email} with the recovery link')
             # messages.info(request, f'This is your link: {link}')
             return redirect('homepage')
-        return render(request, 'pass-recovery.html')
+        return render(request, 'new-pass-request.html')
 
 
 def new_password(request, slug):
+    if request.user.is_authenticated:
+        return redirect('main-profile')
+
     code = get_object_or_404(Recovery, url_code=slug)
     now = datetime.now().timestamp()
     user = User.objects.get(id=code.user_id.id)
     if code.expiration_date <= now:
         code.delete()
         messages.error(request, 'Link is expired')
-        return redirect('homepage')
-    form = SetPasswordForm(user)
+        return redirect('login')
 
     if request.method == 'POST':
         user = User.objects.get(id=code.user_id.id)
-        form = SetPasswordForm(user=user, data=request.POST)
+        new_password = request.POST.get('new-password')
+        confirm = request.POST.get('confirm-new')
 
-        if form.is_valid():
-            form.save()
-            code.delete()
-            messages.success(request, f'Password was changed successfully for {user.username}')
-            return redirect('login')
-        else:
-            messages.info(request, form.errors)
-            messages.error(request, 'Please correct the error')
+        if new_password != confirm:
+            messages.error(request, 'Passwords do not match')
             return redirect('new-password', slug=slug)
-    return render(request, 'pass-recovery-form.html', context={'form': form, 'username': user.username})
+
+        user.set_password(new_password)
+        user.save()
+        code.delete()
+        messages.success(request, f'Password for {user.username} was changed successfully!')
+        return redirect('login')
+    return render(request, 'pass-recovery-form.html')
 
 
 def update_email(request):
-    if request.method == 'GET':
-        if request.user.is_authenticated:
-            form = EmailUpdateForm()
-            return render(request, 'update-email.html', context={'form': form})
-        else:
-            return redirect('login')
-    if request.method == 'POST':
-        form = EmailUpdateForm(request.POST)
-        if form.is_valid():
+    if request.user.is_authenticated:
+
+        if request.method == 'POST':
+            email = request.POST.get('new-email')
+
             user = User.objects.get(pk=request.user.id)
             ssc = SecurityCodes.objects.filter(user_id=user).first()
             if ssc:
@@ -401,13 +420,14 @@ def update_email(request):
                 update_auth_status(request.user.id, auth_key.key, False)
                 auth_key.active = False
                 auth_key.save()
-            user.email = form.cleaned_data.get('email')
+            user.email = email
             user.save()
 
-            # TODO send email with new ss_code
+            # Change message for cases like this -- change email verification
+            verify_email(user, user_ssc.code)
 
             messages.success(request, f'Email was changed successfully for {request.user.username}')
-            return redirect('homepage')
-        else:
-            messages.error(request, form.errors)
-            return redirect('update-email')
+            return redirect('main-profile')
+
+        return render(request, 'change-email-profile.html')
+    return redirect('login')

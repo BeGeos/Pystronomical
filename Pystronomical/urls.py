@@ -27,5 +27,6 @@ urlpatterns = [
     path('how-to-observe/', user_views.how_to_view, name='how-to-observe'),
     path('explore/', user_views.explore_view, name='explore'),
     path('explore/constellation/<str:constellation>', user_views.single_constellation, name='constellation-detail'),
-    path('explore/star/<str:s>', user_views.single_star, name='star-detail')
+    path('explore/star/<str:s>', user_views.single_star, name='star-detail'),
+    path('api/', user_views.api_view, name='api')
 ]
