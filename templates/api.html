@@ -29,16 +29,22 @@
         </div>
         <div class="nav-user">
           {% if request.user.is_authenticated %}
-            <ul>
-            <li><a class="login-user" href="{% url 'main-profile' %}">{{ request.user.username }}</a></li>
+          <ul>
+            <li>
+              <a class="login-user" href="{% url 'main-profile' %}"
+                >{{ request.user.username }}</a
+              >
+            </li>
             <li><a class="sign-up" href="{% url 'logout' %}">Logout</a></li>
           </ul>
-            {% else %}
+          {% else %}
           <ul>
             <li><a class="login-user" href="{% url 'login' %}">Login</a></li>
-            <li><a class="sign-up" href="{% url 'create-user' %}">Sign Up</a></li>
+            <li>
+              <a class="sign-up" href="{% url 'create-user' %}">Sign Up</a>
+            </li>
           </ul>
-            {% endif %}
+          {% endif %}
         </div>
       </div>
     </navbar>
@@ -50,17 +56,21 @@
             <dl>
               <dt>Documentation</dt>
               <dd><a href="#intro">Introduction</a></dd>
-              <dd>Requests</dd>
-              <dd>Response</dd>
-              <dt>Constellations</dt>
-              <dd>General</dd>
-              <dd>All</dd>
-              <dd>Query Based</dd>
-              <dt>Stars</dt>
-              <dd>General</dd>
-              <dd>Brightest</dd>
-              <dd>Closest</dd>
-              <dd>Where to Look</dd>
+              <dd><a href="#requests">Requests</a></dd>
+              <dd><a href="#response">Response</a></dd>
+              <dd><a href="#home-route">Home Route</a></dd>
+              <dd><a href="#greeting">Greetings</a></dd>
+              <dd><a href="#api-key">API key</a></dd>
+              <dt><a href="#constellation">Constellations</a></dt>
+              <dd><a href="#single-constellation">Single Constellation</a></dd>
+              <dd><a href="#query-search">Query Based</a></dd>
+              <dd><a href="#all-constellations">All Constellations</a></dd>
+              <dt><a href="#stars">Stars</a></dt>
+              <dd><a href="#single-star">Single Star</a></dd>
+              <dd><a href="#where-to-stars">Where To Look</a></dd>
+              <dd><a href="#closest">Closest</a></dd>
+              <dd><a href="#brightest">Brightest</a></dd>
+              <dd><a href="#all-stars">All Stars</a></dd>
             </dl>
           </div>
         </div>
@@ -69,82 +79,815 @@
           <div id="intro">
             <h1>Introduction</h1>
             <br />
+            <div class="api-text">
+              <p>
+                Hi and welcome to the documentation for the astropy API. First
+                of all, thank you for visiting this page. If you liked to use
+                the API to get stars and constellations information don’t forget
+                to sign up, confirm your email address and create and API key.
+                <br /><br />
+                This is my first attempt at creating a fully functional API and
+                I honestly hope it could help you develop your project, explore
+                the sky, or get to know a bit more about astronomy.
+                <br /><br />
+                Currently this API provides information about stars and
+                constellations, however as the project progresses planets will
+                be included, too. Oh! and don’t forget about the Moon, and the
+                other moons of course.
+                <br /><br />
+                Below you can see the endpoint for this API, and various example
+                of requests and response, as well as general instructions to
+                make proper requests and a bit of insights about the information
+                provided in the response.
+              </p>
+              <br />
+              <br />
+              <hr />
+              <div id="requests">
+                <h2>Requests</h2>
+                <br />
+                <p>
+                  All routes accept GET requests only and they require certain
+                  parameters, that are specified in this documentation,
+                  depending on the specific route. One parameter that is always
+                  needed is “appid” which represents the API key associated to
+                  your account. At the moment, all the API keys are created
+                  equal, there is no special privilege, or super user, etc. You
+                  will see a couple of admin-only route and they are
+                  specifically there with an eye on the future, when the keys
+                  might get special permissions.
+                  <br /><br />
+                  As per standard all the keys enable you to make requests to
+                  all the endpoints, excluded the admin-only ones, to a maximum
+                  of 1000 calls a day. I understand it is not much, but once you
+                  reach the call limit you have to wait for the day to end. As I
+                  previously mentioned, this project has eyes on the future, I
+                  want to expand and bring it forward as far as I can, and I can
+                  assure you that there will be opportunities for API keys with
+                  unlimited access and number of calls. As the zen master
+                  says…just Be Patient.
+                </p>
+              </div>
 
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis pariatur asperiores exercitationem laborum repellendus
-              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
-              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
-              ipsam a in rerum possimus officia, natus atque minima voluptate
-              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
-              aspernatur quis voluptatum placeat maxime dicta alias velit
-              quibusdam vel assumenda enim asperiores reprehenderit dolore non
-              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate ad! Eveniet amet cupiditate blanditiis?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis pariatur asperiores exercitationem laborum repellendus
-              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
-              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
-              ipsam a in rerum possimus officia, natus atque minima voluptate
-              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
-              aspernatur quis voluptatum placeat maxime dicta alias velit
-              quibusdam vel assumenda enim asperiores reprehenderit dolore non
-              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate a Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Blanditiis pariatur asperiores exercitationem
-              laborum repellendus minima numquam tempora? Dignissimos quisquam
-              eaque fugit, laborum fuga incidunt. Quas nobis, inventore ratione
-              id deleniti maiores ipsam a in rerum possimus officia, natus atque
-              minima voluptate quis, sit corrupti accusantium. Rem ratione ea in
-              autem minus, aspernatur quis voluptatum placeat maxime dicta alias
-            </p>
+              <br /><br />
+              <hr />
+              <div id="response">
+                <h2>Response</h2>
+                <br />
+                <p>
+                  All the responses are returned in JSON format, there might be
+                  an XML version in the future if the users want it. By the way,
+                  if you wanted to leave comments about the API, suggestions,
+                  feedbacks or even requests that you feel would improve it,
+                  please don’t hesitate to hit the Feedback page, I am always
+                  open to collaborations. In addition, this project is on
+                  Github, so you can make pull requests, etc. I’d be happy to
+                  have you on board.
+                  <br /><br />
+                  Along with the JSON response, you receive a status code
+                  depending on the outcome of your request. If you are not
+                  familiar with them, you can visit
+                  <a
+                    href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
+                    target="_blank"
+                    >this</a
+                  >
+                  page on Wikipedia that explains them in detail. However, for
+                  this API the range of status codes is very narrow. There is
+                  200 OK (of course), for successful requests, 204 No Content,
+                  400 Bad Request, 403 Forbidden, 404 Not Found. In the
+                  documentation, it is explained when these codes might arise.
+                  <br /><br />
+                  Now, let’s proceed with 2 routes that have public access and
+                  no api key is required. They are only meant to see whether or
+                  not the API is functioning properly.
+                </p>
+              </div>
+              <br /><br />
+              <hr />
+              <div id="home-route">
+                <h2>Home route</h2>
+                <br />
+                <code>/astropy</code>
+                <br /><br />
+                <p>
+                  This route will help you assess wheter the API is working
+                  correctly or not. It will return a simple JSON file with a
+                  Welcome message and a 200 OK status code. Like this:
+                </p>
+                <br />
+                <code> { "Welcome": "This is AstroPy" } </code>
+              </div>
+              <br /><br />
+              <hr />
+              <div id="greeting">
+                <h2>Greeting message</h2>
+                <br />
+                <code>/astropy/hello</code>
+                <br /><br />
+                <p>
+                  This route accepts only GET requests with two simple
+                  arguments: name and last. <br /><br />
+                  As the name suggests it will return a JSON response with
+                  greetings to name and last. It is a simple way to test
+                  arguments reception by the API. The JSON response will have a
+                  200 status code if everything was sent correctly, a 204 if no
+                  argument is passed in, or a 400 if a bad request was
+                  submitted, or a wrong parameter was passed in or not enough
+                  parameters. This errors will be present for all the requests
+                  that do not fulfil the requirements. So, 200 OK for good
+                  requests, 204 if no argument is passed in and a 400 for bad
+                  requests, in addition 404 status code in case the request was
+                  correctly submitted but no record was found, or the URL was
+                  not correct.
+                </p>
+                <br />
+                <p>Request/Response examples:</p>
+                <br />
+                <p>
+                  <i>In case of 200 <strong>OK</strong></i
+                  >:
+                </p>
+                <br />
+                <p>
+                  GET request: <code>/astropy/hello?name=BeGeos&last=Dev</code>
+                </p>
+                <br />
+                <p>Response: <code>{ "Hello, There": "BeGeos Dev" } </code></p>
+                <br />
+                <p>
+                  <i>In case of 204 <strong>No Content</strong></i
+                  >:
+                </p>
+                <br />
+                <p>GET request: <code>/astropy/hello</code></p>
+                <br />
+                <p>Response: <strong>No content will be shown</strong></p>
+                <br />
+                <p>
+                  <i>In case of 400 <strong>Bad Request</strong></i
+                  >:
+                </p>
+                <br />
+                <p>GET request: <code>/astropy/hello?nme=BeGeos</code></p>
+                <br />
+                <p>Response: <code>{ "message": "Bad Request" } </code></p>
+                <br />
+                <p>
+                  Be careful of reading through the documentation to check all
+                  the required parameters and the correct endpoints so that your
+                  requests will always yield a positive response.
+                </p>
+                <br /><br />
+                <hr />
+              </div>
+              <div id="api-key">
+                <h2>API key</h2>
+                <br />
+                <p>
+                  Every route, apart from the first 2 presented, needs "appid"
+                  among the required arguments. If an appid is not provided the
+                  response will return a "Missing Token" message and a 400 Bad
+                  Request status code.
+                </p>
+                <br /><code>{ "message": "Missing token" } </code><br /><br />
+                <p>
+                  If invalid or expired appid is provided the response will
+                  return "Invalid Token" message and a 403 Forbidden status
+                  code.
+                </p>
+                <br />
+                <code>{ "message": "Invalid token" } </code><br /><br />
+                <p>
+                  To generate an api key simply register to this website
+                  <u><a href="{% url 'create-user' %}">here</a></u> and confirm
+                  your email address. Api keys are fundamental to make requests
+                  to this API.
+                </p>
+                <p>
+                  In case you were already a confirmed user, you can generate an
+                  API key at your profile page or clicking
+                  <u><a href="{% url 'main-profile' %}">here</a></u> if you are
+                  already logged in.
+                </p>
+              </div>
+            </div>
           </div>
-
-          <br />
-          <br />
-          <hr />
-          <div id="requests">
-            <h1>Requests</h1>
+          <div id="constellation">
+            <h1>Constellations</h1>
             <br />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis pariatur asperiores exercitationem laborum repellendus
-              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
-              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
-              ipsam a in rerum possimus officia, natus atque minima voluptate
-              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
-              aspernatur quis voluptatum placeat maxime dicta alias velit
-              quibusdam vel assumenda enim asperiores reprehenderit dolore non
-              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate ad! Eveniet amet cupiditate blanditiis?
-            </p>
+            <div class="api-text">
+              <p>
+                As far as constellations are concerned 3 routes are provided
+                with different endpoints and parameters. <br /><br />
+                The first one is a basic get request to return the information
+                about a constellation, the second one it is a more advanced
+                query search that takes minimum and maximum latitude into
+                account, as well as the quadrant. If you don't know what these
+                are please refer to the 'How to Observe' page and you'll get
+                some insights. The third endpoint is an exclusive admin only
+                request to return all the constellations in the database. It
+                will be updated for special accounts, but it is not provided
+                yet, since all accounts have the same privileges.
+              </p>
+              <br /><br />
+              <hr />
+              <div id="single-constellation">
+                <h2>Single Constellation</h2>
+                <br />
+                <code>/astropy/api/v1/constellation</code>
+                <br /><br />
+                <p>
+                  This route accepts only one parameter, namely c (as for
+                  constellation). Any other parameter won't throw an error, as
+                  long as c is in there, but it won't be considered.
+                  <br /><br />
+                  As previously mentioned, this route will return all the
+                  information about the constellation provided in the c argument
+                  via a GET request.
+                  <br /><br />
+                  If requests are sent correctly the response will be a 200 OK
+                  and the JSON response will look like this:
+                </p>
+                <br />
+                <p>
+                  GET request:
+                  <code
+                    >/astropy/api/v1/constellation?c=ursa%major&appid=YOUR_API_KEY</code
+                  >
+                </p>
+                <br />
+                <p>Response:</p>
+                <div class="JSON-response">
+                  <pre id="json"></pre>
+                </div>
+                <br />
+                <p>
+                  The argument is not case sensitive since each one will be
+                  converted into lowercase in the process. <br /><br />
+                  As you can see the request was sent correctly and the response
+                  yielded the correct result. The main key is "constellation"
+                  which contains the information.
+                </p>
+                <br />
+                <h3>Elements Explained:</h3>
+                <br />
+                <div class="elements-exp">
+                  <div class="resp-path">
+                    <code>constellation.abbreviation</code>
+                  </div>
+                  <div class="resp-description">
+                    <p>
+                      It provides the abbreviation code, as per IUA standards,
+                      of the constellation;
+                    </p>
+                  </div>
+                  <div class="resp-path"><code>constellation.alias</code></div>
+                  <div class="resp-description">
+                    <p>
+                      It represents the most common translation, or meaning
+                      given to the name of said constellation;
+                    </p>
+                  </div>
+                  <div class="resp-path">
+                    <code>constellation.declination</code>
+                  </div>
+                  <div class="resp-description">
+                    <p>
+                      As the name implies it represents the average declination
+                      of the constellation. If you wanted to know more about
+                      declination/right ascension, please visit the dedicated
+                      page 'How to Observe';
+                    </p>
+                  </div>
+                  <div class="resp-path"><code>constellation.id</code></div>
+                  <div class="resp-description">
+                    <p>
+                      It shows the id of that particular constellation. It
+                      doesn't have any observational relevancy;
+                    </p>
+                  </div>
+                  <div class="resp-path">
+                    <code>constellation.max_latitude</code>
+                  </div>
+                  <div class="resp-description">
+                    <p>
+                      It provides the maximum latitude where the constellation
+                      is visible. As the definition implies, maximum means that
+                      beyond that latitude the constellation is not observable;
+                    </p>
+                  </div>
+                  <div class="resp-path">
+                    <code>constellation.min_latitude</code>
+                  </div>
+                  <div class="resp-description">
+                    <p>
+                      It provides the minimum latitude where the constellation
+                      is visible. As the definition implies, minimum means that
+                      the constellation is only observable above that latitude;
+                    </p>
+                  </div>
+                  <div class="resp-path"><code>constellation.name</code></div>
+                  <div class="resp-description">
+                    <p>
+                      Self-explanatory. It returns the standard name of the
+                      constellation, in lower case;
+                    </p>
+                  </div>
+                  <div class="resp-path">
+                    <code>constellation.quadrant</code>
+                  </div>
+                  <div class="resp-description">
+                    <p>
+                      It return the quadrant where the constellation is placed
+                      in the celestial sphere. As a general rule quadrant
+                      starting with N, indicates the Northern Hemisphere. While
+                      S points to the Southern Hemisphere. If you wanted to know
+                      more about how quadrants are considered, please refer to
+                      the 'How to Observe' page;
+                    </p>
+                  </div>
+                  <div class="resp-path">
+                    <code>constellation.right_ascension</code>
+                  </div>
+                  <div class="resp-description">
+                    <p>
+                      It provides the average right ascension of the
+                      constellation. If you wanted to know more about
+                      declination/right ascension, please visit the dedicated
+                      page 'How to Observe';
+                    </p>
+                  </div>
+                  <div class="resp-path"><code>constellation.stars</code></div>
+                  <div class="resp-description">
+                    <p>
+                      It returns the main stars in the constellation. Each star
+                      has a name and apparent magnitude argument;
+                    </p>
+                  </div>
+                  <div class="resp-path">
+                    <code>constellation.stars.apparent_magnitude</code>
+                  </div>
+                  <div class="resp-description">
+                    <p>
+                      It indicates the brightness of the star. Be aware, the
+                      result is not ordered, and more importantly, the lower the
+                      magnitude the higher the brightness;
+                    </p>
+                  </div>
+                  <div class="resp-path">
+                    <code>constellation.stars.name</code>
+                  </div>
+                  <div class="resp-description">
+                    <p>It gives the name of the star in lower case.</p>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <p>
+                  If requests were not correctly submitted, either missing or
+                  misspelled argument the response will give a message and a 400
+                  Bad Request error:
+                </p>
+                <br />
+                <p>
+                  GET request:
+                  <code
+                    >/astropy/api/v1/constellation?C=ursa%major&appid=YOUR_API_KEY</code
+                  >
+                </p>
+                <br />
+                <p>Response: <code>{ "message": "400 Bad request" } </code></p>
+                <br /><br />
+                <p>
+                  In case a request does not have any arguments the response
+                  will return a 400 Bad Request status code and a message:
+                </p>
+                <br />
+                <p>
+                  GET request:
+                  <code>/astropy/api/v1/constellation?appid=YOUR_API_KEY</code>
+                </p>
+                <br />
+                <p>
+                  Response: <code>{ "message": "No argument passed in" } </code>
+                </p>
+                <br /><br />
+                <p>
+                  If the name of the constellation were wrong or non-existent,
+                  you'll simply get a 404 error and no response.
+                </p>
+              </div>
+
+              <br /><br />
+              <hr />
+              <div id="query-search">
+                <h2>Query Based Search</h2>
+                <br />
+                <code>/astropy/api/v1/query</code>
+                <br /><br />
+                <p>
+                  This route is meant to have a more complex logic behind it. It
+                  represents a query to the database. It allows for a bit of
+                  flexibility as far as the parameters are concerned. There are
+                  only 3 key parameters all the others won't throw any error but
+                  they won't be considered.
+                </p>
+                <br />
+                <p>
+                  The query can be based upon the quadrant, as "q" parameter, in
+                  this way:
+                </p>
+                <br />
+                <p>
+                  GET request:
+                  <code>/astropy/api/v1/query?q=NQ2&appid=YOUR_API_KEY</code>
+                </p>
+                <br />
+                <p>
+                  A JSON response with a 200 status code and all the
+                  constellations that fits the query parameter, namely are in
+                  the NQ2 quadrant. <br /><br />
+                  Or it could be based on minimum latitude (as min) and/or
+                  maximum (as max) latitude:
+                </p>
+                <br />
+                <p>
+                  GET request:
+                  <code
+                    >/astropy/api/v1/query?min=-10&max=90&appid=YOUR_API_KEY</code
+                  >
+                </p>
+                <br />
+                <p>
+                  A JSON response with a 200 status code and the constellations
+                  that satisfy the query parameters. If the query yields no
+                  record, an empty response with a 404 code and a message "No
+                  record found" will be delivered. Be aware that min and max are
+                  integers and negative ones indicate southern latitudes, below
+                  the Equator. <br /><br />
+                  You can also concatenate these queries creating a more detail
+                  search, providing q, min and max as parameters. The result
+                  will be a fit of all the conditions specified in the request.
+                  <br /><br />
+                  As always if no argument is passed in, the response will
+                  return a 400 Bad Request and a "No argument passed in"
+                  message.
+                  <br /><br />
+                  If arguments are provided but they are the wrong ones, instead
+                  of q is a Q for instance, you'll receive a 404 not found code
+                  and a "No record found" message. Only the correct arguments
+                  will be considered by the API.
+                </p>
+              </div>
+              <br /><br />
+              <hr />
+              <div id="all-constellations">
+                <h2>All Constellations (@admin only route)</h2>
+                <br />
+                <code>/astropy/api/v1/constellation/all</code>
+                <br /><br />
+                <p>
+                  As of now this is an admin only route, which means that to
+                  make a request to this endpoint you need to have admin
+                  privileges, and an admin key. It only accepts POST requests,
+                  and it will return a JSON response with all the
+                  constellations, and their information. <br /><br />
+                  For future reference to make a request you need to provide in
+                  the JSON body of the POST request, the “ADMIN_KEY” argument.
+                  If none or incorrect argument are provided, you'll receive a
+                  404 Not Found code and a "No valid argument" message.
+                  <br /><br />
+                  On the other hand, if an invalid ADMIN_KEY was provided, a 403
+                  Forbidden and a "Invalid Admin Key" message will be received.
+                  <br /><br />
+                  As the name suggests this route will return a JSON response
+                  with a list of all the constellations and their information.
+                  FYI there are 88.
+                </p>
+              </div>
+            </div>
           </div>
-
-          <br /><br />
-          <hr />
-          <div id="response">
-            <h1>Response</h1>
-            <br />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis pariatur asperiores exercitationem laborum repellendus
-              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
-              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
-              ipsam a in rerum possimus officia, natus atque minima voluptate
-              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
-              aspernatur quis voluptatum placeat maxime dicta alias velit
-              quibusdam vel assumenda enim asperiores reprehenderit dolore non
-              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate ad! Eveniet amet cupiditate blanditiis?
-            </p>
+          <div id="stars">
+            <h1>Stars</h1>
+            <div class="api-text">
+              <p>
+                In the case of stars there are 4 public routes and 1 admin only.
+                <br /><br />
+                As for the constellation one, api keys must be provided in all
+                public requests.
+                <br /><br />
+                The first endpoint returns information about a star, the second
+                one has a more complex logic behind it, and it will return
+                instructions about how and where to look to observe said star,
+                and it is based upon location. The third and fourth ones are
+                fairly similar and the return a response of the closest or the
+                brightest stars in the sky. The admin only route provides a
+                complete list of all the stars in the database.
+              </p>
+              <br /><br />
+              <hr />
+              <div id="single-star">
+                <h2>Single Star</h2>
+                <br />
+                <code>/astropy/api/v1/star</code><br /><br />
+                <p>
+                  This route accepts only one parameter, all the others will not
+                  be considered. The s parameter, for star, is required.
+                  <br /><br />
+                  A successful request looks like this:
+                </p>
+                <br />
+                <p>
+                  GET request:
+                  <code>/astropy/api/v1/star?s=polaris&appid=YOUR_API_KEY</code>
+                </p>
+                <br />
+                <p>Response:</p>
+                <div class="JSON-response">
+                  <pre id="star-json"></pre>
+                </div>
+                <br />
+                <p>
+                  The argument is not case sensitive; therefore, Polaris is
+                  equal to polaris. <br /><br />
+                  In the response the main key is star, from there you can get
+                  access to all the different information here explained:
+                </p>
+                <br />
+                <div class="elements-exp">
+                  <div class="resp-path">
+                    <code>star.apparent_magnitude</code>
+                  </div>
+                  <div class="resp-description">
+                    <p>
+                      It indicates the brightness of a star, namely its
+                      visibility in the night sky. It is important to keep in
+                      mind that the lower the apparent magnitude the higher the
+                      brightness. To have a more comprehensive description,
+                      please refer to the "How to Observe" page;
+                    </p>
+                  </div>
+                  <div class="resp-path"><code>star.constellation</code></div>
+                  <div class="resp-description">
+                    <p>
+                      It provides the name and the abbreviation of the
+                      constellation the star belongs to. To access it just
+                      follow the star.constellation.name for the name, or
+                      star.constellation.abbreviation for its abbreviation;
+                    </p>
+                  </div>
+                  <div class="resp-path"><code>star.declination</code></div>
+                  <div class="resp-description">
+                    <p>
+                      It provides the declination of the star which, along with
+                      its right ascension, are the fundamental parameters for
+                      astronomical observation. Make sure to visit the "How to
+                      Observe" page to read a thorough description of both;
+                    </p>
+                  </div>
+                  <div class="resp-path"><code>star.distance</code></div>
+                  <div class="resp-description">
+                    <p>
+                      It indicates the distance in ly (lightyears) from Earth;
+                    </p>
+                  </div>
+                  <div class="resp-path"><code>star.name</code></div>
+                  <div class="resp-description">
+                    <p>It says the name of the star in lower case;</p>
+                  </div>
+                  <div class="resp-path"><code>star.right_ascension</code></div>
+                  <div class="resp-description">
+                    <p>
+                      It provides the right ascension of the star which, along
+                      with its declination, are the fundamental parameters for
+                      astronomical observation. Make sure to visit the "How to
+                      Observe" page to read a thorough description of both;
+                    </p>
+                  </div>
+                  <div class="resp-path"><code>star.type</code></div>
+                  <div class="resp-description">
+                    <p>
+                      It indicates the spectral type of the star. It suggests
+                      the stars' colour, mass and whether it's a binary,
+                      multiple or single star system.
+                    </p>
+                  </div>
+                </div>
+                <br /><br />
+                <p>
+                  If requests are not correctly submitted, either missing or
+                  misspelled argument the response will give a message and a 400
+                  Bad Request error, for instance:
+                </p>
+                <br />
+                <p>
+                  GET request:
+                  <code>/astropy/api/v1/star?S=polaris&appid=YOUR_API_KEY</code>
+                </p>
+                <br />
+                <p>Response: <code>{ "message": "Bad Request" } </code></p>
+                <br /><br />
+                <p>or GET request: <code>/astropy/api/v1/star</code></p>
+                <br />
+                <p>
+                  Response: <code>{ "message": "No argument passed in" } </code>
+                </p>
+                <br />
+                <p>
+                  In case no record was found the response will give a 404 Not
+                  Found error.
+                </p>
+              </div>
+              <br /><br />
+              <hr />
+              <div id="where-to-stars">
+                <h2>Where to Look</h2>
+                <br />
+                <code>/astropy/api/v1/where-to-look</code><br /><br />
+                <p>
+                  This URL enables complex logic to calculate the current star's
+                  position in the sky from a certain location. The response
+                  might be different based upon the data received. It works with
+                  2 required arguments. First: "s" (star) is fundamental since
+                  it will take this star into consideration for the
+                  calculations. Second, either the name of the city (as city) or
+                  the latitude (lat) and longitude (lon) of a location.
+                  <br /><br />
+                  Always make sure to parse the arguments correctly or the
+                  response will throw an error, in the case of latitude and
+                  longitude they should start with numbers, so N67 is not valid,
+                  and always have a + or - in front of the latitude. An example
+                  of an acceptable format is lat = -87 lon = 180. Precise
+                  coordinates are not necessary since the calculation will only
+                  take the degrees into consideration. If you provide precise
+                  coordinates the engine won't work correctly. The second option
+                  is to provide the name of a city (it is not case sensitive).
+                  The engine will use an API to get the coordinates and start
+                  all the calculations.
+                  <br /><br />
+                  Request examples:
+                </p>
+                <br />
+                <p>
+                  GET request:
+                  <code
+                    >/astropy/api/v1/where-to-look?s=polaris&lat=-10&lon=80&appid=YOUR_API_KEY</code
+                  >
+                </p>
+                <br />
+                <p>Response:</p>
+                <div class="JSON-response">
+                  <pre id="where-json-1"></pre>
+                </div>
+                <br />
+                <p>
+                  As you can see the response gives some basic information about
+                  the star but mainly the “where” key tells you where to look.
+                  In this case, Polaris is not observable from latitude -10
+                  because it is notoriously only visible in the Northern
+                  Hemisphere.
+                </p>
+                <br />
+                <p>
+                  GET request:
+                  <code
+                    >/astropy/api/v1/where-to-look?s=polaris&city=London&appid=YOUR_API_KEY</code
+                  >
+                </p>
+                <br />
+                <p>Response:</p>
+                <div class="JSON-response-long">
+                  <pre id="where-json-2"></pre>
+                </div>
+                <br />
+                <p>
+                  This response refers to the current time when the request is
+                  sent, and the hours are displayed in the time zone of the
+                  location. Some of these items are well-know, but the main
+                  things you want to look at is the star rise and set times,
+                  which tells you when this star is going to rise and set at
+                  said location. In this case, the "it rises" item doesn't
+                  provide a time of day because Polaris is a circumpolar star
+                  (see "How to Observe- Nomenclature") therefore it is always
+                  above the horizon at this latitude. The sunrise and sunset
+                  times are also very important because they tell you when you
+                  can start observing the sky. In the "where" section you can
+                  see instructions to follow to locate the star from this
+                  location. Since Polaris never rises, nor set at this location,
+                  there is no E-W movement, although since London's latitude is
+                  below Polaris' declination you need to compensate that by
+                  looking at the zenith plus 38° to the North. For a complete
+                  guide refer to the How to Observe page in this website.
+                </p>
+                <br /><br />
+                <p>
+                  GET request:
+                  <code>/astropy/api/v1/where-to-look?s=hamal&city=London</code>
+                </p>
+                <br />
+                <p>Response:</p>
+                <div class="JSON-response">
+                  <pre id="where-json-3"></pre>
+                </div>
+                <br />
+                <p>
+                  In this response the star Hamal was requested, in the Aries
+                  constellation. Rise and set times are 11 AM and 23 (meaning 11
+                  PM), thankfully all the stars apart from the Sun always remain
+                  12 hours above the horizon. From London, coordinates are
+                  specified in the “lat” and “lon” arguments, the current
+                  position says that this star has already set, therefore is not
+                  visible at the moment (8 AM in London). Just wait patiently
+                  for 3 hours and Hamal should rise. Unfortunately, stars are
+                  not visible in the Sky when the Sun is up, due to its
+                  overwhelming brightness. So, if you want to observe this star
+                  you have time until it sets at 23, knowing that the Sun sets
+                  at 17.15 gives you almost 6 hours for observation. Although,
+                  since the sunset doesn’t completely switch the lights off, you
+                  should realistically have 3-4 hours for observation.
+                  <br /><br />
+                  One important item I’d like to explain is the current delay.
+                  To understand it you need to read the “How to Observe – Right
+                  Ascension” section. As it is explained, the theory of right
+                  ascension (RA) considers the value RA on the vernal equinox
+                  (21st March). Progressively with the changing seasons this
+                  time varies, although not the actual RA of the star but the
+                  delay it has on the Sun. Why? Because while the Sun increases
+                  the time of daylight and its height above the horizon, stars
+                  do not, not in human timespan at least. Considering a full 24
+                  hours to go back to their original RA and 12 months to do so,
+                  every month the RA move ahead 2 hours. Again, I encourage you
+                  to read the dedicated section that further elaborate on this
+                  aspect.
+                </p>
+              </div>
+              <br /><br />
+              <hr />
+              <div id="closest">
+                <h2>Closest Stars</h2>
+                <br />
+                <code>/astropy/api/v1/star/closest/&lt;int&gt;</code
+                ><br /><br />
+                <p>
+                  This route accepts GET requests where only one argument is
+                  required, namely the appid. The &lt;int&gt; in the URL
+                  indicates the limit of results this query will yield. There
+                  needs to be a limit. If it is below 0, default will return 5
+                  results. On the other hand, the maximum number of results is
+                  25. <br /><br />
+                  As the name suggests, if the request is successful, the return
+                  value will be a JSON response with a number of stars specified
+                  in the URL ordered by distance. This gives you a list of the
+                  closest stars to Earth.
+                  <br /><br />
+                  In case the URL is incorrectly prompted a 404 Not Found
+                  response will be received.
+                </p>
+              </div>
+              <br /><br />
+              <hr />
+              <div id="brightest">
+                <h2>Brightest Stars</h2>
+                <br />
+                <code>/astropy/api/v1/star/brightest/&lt;int&gt;</code
+                ><br /><br />
+                <p>
+                  This route work exactly as the previous one, but the return
+                  JSON response will see the stars ordered by their apparent
+                  magnitude (brightness). Keep in mind that the first result
+                  will have the lowest apparent magnitude because, as already
+                  mentioned, the lower the magnitude the higher the brightness.
+                  It could also go below 0, as a matter of fact it does.
+                </p>
+              </div>
+              <br /><br />
+              <hr />
+              <div id="all-stars">
+                <h2>All Stars (@admin only route)</h2>
+                <br />
+                <code>/astropy/api/v1/star/all</code>
+                <br /><br />
+                <p>
+                  As of now this is an admin only route, which means that to
+                  make a request to this endpoint you need to have admin
+                  privileges, and an admin key. It only accepts POST requests,
+                  and it will return a JSON response with all the
+                  constellations, and their information. <br /><br />
+                  For future reference to make a request you need to provide in
+                  the JSON body of the POST request, the “ADMIN_KEY” argument.
+                  If none or incorrect argument are provided, you'll receive a
+                  404 Not Found code and a "No valid argument" message.
+                  <br /><br />
+                  On the other hand, if an invalid ADMIN_KEY was provided, a 403
+                  Forbidden and a "Invalid Admin Key" message will be received.
+                  <br /><br />
+                  As the name suggests this route will return a JSON response
+                  with the entire list of stars and their information. FYI, at
+                  the moment, there are 357 stars.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -173,5 +916,6 @@
         </div>
       </footer>
     </main>
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
   </body>
 </html>

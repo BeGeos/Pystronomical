@@ -88,23 +88,11 @@
         </div>
 
         <div class="content">
-          <h1>{{ constellation|title }}</h1>
+          <h1>{{ constellation.name|title }}</h1>
           <br />
           <div class="single-element">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis pariatur asperiores exercitationem laborum repellendus
-              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
-              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
-              ipsam a in rerum possimus officia, natus atque minima voluptate
-              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
-              aspernatur quis voluptatum placeat maxime dicta alias velit
-              quibusdam vel assumenda enim asperiores reprehenderit dolore non
-              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate ad! Eveniet amet cupiditate blanditiis?
-            </p>
+            <p>Alias: {{ constellation.alias }}</p>
+            <p>Description: {{ constellation.description }}</p>
             <img src="img/ursa_major.jpg" alt="ursamajor" max-width="400" />
           </div>
         </div>

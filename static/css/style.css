@@ -11,6 +11,11 @@ body {
   overflow-x: hidden;
 }
 
+code {
+  padding: 10px;
+  background: #e8e9ea;
+}
+
 p {
   font-weight: 400;
 }
@@ -142,7 +147,7 @@ main {
 }
 
 .message:nth-child {
-    margin-top: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 footer {
@@ -517,7 +522,7 @@ th {
 .page-home {
   margin: 2rem auto;
   width: 70%;
-  line-height: 1.6;
+  line-height: 2;
 }
 
 .center-title {
@@ -646,6 +651,42 @@ tr {
   line-height: 1.6;
 }
 
+.api-text {
+  padding: 10px 30px;
+}
+
+.JSON-response {
+  background: #e8e9ea;
+  width: 45rem;
+  padding: 10px;
+}
+
+.JSON-response-long {
+  background: #e8e9ea;
+  width: 55rem;
+  padding: 10px;
+}
+
+#intro,
+#constellation {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid rgba(138, 138, 138, 0.4);
+}
+
+#stars {
+  margin-bottom: 4rem;
+}
+
+.elements-exp {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+}
+
+.resp-path,
+.resp-description {
+  margin: 10px 10px;
+}
+
 .single-element img {
   width: 500px;
 }
@@ -757,6 +798,26 @@ tr {
   width: 15rem;
 }
 
+/* #intro h1::before,
+#constellation h1::before,
+#stars h1::before {
+  display: block;
+  content: " ";
+  margin-top: -6rem;
+  height: 6rem;
+  visibility: hidden;
+  pointer-events: none;
+} */
+
+.how-to-element * h2::before {
+  display: block;
+  content: " ";
+  margin-top: -6rem;
+  height: 6rem;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .endpoints h2 {
   margin-bottom: 1rem;
 }
@@ -764,7 +825,7 @@ tr {
 .endpoints dd,
 dt {
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 2;
 }
 
 .endpoints dd {
@@ -778,6 +839,10 @@ dt {
 }
 
 .endpoints dd a {
+  color: black;
+}
+
+.endpoints dt a {
   color: black;
 }
 

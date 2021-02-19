@@ -82,6 +82,8 @@ WSGI_APPLICATION = 'Pystronomical.wsgi.application'
 
 DATABASES = {
     'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': 'pystronomical.sqlite3'
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pystronomicaldb',
         'USER': secret_keys['POSTGRES_USER'],

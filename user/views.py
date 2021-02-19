@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
-from .models import UserStatus, User, AuthKeys, SecurityCodes, Recovery
+from .models import UserStatus, User, AuthKeys, SecurityCodes, Recovery, Constellation
 from .forms import UserRegisterForm, EmailUpdateForm
 import requests, string, random
 from datetime import datetime, timedelta
@@ -146,7 +146,8 @@ def single_constellation(request, constellation):
     if request.method == 'POST':
         star = request.POST.get('star')
         return redirect('star-detail', s=star)
-    context = {'constellation': constellation}
+    const = Constellation.objects.filter(name=constellation.lower()).first
+    context = {'constellation': const}
     return render(request, 'single-constellation.html', context)
 
 
@@ -208,7 +209,7 @@ def create_user_view(request):
         if is_username_valid(username) and is_password_valid(password1, password2):
             new_user = User.objects.create_user(username, email, password1)
             # user = User.objects.filter(username=username).first()
-            UserStatus.objects.create(user_id=new_user)
+            # UserStatus.objects.create(user_id=new_user)
             security_code = security_code_generator()
             exp = datetime.now() + timedelta(seconds=600)
             sc = SecurityCodes.objects.create(user_id=new_user, code=security_code,
