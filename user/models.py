@@ -24,7 +24,7 @@ def create_user_status(sender, instance, **kwargs):
     UserStatus.objects.create(user_id=instance)
 
 
-post_save.connect(create_user_status, sender=User)
+# post_save.connect(create_user_status, sender=User)
 
 
 class AuthKeys(models.Model):
@@ -81,5 +81,8 @@ class Star(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='static/images')
+    image = models.ImageField(upload_to='media')
     constellation_id = models.OneToOneField(Constellation, on_delete=models.CASCADE, null=False, blank=False)
+
+    def __str__(self):
+        return self.constellation_id.name

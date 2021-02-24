@@ -146,8 +146,9 @@ def single_constellation(request, constellation):
     if request.method == 'POST':
         star = request.POST.get('star')
         return redirect('star-detail', s=star)
+    andromeda = Constellation.objects.filter(name='andromeda').first()
     const = Constellation.objects.filter(name=constellation.lower()).first
-    context = {'constellation': const}
+    context = {'constellation': const, 'andromeda': andromeda}
     return render(request, 'single-constellation.html', context)
 
 
@@ -209,7 +210,7 @@ def create_user_view(request):
         if is_username_valid(username) and is_password_valid(password1, password2):
             new_user = User.objects.create_user(username, email, password1)
             # user = User.objects.filter(username=username).first()
-            # UserStatus.objects.create(user_id=new_user)
+            UserStatus.objects.create(user_id=new_user)
             security_code = security_code_generator()
             exp = datetime.now() + timedelta(seconds=600)
             sc = SecurityCodes.objects.create(user_id=new_user, code=security_code,
@@ -230,12 +231,18 @@ def create_user_view(request):
 def profile_view(request):
     if request.user.is_authenticated:
         keys = AuthKeys.objects.filter(user_id=request.user).first()
-        if not keys:
-            keys = None
+        context = {}
+        if keys:
+            context['key'] = keys
+            expired = True
+            now = datetime.utcnow().timestamp()
+            if keys.expiration_date > now:
+                expired = False
+            context['expired'] = expired
+        else:
+            context['key'] = None
 
-        context = {'key': keys}
         return render(request, 'main-profile.html', context)
-        pass
     return redirect('login')
 
 
@@ -249,7 +256,7 @@ def create_auth_key(request):
                 check_key.delete()
 
             key = key_generator()
-            exp = datetime.utcnow() + timedelta(seconds=600)
+            exp = datetime.utcnow() + timedelta(days=183)
             new_key = AuthKeys.objects.create(user_id=request.user, key=key, expiration_date=int(exp.timestamp()))
 
             put_request(new_key.user_id.id, new_key.key, new_key.expiration_date)  # Create a new one in API db
@@ -379,7 +386,7 @@ def new_password(request, slug):
     if code.expiration_date <= now:
         code.delete()
         messages.error(request, 'Link is expired')
-        return redirect('login')
+        return redirect('homepage')
 
     if request.method == 'POST':
         user = User.objects.get(id=code.user_id.id)
@@ -389,12 +396,15 @@ def new_password(request, slug):
         if new_password != confirm:
             messages.error(request, 'Passwords do not match')
             return redirect('new-password', slug=slug)
+        if not is_password_valid(new_password, confirm):
+            messages.error(request, 'Password is not valid')
+            return redirect('new-password', slug=slug)
 
         user.set_password(new_password)
         user.save()
         code.delete()
         messages.success(request, f'Password for {user.username} was changed successfully!')
-        return redirect('login')
+        return redirect('homepage')
     return render(request, 'pass-recovery-form.html')
 
 

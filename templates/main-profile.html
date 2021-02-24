@@ -1,51 +1,61 @@
-{% extends 'base-profile.html' %}
-      {% block content %}
-      <div class="central-menu">
-        <div class="central-info">
-            {% if key %}
-          <h1>API key</h1>
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Key</th>
-                <th scope="col">Expires on</th>
-                <th scope="col">Status</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ key.key }}</td>
-                <td>{{ key.expiration_date }}</td>
-                  {% if key.active %}
-                    <td>Active</td>
-                  {% else %}
-                  <td>Not Active</td>
-                  {% endif %}
-                <td>
-                  <button><a href="{% url 'create-key' %}">Regenerate Key</a></button>
-                  <button><a href="{% url 'delete-key' key.key %}">Delete Key</a></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-            {% else %}
-            {% if request.user.userstatus.confirmed %}
-                <button><a href="{% url 'create-key' %}">Generate Key</a></button>
-            {% else %}
-            <p>It looks like you are still not a confirmed user. If you want to be able to generate API keys and
-            using the astropy API you should think about verify your account. Either check your email for the verification code
-            or request a new code here: <button><a href="">Request Verification Code</a></button></p>
-            {% endif %}
-            {% endif %}
-          <div class="central-description">
-            <small>
-              Api keys enable you to use the astropy API. <br />For more
-              information, please visit the dedicated page at this link :
-              <a href="{% url 'api' %}" class="cyan">API</a>
-            </small>
-          </div>
-        </div>
-      </div>
-      {% endblock %}
-
+{% extends 'base-profile.html' %} {% block content %} {% load my_tags %}
+<div class="central-menu">
+  <div class="central-info">
+    {% if key %}
+    <h1>API key</h1>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Key</th>
+          <th scope="col">Expires on</th>
+          <th scope="col">Status</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ key.key }}</td>
+          {% if expired %}
+          <td>Expired</td>
+          {% else %}
+          <td>{% convert_timestamp key.expiration_date %}</td>
+          {% endif %} {% if key.active %}
+          <td>Active</td>
+          {% else %}
+          <td>Not Active</td>
+          {% endif %}
+          <td>
+            <button><a href="{% url 'create-key' %}">Regenerate Key</a></button>
+            <button>
+              <a href="{% url 'delete-key' key.key %}">Delete Key</a>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    {% else %} {% if request.user.userstatus.confirmed %}
+    <p>You don't have an API key, yet.</p>
+    <button style="margin-top: 1rem; float: left; padding: 10px">
+      <a href="{% url 'create-key' %}">Generate Key</a>
+    </button>
+    {% else %}
+    <p>
+      It looks like you are still not a confirmed user. If you want to be able
+      to generate API keys and using the astropy API you should think about
+      verify your account. Either check your email for the verification code or
+      request a new code here:
+    </p>
+    <button style="margin-top: 1rem; float: left; padding: 10px">
+      <a href="">Request Verification Code</a>
+    </button>
+    {% endif %} {% endif %}
+    <div class="central-description">
+      <small>
+        Api keys enable you to use the astropy API. <br />For more information,
+        please visit the dedicated page at this link :
+        <a href="{% url 'api' %}" class="cyan">API</a>
+      </small>
+    </div>
+  </div>
+</div>
+{% endblock %}

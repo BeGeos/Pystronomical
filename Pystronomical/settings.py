@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user'
+    'user',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +86,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': 'pystronomical.sqlite3'
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pystronomicaldb',
+        'NAME': 'pystroDbEu',
         'USER': secret_keys['POSTGRES_USER'],
         'PASSWORD': secret_keys['POSTGRES_PASS'],
         'HOST': secret_keys['POSTGRES_HOST'],
@@ -138,6 +139,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
+
+# EMAIL manager configuration
 DEFAULT_FROM_EMAIL = secret_keys['EMAIL_ADDRESS']
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -145,4 +148,23 @@ EMAIL_USE_SSL = True
 EMAIL_PORT = 465
 EMAIL_HOST_USER = secret_keys['EMAIL_ADDRESS']
 EMAIL_HOST_PASSWORD = secret_keys['EMAIL_PASSWORD']
+
+# S3 backend configuration
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+# AWS Bucket credentials
+AWS_ACCESS_KEY_ID = secret_keys['AWS_S3_ACCESS_KEY']
+AWS_SECRET_ACCESS_KEY = secret_keys['AWS_S3_SECRET_KEY']
+AWS_STORAGE_BUCKET_NAME = secret_keys['AWS_STORAGE_BUCKET_NAME']
+AWS_S3_REGION_NAME = 'eu-central-1'
+AWS_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.eu-central-1.amazonaws.com'
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+# Media setup S3 buckets
+MEDIA_URL = f'https://{AWS_CUSTOM_DOMAIN}/media/'
+
+
 

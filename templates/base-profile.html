@@ -20,80 +20,88 @@
           <img src="{% static 'img/Logo.svg' %}" alt="Logo" height="70" />
         </div>
         <div class="nav-links">
-            <ul>
+          <ul>
             <li><a href="{% url 'homepage' %}">Home</a></li>
             <li><a href="{% url 'explore' %}">Explore</a></li>
             <li><a href="{% url 'how-to-observe' %}">How to Observe</a></li>
             <li><a href="{% url 'api' %}">API</a></li>
           </ul>
-
         </div>
         <div class="nav-user">
           {% if request.user.is_authenticated %}
-            <ul>
-            <li><a class="login-user" href="{% url 'main-profile' %}">{{ request.user.username }}</a></li>
+          <ul>
+            <li>
+              <a class="login-user" href="{% url 'main-profile' %}"
+                >{{ request.user.username }}</a
+              >
+            </li>
             <li><a class="sign-up" href="{% url 'logout' %}">Logout</a></li>
           </ul>
-            {% else %}
+          {% else %}
           <ul>
             <li><a class="login-user" href="{% url 'login' %}">Login</a></li>
-            <li><a class="sign-up" href="{% url 'create-user' %}">Sign Up</a></li>
+            <li>
+              <a class="sign-up" href="{% url 'create-user' %}">Sign Up</a>
+            </li>
           </ul>
-            {% endif %}
+          {% endif %}
         </div>
       </div>
     </navbar>
 
     <div class="main-wrapper">
-      {% if messages %}
-        {% for message in messages %}
-      <div class="message"><p>{{ message }}</p></div>
-        {% endfor %}
-        {% endif %}
-    <main class="profile">
-
-      <div class="sidebar">
-        <div class="sidebar-menu">
-          <h2><i>Account</i></h2>
-          <ul>
-            <li><a href="{% url 'verification' %}">Confirm Account</a></li>
-            <li><a href="{% url 'update-password-profile' %}">Change Password</a></li>
-            <li><a href="{% url 'update-email-profile' %}">Change Email Address</a></li>
-            <li><a href="{% url 'main-profile' %}">API key</a></li>
-          </ul>
+      {% if messages %} {% for message in messages %}
+      <div class="message-profile"><p>{{ message }}</p></div>
+      {% endfor %} {% endif %}
+      <main class="profile">
+        <div class="sidebar">
+          <div class="sidebar-menu">
+            <h2>Account</h2>
+            <ul>
+              <li><a href="{% url 'verification' %}">Confirm Account</a></li>
+              <li>
+                <a href="{% url 'update-password-profile' %}"
+                  >Change Password</a
+                >
+              </li>
+              <li>
+                <a href="{% url 'update-email-profile' %}"
+                  >Change Email Address</a
+                >
+              </li>
+              <li><a href="{% url 'main-profile' %}">API key</a></li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <hr />
-      {% block content %}
-        {% endblock %}
-      <hr />
-      <div class="user-stats">
-        <h1>
-          Hey <bold><i>{{ request.user.username }}</i></bold>
-        </h1>
-        <p>It's good to see you are back!</p>
-        <h3>
-          <bold>Username: <br /></bold>{{ request.user.username }}
-        </h3>
-        <h3>
-          <bold>Email Address: <br /></bold>{{ request.user.email }}
-        </h3>
-        <h3>
+        <hr />
+        {% block content %} {% endblock %}
+        <hr />
+        <div class="user-stats">
+          <h1>
+            Hey <bold><i>{{ request.user.username }}</i></bold>
+          </h1>
+          <p>It's good to see you are back!</p>
+          <h3>
+            <bold>Username: <br /></bold>{{ request.user.username }}
+          </h3>
+          <h3>
+            <bold>Email Address: <br /></bold>{{ request.user.email }}
+          </h3>
+          <h3>
             {% if request.user.userstatus.confirmed %}
-            <bold>Confirmed: <br /></bold>Yes
-            {% else %}
-            <bold>Confirmed: <br /></bold>No
-            {% endif %}
-        </h3>
-        <h3>
-          <bold>Created at: <br /></bold>{{ request.user.date_joined|date:'d-m-Y' }}
-        </h3>
-      </div>
-      <!-- <div class="profile-svg">
+            <bold>Confirmed: <br /></bold>Yes {% else %}
+            <bold>Confirmed: <br /></bold>No {% endif %}
+          </h3>
+          <h3>
+            <bold>Created at: <br /></bold>
+            {{ request.user.date_joined|date:'d F, Y' }}
+          </h3>
+        </div>
+        <!-- <div class="profile-svg">
         <img src="img/user-profile.svg" alt="user-account" height="300" />
       </div> -->
-    </main>
-      </div>
+      </main>
+    </div>
     <footer class="login-footer">
       <div class="bottom-footer">
         <div class="resources">
@@ -102,15 +110,30 @@
           <a href="">Resources</a>
         </div>
         <div class="top-footer">
-          <a href=""><img src="{% static 'img/twitter.svg' %}" height="23" /></a>
-          <a href=""><img src="{% static 'img/github.svg' %}" alt="@BeGeos" height="23" /></a>
           <a href=""
-            ><img src="{% static 'img/facebook.svg' %}" alt="@BeGeos" height="23"
+            ><img src="{% static 'img/twitter.svg' %}" height="23"
           /></a>
           <a href=""
-            ><img src="{% static 'img/instagram.svg' %}" alt="@BeGeos" height="23"
+            ><img src="{% static 'img/github.svg' %}" alt="@BeGeos" height="23"
           /></a>
-          <a href=""><img src="{% static 'img/youtube.svg' %}" alt="@BeGeos" height="23" /></a>
+          <a href=""
+            ><img
+              src="{% static 'img/facebook.svg' %}"
+              alt="@BeGeos"
+              height="23"
+          /></a>
+          <a href=""
+            ><img
+              src="{% static 'img/instagram.svg' %}"
+              alt="@BeGeos"
+              height="23"
+          /></a>
+          <a href=""
+            ><img
+              src="{% static 'img/youtube.svg' %}"
+              alt="@BeGeos"
+              height="23"
+          /></a>
         </div>
       </div>
     </footer>

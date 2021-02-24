@@ -28,17 +28,23 @@
           </ul>
         </div>
         <div class="nav-user">
-            {% if request.user.is_authenticated %}
-            <ul>
-            <li><a class="login-user" href="{% url 'main-profile' %}">{{ request.user.username }}</a></li>
+          {% if request.user.is_authenticated %}
+          <ul>
+            <li>
+              <a class="login-user" href="{% url 'main-profile' %}"
+                >{{ request.user.username }}</a
+              >
+            </li>
             <li><a class="sign-up" href="{% url 'logout' %}">Logout</a></li>
           </ul>
-            {% else %}
+          {% else %}
           <ul>
             <li><a class="login-user" href="{% url 'login' %}">Login</a></li>
-            <li><a class="sign-up" href="{% url 'create-user' %}">Sign Up</a></li>
+            <li>
+              <a class="sign-up" href="{% url 'create-user' %}">Sign Up</a>
+            </li>
           </ul>
-            {% endif %}
+          {% endif %}
         </div>
       </div>
     </navbar>
@@ -46,8 +52,8 @@
       <div class="container-page">
         <div class="general-sidebar">
           <div class="search-bar">
-            <form class="search-star" >
-                {% csrf_token %}
+            <form class="search-star">
+              {% csrf_token %}
               <input type="text" name="star" placeholder="Search for a Star" />
               <button>
                 <svg
@@ -68,8 +74,33 @@
           <div class="how-to-observe">
             <h2>How To Observe</h2>
             <ul>
-              <li><a href="#intro">Introduction</a></li>
+              <li><a href="#introduction">Introduction</a></li>
+              <li>
+                <a href="#nomenclature">Nomenclature</a>
+              </li>
+              <div class="inner-list">
+                <li>
+                  <a href="#apparent-magnitude" style="font-size: 14px"
+                    >Apparent Magnitude</a
+                  >
+                </li>
+                <li>
+                  <a href="#circumpolar" style="font-size: 14px">Circumpolar</a>
+                </li>
+                <li>
+                  <a href="#light-years" style="font-size: 14px">Light Years</a>
+                </li>
+                <li><a href="#parsec" style="font-size: 14px">Parsec</a></li>
+                <li>
+                  <a href="#spectral-type" style="font-size: 14px"
+                    >Spectral Type</a
+                  >
+                </li>
+                <li><a href="#zenith" style="font-size: 14px">Zenith</a></li>
+              </div>
+
               <li><a href="#telescope">The Telescope</a></li>
+              <li><a href="#guide-to">Guide to Observation</a></li>
               <li><a href="#right-ascension">Right Ascension</a></li>
               <li><a href="#declination">Declination</a></li>
             </ul>
@@ -77,112 +108,789 @@
         </div>
 
         <div class="how-to-element">
-          <div id="telescope">
-            <h1>The Telescope</h1>
-            <br />
+          <div class="instruction-text">
+            <div id="introduction">
+              <h2>Introduction</h2>
+              <br />
+              <p>
+                Hello there, welcome to this introductory page for observing the
+                stars and other celestial objects in the Sky. I won’t focus upon
+                the history of observation for too long, however it is always a
+                good thing to start from the very beginning.
+                <br /><br />
+                Well before our time, with powerful technology and giant
+                telescopes, ancient civilisations were already looking at the
+                Sky in the attempt to observe, map and predict the movements of
+                celestial objects. How long ago? As early as the Babylonians and
+                the Greek, 200-300 B.C.
+                <br /><br />
+                There is not a defined date when humans started looking
+                critically at the Sky but many manufacts still happen to be
+                present today, and they show remarkable inventions and
+                ingenuity. For example, the Antikythera mechanism, design by
+                Hipparchus is a spectacular example of ancient technology. As
+                many describe it as an early analogue computer capable of
+                calculating the location of the Sun, Moon and planets for a
+                given date. The Greek didn’t just do that, as you can notice by
+                first looking through a manual of astronomy, most of the names
+                of constellations and stars in the Northern Hemisphere have a
+                greek root, such as Procyon (in Canis Minor constellation) which
+                literally translates with “Before the dog”. You can also notice
+                a lot of Roman influence, meaning Latin Roman, in lots of the
+                names as well as the stories and legends that surround
+                constellations.
+                <br /><br />
+                For instance, Andromeda which is a constellation and also a
+                galaxy, the only astronomical object outside our galaxy (the
+                Milky Way) that can be seen with the naked eye. The mythological
+                figure of a chained virgin, daughter of king Cepheus and queen
+                Cassiopeia (also constellations in the northern sky) left on the
+                rocks to be sacrificed to the sea monster sent by Poseidon (the
+                god of the Seas) as a punishment for her mother’s vanity.
+                Everybody knows the name Perseus who killed one of the Gorgons,
+                Medusa, cut her head off and used it as a weapon to defeat the
+                monster and save the virgin.
+                <br /><br />
+                This kind of elaborate stories are extremely fascinating and
+                interesting but also well thought out. There is countless
+                belonging to the Mediterranean civilisations, and you could just
+                get lost by learning about all of them.
+                <br /><br />
+                One of the biggest revolutions in astronomy was, without a
+                doubt, the creation of the telescope by a scientist named
+                Galileo Galilei. Why is that important? Well, for the first time
+                in centuries, human could observe objects in the Sky that were
+                previously invisible, and also could see planets more clearly.
+                As a matter of fact, Galileo discovered Jupiter’s moons and also
+                came to develop the most revolutionary theory in astronomy at
+                the time. The Earth is not the centre of the Universe, but the
+                Sun is, and planets rotate around it. This shift is well-known
+                to students all around the world as the heliocentric theory (or
+                Copernican Model of the Solar System) opposed to the Ptolemaic
+                Model, or geocentric. At the time Galileo lived in Pisa, Italy,
+                and the church, the Vatican had an enormous power upon the
+                people. Such a theory would see Earth not as a gift of God or
+                the most important among the other celestial objects, but just
+                one of many. They couldn’t let it happen, and so Galileo was
+                forced (under torture) to reject his theory.
+                <br /><br />
+                Many years have passed but his contributions, as well as those
+                of many other scientists, astronomers and keen passionate
+                observers led to what we have now, comprised of 88
+                constellations, the knowledge that the Earth is a planet with 7
+                others rotating around a common star, conventionally and
+                historically called Sun, to form a system by the name, very
+                creative, of Solar System. This system travels through space
+                around a centre which is not quite understandable at first, of a
+                giant cluster of stars, planets, nebulas and other celestial
+                objects, namely a galaxy. We found out that there are many more
+                like our galaxy, many many more, and they could potentially host
+                life as Earth does in our system. This is quite scary but also
+                extremely exciting in my opinion.
+                <br /><br />
+                Nowadays, technology has given us powerful computers capable of
+                calculating and creating complex models of astronomical objects,
+                the physics has improved as well to explain such objects, for
+                example Black Holes. Today, we have a plethora of tools to
+                observe the deep sky, gigantic telescopes as those in the Mauna
+                Kea Observatory (Hawaii) able to look further, clearer and
+                longer at objects. But also telescopes outside the atmosphere,
+                such as the Hubble Telescope, which donated some stunning
+                pictures of our Universe. Why are orbital telescopes better? For
+                starters, there is no atmosphere out there at 540 km away, and
+                when you’ll start observing you’ll notice that the atmosphere is
+                kind of an obstacle, especially if you live in a foggy or
+                polluted kind of place. Secondly, it is always dark. The Sun and
+                Moon phases are not a problem as we face here on Earth. You
+                might think this is trivial, and for backyard observation this
+                actually is. However, as the laws of optics dictate, the longer
+                the exposure the more the light a lens can “see”. On Earth, a
+                day, as short as it can be, allows 12h, sometimes a bit longer,
+                of continuous exposure. Is it enough? Not really because other
+                than that the Earth moves, so the telescope won’t be fixed on an
+                object for very long. On the other hand, high up in the
+                atmosphere there is no “day” and most importantly the rotation
+                of a satellite around Earth is somewhat arbitrary, which means
+                that it can be changed to remain fixed on a point for a very
+                long time. One of the most famous images from Hubble Telescope
+                was taken looking at a portion of the sky for 3 days straight.
+                It goes without saying you can’t do that on Earth.
+                <br /><br />
+                So, why have I told you all this stuff? In my opinion, it is
+                important when approaching a subject, such as astronomy, or
+                chemistry or anything else, to be aware of the history behind
+                it. To know what other people did before us and find out that
+                fundamentally they weren’t so different. The feeling you get by
+                looking through a telescope lens and watch a clear, hopefully,
+                image of Jupiter or Saturn’s rings, and think that 400 years ago
+                Galileo Galilei was doing the same helps me connecting at an
+                emotional level, not a rational one, with one of my heroes, or
+                for you it might be someone you think of with respect and awe.
+                <br /><br />
+                I hope you understand that what I wrote here was a mere .0001%
+                of things that could be said, seen or written about this
+                subject. If you are interested, I encourage you to explore this
+                topic even more and I can assure you will have a fantastic
+                experience. The feeling of discovering the Universe is such a
+                vast and immense place might make some of you feel tiny and
+                alone, but it is actually the opposite. There is so much to see,
+                explore, create and know. Also, in such a vast space we are
+                definitely not alone.
+                <br /><br />
+                Now that we got that out of the way, let’s proceed with some
+                general concepts to help you start observing the sky.
+              </p>
+            </div>
+            <br /><br />
+            <hr />
+            <div id="nomenclature">
+              <h2>Nomenclature</h2>
+              <br />
+              <p>
+                As you go through this website or other manuals, set of
+                instructions etc you might come across certain words and terms
+                you are not totally familiar with. Things that might mean
+                something different than what is commonly known, so it is best
+                to get a general understanding of the pseudo-scientific jargon
+                that surrounds this subject.
+              </p>
+              <br />
+              <hr />
+              <div id="apparent-magnitude">
+                <h3>Apparent Magnitude</h3>
 
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis pariatur asperiores exercitationem laborum repellendus
-              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
-              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
-              ipsam a in rerum possimus officia, natus atque minima voluptate
-              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
-              aspernatur quis voluptatum placeat maxime dicta alias velit
-              quibusdam vel assumenda enim asperiores reprehenderit dolore non
-              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate ad! Eveniet amet cupiditate blanditiis?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis pariatur asperiores exercitationem laborum repellendus
-              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
-              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
-              ipsam a in rerum possimus officia, natus atque minima voluptate
-              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
-              aspernatur quis voluptatum placeat maxime dicta alias velit
-              quibusdam vel assumenda enim asperiores reprehenderit dolore non
-              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate a Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Blanditiis pariatur asperiores exercitationem
-              laborum repellendus minima numquam tempora? Dignissimos quisquam
-              eaque fugit, laborum fuga incidunt. Quas nobis, inventore ratione
-              id deleniti maiores ipsam a in rerum possimus officia, natus atque
-              minima voluptate quis, sit corrupti accusantium. Rem ratione ea in
-              autem minus, aspernatur quis voluptatum placeat maxime dicta alias
-              velit quibusdam vel assumenda enim asperiores reprehenderit dolore
-              non quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate a Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Blanditiis pariatur asperiores exercitationem
-              laborum repellendus minima numquam tempora? Dignissimos quisquam
-              eaque fugit, laborum fuga incidunt. Quas nobis, inventore ratione
-              id deleniti maiores ipsam a in rerum possimus officia, natus atque
-              minima voluptate quis, sit corrupti accusantium. Rem ratione ea in
-              autem minus, aspernatur quis voluptatum placeat maxime dicta alias
-              velit quibusdam vel assumenda enim asperiores reprehenderit dolore
-              non quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate a Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Blanditiis pariatur asperiores exercitationem
-              laborum repellendus minima numquam tempora? Dignissimos quisquam
-              eaque fugit, laborum fuga incidunt. Quas nobis, inventore ratione
-              id deleniti maiores ipsam a in rerum possimus officia, natus atque
-              minima voluptate quis, sit corrupti accusantium. Rem ratione ea in
-              autem minus, aspernatur quis voluptatum placeat maxime dicta alias
-              velit quibusdam vel assumenda enim asperiores reprehenderit dolore
-              non quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate a
-            </p>
-          </div>
+                <p>
+                  The apparent magnitude of a celestial object refers to its
+                  relative brightness. In simple terms, magnitude depends on the
+                  object’s luminosity (which indicates the energy it radiates),
+                  and its distance form Earth. This last aspect is quite
+                  important. As a matter of fact, there are 2 types of
+                  magnitude: Absolute magnitude and Apparent Magnitude.
+                  <br /><br />
+                  They both refers to a star’s brightness but in the case of
+                  absolute magnitude, this would be measured from a fixed
+                  distance from Earth. This distance is standard and common to
+                  every object at 10 parsecs (32,6 lightyears). Basically, it
+                  indicates what would be the magnitude of that object be at 10
+                  parsecs from Earth. On the other hand, apparent magnitude is
+                  measured on the actual distance and brightness of the object
+                  as seen from Earth.
+                  <br /><br />
+                  It is very important to keep in mind that the lower the
+                  magnitude the higher the brightness. This is due to historical
+                  reasons (Ptolemy used to classify the most visible stars in
+                  the night sky as 1st magnitude, because they were the ones you
+                  could see first, up to 6th magnitude, which represent the
+                  dimmest objects) as well as mathematical reasons since the
+                  magnitude scale is measured on a reverse logarithmic trend.
+                  This trend gives the actual ratio between objects’ magnitude.
+                  It is at 100<sup>1/5</sup> which corresponds to 2.512. This
+                  means that a a star of magnitude 2.0 is 2.512 times brighter
+                  than a star of magnitude 3.0, 6.31 times brighter than a star
+                  of magnitude 4.0, and 100 times brighter than one of magnitude
+                  7.0. <br /><br />
+                  The visibility of astronomical objects by the naked eye can go
+                  up to magnitude of +6,5 in a very clear sky. Telescopes such
+                  as Hubble can see up to magnitude of +30.
+                </p>
+                <br />
+              </div>
+              <div id="circumpolar">
+                <h3>Circumpolar</h3>
+                <p>
+                  A circumpolar star is a star, as viewed from a given latitude
+                  on Earth, that never sets below the horizon due to its
+                  apparent proximity to one of the celestial poles. Circumpolar
+                  stars are therefore visible from said location toward the
+                  nearest pole for the entire night on every night of the year.
+                  <br /><br />
+                  Whether a given star is circumpolar at the observer's latitude
+                  (θ) may be calculated in terms of the star's declination (δ).
+                  The star is circumpolar if θ + δ is greater than +90°
+                  (observer in Northern Hemisphere), or θ + δ is less than −90°
+                  (observer in Southern Hemisphere).
+                </p>
+              </div>
+              <br />
+              <div id="light-years">
+                <h3>Light-Years</h3>
 
-          <br />
-          <br />
-          <hr />
-          <div id="right-ascension">
-            <h1>Right Ascension</h1>
-            <br />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis pariatur asperiores exercitationem laborum repellendus
-              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
-              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
-              ipsam a in rerum possimus officia, natus atque minima voluptate
-              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
-              aspernatur quis voluptatum placeat maxime dicta alias velit
-              quibusdam vel assumenda enim asperiores reprehenderit dolore non
-              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate ad! Eveniet amet cupiditate blanditiis?
-            </p>
-          </div>
+                <p>
+                  This one should be common knowledge especially for those
+                  science-fiction aficionados but it is a pivoting aspect of
+                  astronomy. First of all, it is a unit of length, as meters, or
+                  miles if you are North American, not of time as it is sometime
+                  mistakenly used. As the name suggests it is a simple
+                  multiplication of years and light, in this case it means the
+                  speed of light which is measured in km/s. The final product is
+                  expressed in kilometers or meters, but you don’t really want
+                  to see that in km because it’s quite long and from a human
+                  perspective it doesn’t really make any sense. In an average
+                  lifespan of 80 years, you might travel couple of millions of
+                  kilometers. One light-year is 9.46 trillion kilometers. As you
+                  can see it is not something for us to grasp, this is why we
+                  use light-years for astronomical distances. They become way
+                  more manageable. After all, the concept become pretty clear, 1
+                  light-year is the distance that light covers in one year.
+                  <br /><br />
+                  From this last sentence you can see the confusion that
+                  sometimes might arise around it. Effectively, when you are
+                  looking at the stars you are looking through time, because the
+                  light (which is the actual image, let’s say, of that star) has
+                  been travelling for 3, 4 or maybe 800 years before coming to
+                  us. So, if we wanted to explain it with a photographic
+                  analogy, when we look at particular objects in the Sky, we are
+                  actually looking at old pictures, as old as they are distant
+                  from us, and that’s because even something as fast as light
+                  takes a long time to arrive here. This is how large the
+                  Universe is.
+                </p>
+              </div>
+              <br />
+              <div class="quiz-text">
+                <div class="question">
+                  <p><strong>How fast is the speed of light?</strong></p>
+                  <button onclick="reveal()">Show Me the Answer</button>
+                </div>
 
-          <br /><br />
-          <hr />
-          <div id="declination">
-            <h1>Declination</h1>
+                <p id="speed-light-answer" style="display: none">
+                  299,792,458 m/s.<br />That's 7.5 complete circles around the
+                  Equator every second!
+                </p>
+              </div>
+              <br />
+              <div id="parsec">
+                <h3>Parsec</h3>
+
+                <p>
+                  Now this one is a little bit more complicated because it deals
+                  with geometry and trigonometry. You definitely do not need to
+                  know all that to understand what a parsec is. As before, it is
+                  a unit of length and it corresponds to approximately 3.26
+                  lightyears.
+                  <br /><br />
+                  The way it is measured is different and it makes use of an
+                  effect called parallax, the name comes from
+                  <strong>par</strong>allax at arc<strong>sec</strong>ond.
+                  Parallax is a displacement or difference in the apparent
+                  position of an object viewed along two different lines of
+                  sight and is measured by the angle of inclination between
+                  those two lines. <br /><br />
+                  It is quite difficult to visualise, but bear in mind that the
+                  Earth rotates around the Sun in 365 days. Now, we are looking
+                  at a star and we want to take note of its position at the same
+                  time of everyday of the year. Since the Earth moves, the star
+                  will show a slight movement, as described by the parallax
+                  effect, by changing line of sight. This line is an imaginary
+                  line that goes from Earth, our place of observation, through a
+                  “fixed” near object, in this case the Sun, and connects the
+                  star, the final object of our observation. This movement is
+                  measured by the angle of this different lines of sight. 1
+                  parsec happens when in one year the angle is equal to 1
+                  arcsecond, namely 1/3600 of a degree.
+                  <br /><br />
+                  Finally, this is quite an advanced topic and it requires a bit
+                  of geometrical knowledge but what you need to know is that is
+                  a measure of length and can be used sometimes when lightyears
+                  don’t suffice.
+                </p>
+              </div>
+              <br />
+              <div id="spectral-type">
+                <h3>Spectral Type</h3>
+
+                <p>
+                  Among the various concepts here presented this might be the
+                  longest, and difficult to understand. The reason is that there
+                  are many types of classifications, and they depend on
+                  different aspects, different scientists etc. You might need to
+                  be familiar with basic physics concepts such as wavelength,
+                  electro-magnetism and diffraction. However, in this brief
+                  description I will try to lay it out as simply as possible.
+                  <br /><br />
+                  Let’s start from what a star is. Basically, a star is a
+                  gaseous object that consumes, or “burns” certain chemical
+                  elements to produce energy. This energy is vital to maintain
+                  its temperature, mass and volume and its overall density.
+                  Depending on the element that nuclear reactions use and
+                  produce, our star can have different characteristics in terms
+                  of its color, energy radiations, and spectrum meaning what
+                  elements and wavelength it emits. It’s also important to
+                  remember that speaking of energy is equal to temperature,
+                  indicating surface temperature.
+                  <br /><br />
+                  All these characteristics belong to the outermost shell of a
+                  star, since it’s quite impossible to see what goes on inside
+                  (why? Well, it’s too bright) although physics can help. This
+                  shell is called the photosphere, the layer from which light is
+                  radiated.
+                  <br /><br />
+                  Most stars are classified under the Morgan-Keenan (MK) system
+                  which uses letters O, B, A, F, G, K and M in this order from
+                  hottest (O type) to coolest (M type). Further description sees
+                  the use of numbers from 0, being hottest, to 9, being coolest
+                  (for example, A9, F0 etc.). Another parameter is added to
+                  indicate a star’s luminosity class which approximately
+                  indicates its mass, it distinguishes giants from dwarves. It
+                  is indicated with Roman numbers (I-II-III etc.). Ia+ are
+                  hypergiants, while VII are white dwarfs.
+                  <br /><br />
+                  As an example, let’s look at the Sun with a spectral class of
+                  G2V (which is read G-two-fifth). G2 points to a relatively
+                  cooler star with a surface temperature of 5.800K, and V
+                  indicates a main-sequence star, namely not too large not too
+                  small.
+                  <br /><br />
+                  What does main-sequence mean? It refers to a very important
+                  diagram in astronomy and astrophysics, namely the
+                  Hertzsprung-Russel diagram (HR). This diagram represents all
+                  the stars in our galaxy, but it could also be drawn for other
+                  galaxies, with the absolute magnitude on the Y-axis and the
+                  spectral type on the X-axis. What this diagram shows is that
+                  there seems to be a well-defined pattern of stars from small
+                  and cool, to larger and hotter. This pattern is called main
+                  sequence and 99% of the stars are included in this trend.
+                  Outside of it there are rare specimen of stars which represent
+                  the extremes. For example, hypergiants that are insanely huge
+                  but can also be cool, or white dwarfs that are relatively
+                  small but scorching hot. The HR diagram is the closest thing
+                  to a galaxy picture. As a matter of fact, HR diagrams for
+                  other galaxies exist and by analysing their main sequence,
+                  information such as the age and most importantly the evolution
+                  stage of that galaxy can be inferred. In fact, newer galaxies
+                  have a sparser trend, with no defined main sequences, on the
+                  other hand older systems have predominant “dying stars” which
+                  are on the brink of extinction. How do you measure that?
+                  Energy is a determining factor: the average temperatures tend
+                  to be lower, and the material is scarce. Our galaxy seems to
+                  be somewhere in the middle.
+                  <br /><br />
+                  One last concept that is inherently connected to the spectral
+                  type is the color of a star. If you remember from your student
+                  days when the teacher was speaking of electromagnetism and
+                  wavelength, there is a tight connection between energy and
+                  wavelength. The higher the energy, or temperature, the shorter
+                  the wavelength. When we talk about light and what’s visible,
+                  we are actually referring to a particular range of wavelengths
+                  called, intuitively, the visible spectrum. This range goes
+                  from 350nm to 750nm (nm indicate nanometers which is 1/1000 of
+                  a millimeter). Now, if you try and recall that spectrum you
+                  can see that it goes from red, longer wavelengths, to blue,
+                  shorter wavelength. This trend works exactly in the same way
+                  for stars. They emit a bunch of radiations on every possible
+                  spectrum: x-rays, infrared, ultraviolet, gamma rays, cosmic
+                  rays and, more importantly for stargazers, visible spectrum
+                  rays. We perceive these radiations as colour, and since energy
+                  = temperature = wavelength, hotter stars will appear blueish
+                  or even white, whereas cooler stars will appear reddish,
+                  yellow or orange. This might slightly change due to an effect
+                  called “Doppler Shift” which depends on the velocity and
+                  overall motion of an object compared to Earth, namely if it
+                  moves away from us the effect will lengthen the waves shifting
+                  the colour to red, while if it moves towards us the wavelength
+                  will be shorten and the shift will be toward the blue side.
+                  This concept is not trivial in astronomy because, first of all
+                  it tells you that all the objects in the Universe are moving
+                  but also because perfectly visible stars could become
+                  invisible if this effect moves their dominant radiation to a
+                  non-visible spectrum such as infrared.
+                  <br /><br />
+                  Sometimes, on this website, you’ll see the Morgan-Keenan
+                  notation accompanied by either bin, doub, mul, or tri. What do
+                  they mean? Although, it’s not part of the actual
+                  classification, I wanted to include such information because
+                  when observing the sky, certain stars might appear having
+                  variable spectral types (in terms of color, luminosity etc.).
+                  Bin indicates binary systems which means 2 stars orbiting
+                  around each other (or a common center of gravity), doub
+                  indicates double stars and the main difference is that they
+                  are not close to each other, they just appear double when
+                  looked at, sometimes star A is in front, others is star B, or
+                  maybe the brightness of one totally outshines the other. Tri
+                  as you might have guessed indicates triple, and mul multiple
+                  star systems.
+                  <br /><br />
+                  As far as we know, binary and triple systems are actual the
+                  norm, rather than the exception in the Universe. As a matter
+                  of fact, the Solar System can be considered a statistical
+                  anomaly, luckily for us. Although, if you observe the planets
+                  in our system you might notice something quite peculiar. Earth
+                  is a solid planet, meaning it has a solid surface divided in
+                  layers (crust, mantle, core etc). There are other planets like
+                  Earth, Mars for example, or Venus and Mercury. Looking further
+                  we have Jupiter. Now that is a strange looking planet. First
+                  of all, it is completely gaseous and has a density lower than
+                  water’s. In addition, it is massive, larger than all the other
+                  planets combined. Well, as it turns out Jupiter is actually a
+                  failed, or aborted star. It means that it was supposed to be a
+                  star but, in the process, it didn’t reach the temperatures or
+                  pressures needed to trigger the nuclear reactions that
+                  ultimately result in the genesis of a star. So again, we have
+                  been pretty lucky because Jupiter is stunningly beautiful, and
+                  also strategically important when it comes to outside threats.
+                </p>
+              </div>
+              <br />
+              <div id="zenith">
+                <h3>Zenith</h3>
+
+                <p>
+                  To put it simply the zenith in astronomical observation is the
+                  highest point in the celestial sphere which corresponds with a
+                  vertical position to the observer. It’s the direction directly
+                  above our heads, when you look up from where you stand you are
+                  looking at the zenith. The opposite direction is called nadir,
+                  but since in observation the objects along the nadir direction
+                  are covered by the Earth itself is not very important.
+                </p>
+              </div>
+            </div>
+            <br /><br />
+            <hr />
+            <div id="telescope">
+              <h2>The Telescope</h2>
+              <br />
+              <p>
+                Let’s start from the book definition of a telescope: the
+                telescope is an optical instrument using lenses, curved mirrors,
+                or a combination of both, to observe distant objects. The
+                history behind it is not important in this case, although it is
+                important to recall all the remarkable upgrades and scientific
+                breakthroughs that allowed us today to enjoy stunning pictures
+                of our, as well as other, galaxies.
+                <br /><br />
+                As previously mentioned, light is divided in an electromagnetic
+                spectrum. What we see and perceive as colour is called the
+                visible spectrum which is just a very small part of it all.
+                Extremely advanced telescopes can now see other radiations such
+                as gamma ray, x-rays, infrared, ultraviolet and some particular
+                telescopes can go down to radio waves (which are the longest) so
+                called radio-telescopes, that do not really see but hear the
+                sound of the Universe. For example, Arecibo Observatory in
+                Puerto Rico is one of the biggest radio-telescopes out there,
+                unfortunately it has been put out of service quite recently.
+                <br /><br />
+                Despite all this, for stargazers the only tool available that
+                can be within a normal person’s budget is an optical telescope.
+                There is plenty of models, sizes, types and they have different
+                perks, pros and cons that you should evaluate based upon your
+                intentions about observation. Keep in mind the 2 most important
+                properties of a telescope: first, its ability to gather light.
+                The better light can be gathered the further and clearer you can
+                see. It usually depends on the aperture of the device and you
+                want a minimum of 90mm for refractors or 130mm for reflectors.
+                Do not get obsessed with these terms they only indicate how
+                light is gathered, either through lenses (refractor) or through
+                mirrors (reflectors). Secondly, the magnification which refers
+                to how much larger the telescope can make objects appear.
+                Magnification, strictly speaking, is not an attribute of the
+                telescope it mainly depends on the eyepiece being used
+                <br /><br />
+                When purchasing you might see the term Focal Length. It
+                basically refers to the actual length of the telescope, remember
+                that a shorter focal length gives a wider field of view, but the
+                objects will appear smaller. On the other hand, a longer focal
+                length will give you larger images but also narrower portions of
+                the Sky. Although, these aspects are quite secondary for us
+                because it depends on your particular budget and purposes.
+                <br /><br />
+                What I’d like you to focus is the type of mount for your
+                telescope, that could be quite a steep investment, but it will
+                certainly help you in localising stars and more importantly to
+                follow them while they move through the Sky.
+                <br /><br />
+                The first type is called altazimuth mount and is a simple 2-axis
+                mount for supporting and rotating the telescope around 2
+                perpendicular axes, this is pretty much standard with 99% of the
+                telescopes out there. One axis is vertical and allows movements
+                that change the azimuth (left and right), basically the angle
+                between our line of observation and North. The other axis is
+                horizontal (up and down) and allow us to change the altitude of
+                the pointing direction. This type of mount is generally found in
+                beginners’ telescopes or is the standard for other more advanced
+                ones. However, just keep in mind that this mount allows 2
+                movements: Up and Down (regulating the altitude) and Left and
+                Right (changing the azimuth).
+                <br /><br />
+                The second type is a bit more advanced and pricier. It is
+                commonly known as Equatorial mount. It is meant for instruments
+                to compensate for Earth’s rotation by having 1 rotational axis
+                parallel to the Earth’s axis of rotation (the one that Earth
+                rotates around in approximately 24 hours). The advantage of an
+                equatorial mount lies in its ability to allow the instrument
+                attached to it to stay fixed on any celestial object with a
+                diurnal motion (it moves through the Sky during the day) by
+                driving 1 axis at a constant speed, so it matches, thanks to
+                motorised “clock drives” that rotates that axis one revolution
+                every 23 hours and 56 minutes, the Earth’s rotation speed. Some
+                of these mounts may also be equipped with setting circles to
+                allow for the location of objects by their celestial
+                coordinates: Right Ascension and Declination.
+                <br /><br />
+                For this second type of mounts, observation becomes a bit
+                easier, you just need the celestial coordinates of an object,
+                which are provided in this website, and following the
+                instructions of your particular device you can localise and
+                identify the object you were looking for.
+                <br /><br />
+                Celestial coordinates are explained in detail further down in
+                this documentation. From here though the question is simple, how
+                do normal people with normal telescopes and no fancy Equatorial
+                motorised mounts can locate an object? Well, first of all it is
+                good practice to get a general understanding of how the Sky and
+                the objects on it move.
+              </p>
+            </div>
+            <br /><br />
+            <hr />
+            <div id="guide-to">
+              <h2>Guide to Observation</h2>
+              <br />
+              <p>
+                As everyone knows, the Sun rises in the East, and sets to the
+                West. This indicates that the Earth’s rotation around itself
+                (revolution) happens from west to east, in what you can
+                visualise, keeping east as right and west as left, as a
+                clockwise motion. Since the movement of the Sun and the other
+                objects is apparent, because it’s the Earth that it’s moving,
+                they will all follow the same principle, rise in the E and set
+                to the W.
+                <br /><br />
+                Now I want you to focus your attention on some particular
+                aspects that some of you may know but they are very important
+                for understanding how astronomy of the Solar System works. The
+                Earth rotates around the Sun in approximately 365 days, it is
+                actually a bit more than that by 6 hours. This means that every
+                year, considering 365 days we “lose” or anticipate the year by 6
+                hours. Every 4 years we have 24 hours delay on the actual year,
+                which means when the Earth is in the same exact position as it
+                was the previous year in respect to the Sun, therefore we have
+                to catch up by adding 1 extra day, namely the 29th February.
+                Those years are well-known as leap years.
+                <br /><br />
+                Considering now a 3D space model with only the Earth and the Sun
+                we have a 2D plane that identifies Earth’s orbit around the Sun,
+                namely the Ecliptic plane. In this model there is a kind of
+                unbalance because the Earth’s rotation axis is not perpendicular
+                to the ecliptic but is inclined of 23,5°. This actually creates
+                what we know here on Earth as the season cycle. Why? Well, first
+                of all the rotation axis always remains parallel to itself
+                during the rotation, there are some minor movements, but they
+                are so slow that they are negligible for our purpose. Having
+                this condition there will be times when the Earth “shows” a
+                larger portion to the Sun of the Northern Hemisphere, we call it
+                Boreal summer. The days are longer, and weather is hotter
+                because solar rays hit more directly (with a smaller angle) the
+                atmosphere at Northern latitudes. Other times, the Earth will
+                expose more of the Southern side and we will have Boreal winter,
+                or Austral summer. There is a small portion of the Earth, which
+                is not affected by these changes, namely the Tropics. There, the
+                days, meaning daylight, always have the same length and solar
+                rays slightly varies the angle of incidence to a minimal change
+                along the Equator.
+                <br /><br />
+                In this model there are 2 points that are extremely important.
+                They are the same but opposite. These points happen when the
+                ecliptic coincides with the celestial equator, which is a plane
+                created by extending the Equator to the celestial sphere. They
+                are called the Vernal Equinox (21st March) and the September
+                Equinox (21st September). When the Earth is in that position,
+                everywhere the duration of the day is equal to the night (12
+                hours – Equinox from Latin means equal to the night). For
+                astronomy the vernal equinox is fundamental because all the
+                celestial coordinates (right ascension and declination) are
+                actual referred to the object’s position at this time of year.
+                <br /><br />
+                If you had an Equatorial mount with your telescope, you’d only
+                need to follow the instructions of the telescope to set the
+                right ascension and declination of the object you wanted to
+                observe. For altazimuth mounts is not that easy, and this is
+                where this website might come in handy. In the explore section,
+                you can look up information about constellations, and stars,
+                just look for them in the search bar in the upper left corner.
+                If you notice, below that there is a section called Where to
+                Look which asks for a location. What that does it takes the
+                coordinates of the location to calculate the current position of
+                a star. Among the details you’ll see the <i>where</i> key. It
+                might tell you different things. Usually, the instructions will
+                go like this: <i>38° to the North and 35° to the East</i>. How
+                do you read this? The first part represents a movement on a
+                North-South line. You just look up from where you are (the
+                zenith) put yourself on a N-S trend and look 38° to the N, there
+                you trace a semi-arc that goes around from E to W. The second
+                part is a bit more complicated. First you need to identify the
+                celestial equator, as we have seen previously it is the
+                projection of the Equator on the celestial sphere. How do I do
+                that? You need to know the latitude of your location (don’t
+                worry it is provided in the response). Now, simply do the math:
+                if you were at the Equator the celestial equator would be right
+                over your head, so 90°. If you move North, you’ll see it slowly
+                moving down towards the south. When you are 30° North of the
+                Equator the celestial line will be 90° – 30° towards the South,
+                so basically 60° looking south. If you move south, well the
+                logic is similar but on the other way so the celestial equator
+                will move to the North. If we are correct, being at the North or
+                South pole should mean seeing the celestial equator right along
+                the horizon all around us. <br /><br />
+                After this step you’ll see that the celestial equator will trace
+                a semi-arc moving from east to west, these are the anchor points
+                where you want to fix this line. Reading the instructions again
+                the second part tells us to look 35° to the East. So, taking the
+                celestial line we’ve just found we move along it 35° from East
+                to West, once there we move up (north) or down (south) until we
+                cross the line we previously identified on the N-S trend. If
+                everything went well there you should see the star. Consider
+                that the engine makes approximate calculations so you might need
+                to move your observation direction of a few degrees around a
+                circle.
+                <br /><br />
+                Sometimes, the instructions will be different, and you won’t
+                have any result simply because the star might not be visible
+                from that location, or it might not have risen yet or a star is
+                circumpolar, meaning at that particular latitude is always
+                visible, or above the horizon. You’ll have N-S coordinates
+                anyway but since it doesn’t rise nor set the engine will not be
+                able to compute its position in the Sky. It is definitely
+                something that can and will be improved.
+              </p>
+            </div>
             <br />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis pariatur asperiores exercitationem laborum repellendus
-              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
-              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
-              ipsam a in rerum possimus officia, natus atque minima voluptate
-              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
-              aspernatur quis voluptatum placeat maxime dicta alias velit
-              quibusdam vel assumenda enim asperiores reprehenderit dolore non
-              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate ad! Eveniet amet cupiditate blanditiis?
-            </p>
+            <br />
+            <hr />
+            <div id="right-ascension">
+              <h2>Right Ascension</h2>
+              <br />
+              <p>
+                Right ascension (abbreviated RA; symbol α) is the angular
+                distance of a particular point measured eastward along the
+                celestial equator from the Sun at the March equinox the point in
+                question above the earth.
+                <br /><br />
+                After reading the Guide to Observation you should be familiar
+                with all of these terms. Right Ascension is not an easy concept
+                to grasp first of all if you see its unit of measure, you’ll
+                notice it is in hours/minutes/seconds like this: 02h 31m 48,7s.
+                <br /><br />
+                Now, how could that be a measure for an angle? It actually
+                isn’t. In contrast, it indicates a time, a very specific time
+                and it refers to the delay a particular star has to the Sun on
+                the vernal equinox. What do I mean for delay? I mean, when the
+                star will rise to the east, even though not all stars will rise
+                because some are always upon the horizon and others are always
+                below. If you wanted, you could convert this into degrees. A
+                complete circle is 360°, the Earth completes a revolution in 24
+                hours that means that 360° divided 24 h is 15° per hour.
+                Therefore, 2 hours and some minutes is approximately 30°.
+                <br /><br />
+                Why put that in hours then, couldn’t they just give it in
+                degrees, like normal human beings? It turns out that considering
+                the time gives more information because you know the delay
+                compared to the Sun and other stars and when you learn a bit
+                more you could even infer the best time for observation of that
+                star.
+                <br /><br />
+                Let’s see for example a star that has a right ascension of 12h
+                37m 42,2s. This datum means that on the March equinox (21st
+                March) this star will rise 12 hours after the Sun. This tells
+                you that it is clearly visible in March because it rises when
+                the Sun supposedly sets. On the other hand, a star with a right
+                ascension of 01h 08m 34,5s in March rises almost at the same
+                time with the Sun, this doesn’t give any observer the chance to
+                take a look at that star.
+                <br /><br />
+                Are we condemned to never see that star then? Absolutely not,
+                because as the seasons progress so does the vernal equinox,
+                therefore the Sky “changes”. I’d like you to understand that the
+                Sky doesn’t actually change, but since the Earth moves, you’ll
+                see fixed reference points on the celestial sphere moving. From
+                the vernal equinox the Sun will rises earlier and earlier in the
+                Northern Hemisphere. The stars won’t do so because they are too
+                distant, and we are not orbiting around them. This gives us a
+                great advantage because a star that has a 1-hour delay after 1
+                month will have a 3-hour delay, the Earth moved. Why did it lose
+                2 hours? It goes as before, a complete orbit around the Sun is
+                360° or 24 hours (keep in mind the 15° per hour) in 365 days, or
+                12 months means 2 hours every month because Earth moved around
+                the Sun of 30°. This is the fundamental theory of right
+                ascension, every month from the Vernal equinox a star “loses” 2
+                hours to the Sun, remember that its right ascension intended as
+                the actual coordinate doesn’t change, what does is the delay on
+                the Sun. To go back to our previous example, if we wanted to
+                take a look at that star with a RA of 01h 08m 34,5s we should
+                wait for 4-6 months so that its delay became 14-15 hours. That
+                would guarantee the star will be visible since it won’t be
+                outshined by the sunlight.
+                <br /><br />
+                Although this website does it automatically, you could try and
+                calculate the current delay of a star starting from its right
+                ascension. You just subtract 2 hours for every month from March.
+                For example, let’s take an actual star: Sirius in the Canis
+                Major constellation. Its RA is 6h 45m. This means that on 21st
+                March it will be 6 hours behind the Sun, so when the Sun sets, 6
+                hours times 15° per hour is 90°, Sirius should be exactly at 90°
+                from the east on the celestial equator (don’t forget the
+                declination that we’ll see in a bit). After 3 months, in June,
+                its delay will be 0 because 3 months times 2 hours a month gives
+                us 6 hours. This means Sirius will rise with the Sun and set
+                with it, we are out of luck. Fast forward by 2 months in August
+                and you’ll see that Sirius now has -4 hours. What does negative
+                delay mean? It means that the star would rise before the Sun, in
+                this case 4 hours before, hence if we wanted to take a look at
+                Sirius in August, we should set the alarm clock and wake up
+                quite early or not even go to bed. If the Sun rises at 5 AM,
+                Sirius will be up from 1 AM.
+                <br /><br />
+                I took Sirius as an example because it is the brightest star in
+                the Sky, apart from the Sun, and if you didn’t want to stay up
+                late but being comfortable with your partner at 8 or 9 o’clock
+                at night stargazing and trying to see Sirius, you should wait
+                for January or February.
+              </p>
+            </div>
+
+            <br /><br />
+            <hr />
+            <div id="declination">
+              <h2>Declination</h2>
+              <br />
+              <p>
+                Declination (abbreviated dec; symbol δ) is the angle measured
+                north or south of the celestial equator, along the hour circle
+                passing through the point in question. <br /><br />
+                This coordinate is the second fundamental parameter to keep in
+                mind in astronomy. It is easier to understand, and it could be
+                assimilated to latitude for geographical coordinates. So,
+                latitude is the angle between the Equator and a location. When
+                you take a look at London’s latitude (N51°…) it says that the
+                angle between London and the Equator is 51°.
+                <br /><br />
+                Instead of the actual Equator, in astronomy we consider a
+                celestial equator, we have already seen what that is. A brief
+                reminder: the celestial equator is the projection of the Equator
+                onto the celestial sphere. The declination of a star simply
+                indicates the angle between the celestial equator and the star
+                itself along the meridian, or the N-S line.
+                <br /><br />
+                How is that helpful for observation? The celestial equator
+                basically represents the Equator, so your location’s latitude
+                can be traced on the celestial sphere. As for London (N51°) just
+                identify the celestial equator and move North, along the
+                meridian, of 51°. There you’ll have a semi-arc parallel to the
+                celestial equator that represents the projection of your
+                latitude. If a star has a declination of 10° it means that its
+                angle from the celestial equator is 10° to the north. Where
+                should I look then? Simply doing the math, we are at 51° north,
+                the star is at 10° north, 10 – 51 is equal to -41 so from the
+                zenith (look in this page for the definition) we move down,
+                because the result is negative, of 41°. To give you a simple
+                formula you can apply when stargazing, the position along the
+                meridian of a star is its angle of declination minus your
+                position’s latitude (<span>&delta;</span> -
+                <span>&theta;</span>). Positive angles of declination indicate
+                positions above the Equator and negative ones, below the
+                Equator.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -192,25 +900,40 @@
             <p>@Pystronomical</p>
 
             <a href="">Resources</a>
-              <a href="">Feedback</a>
+            <a href="">Feedback</a>
           </div>
           <div class="top-footer">
-            <a href=""><img src="{% static 'img/twitter.svg' %}" height="23" /></a>
             <a href=""
-              ><img src="{% static 'img/github.svg' %}" alt="@BeGeos" height="23"
+              ><img src="{% static 'img/twitter.svg' %}" height="23"
             /></a>
             <a href=""
-              ><img src="{% static 'img/facebook.svg' %}" alt="@BeGeos" height="23"
+              ><img
+                src="{% static 'img/github.svg' %}"
+                alt="@BeGeos"
+                height="23"
             /></a>
             <a href=""
-              ><img src="{% static 'img/instagram.svg' %}" alt="@BeGeos" height="23"
+              ><img
+                src="{% static 'img/facebook.svg' %}"
+                alt="@BeGeos"
+                height="23"
             /></a>
             <a href=""
-              ><img src="{% static 'img/youtube.svg' %}" alt="@BeGeos" height="23"
+              ><img
+                src="{% static 'img/instagram.svg' %}"
+                alt="@BeGeos"
+                height="23"
+            /></a>
+            <a href=""
+              ><img
+                src="{% static 'img/youtube.svg' %}"
+                alt="@BeGeos"
+                height="23"
             /></a>
           </div>
         </div>
       </footer>
     </main>
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
   </body>
 </html>

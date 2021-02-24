@@ -29,16 +29,22 @@
         </div>
         <div class="nav-user">
           {% if request.user.is_authenticated %}
-            <ul>
-            <li><a class="login-user" href="{% url 'main-profile' %}">{{ request.user.username }}</a></li>
+          <ul>
+            <li>
+              <a class="login-user" href="{% url 'main-profile' %}"
+                >{{ request.user.username }}</a
+              >
+            </li>
             <li><a class="sign-up" href="{% url 'logout' %}">Logout</a></li>
           </ul>
-            {% else %}
+          {% else %}
           <ul>
             <li><a class="login-user" href="{% url 'login' %}">Login</a></li>
-            <li><a class="sign-up" href="{% url 'create-user' %}">Sign Up</a></li>
+            <li>
+              <a class="sign-up" href="{% url 'create-user' %}">Sign Up</a>
+            </li>
           </ul>
-            {% endif %}
+          {% endif %}
         </div>
       </div>
     </navbar>
@@ -47,7 +53,7 @@
         <div class="general-sidebar">
           <div class="search-bar">
             <form class="search-star" method="post">
-                {% csrf_token %}
+              {% csrf_token %}
               <input type="text" name="star" placeholder="Search for a Star" />
               <button type="submit">
                 <svg
@@ -85,9 +91,8 @@
               </button>
             </form>
             <div class="where-to-data">
-                {% if city %}
-                <div class="city-data">
-
+              {% if city %}
+              <div class="city-data">
                 <h3>{{ city|title }}</h3>
                 <small
                   ><img src="{% static 'img/arrow-up.svg' %}" height="15" /><img
@@ -97,7 +102,10 @@
                   8:35</small
                 >
                 <small
-                  ><img src="{% static 'img/arrow-down.svg' %}" height="15" /><img
+                  ><img
+                    src="{% static 'img/arrow-down.svg' %}"
+                    height="15"
+                  /><img
                     src="{% static 'img/sun-fill.svg' %}"
                     height="15"
                   />17:45</small
@@ -148,17 +156,19 @@
                     9:30
                   </small>
                 </div>
-                <p><b>Current Right Ascension:</b> 23h 12m 23s</p>
+                <p><b>Current Delay:</b> 23h 12m 23s</p>
+                <p><b>Location's Latitude:</b> 51° 07' 32''</p>
+                <p><b>Location's Longitude:</b> 0° 7' 45''</p>
                 <p><b>Where to look:</b> 11° to the North and 35° to East</p>
               </div>
-                {% else %}
-                 <small
+              {% else %}
+              <small
                 >Based on latitude and longitude, a star can be found in the sky
                 using the principles of right ascension and declination. You
                 could enter a city and discover where to point your telescope
                 from that location.
               </small>
-                {% endif %}
+              {% endif %}
             </div>
           </div>
         </div>
@@ -183,11 +193,16 @@
               <br />
               <br />
               <small
-                >Go back to <a href="{% url 'explore' %}">Constellations</a></small
+                >Go back to
+                <a href="{% url 'explore' %}">Constellations</a></small
               >
             </p>
 
-            <img src="img/ursa_major.jpg" alt="ursamajor" width="400" />
+            <img
+              src="{% static 'img/ursa_major.jpg' %}"
+              alt="ursamajor"
+              width="400"
+            />
           </div>
         </div>
       </div>

@@ -150,6 +150,7 @@
                   <a
                     href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
                     target="_blank"
+                    style="text-decoration: underline"
                     >this</a
                   >
                   page on Wikipedia that explains them in detail. However, for
@@ -399,12 +400,10 @@
                   </div>
                   <div class="resp-description">
                     <p>
-                      It return the quadrant where the constellation is placed
+                      It returns the quadrant where the constellation is placed
                       in the celestial sphere. As a general rule quadrant
                       starting with N, indicates the Northern Hemisphere. While
-                      S points to the Southern Hemisphere. If you wanted to know
-                      more about how quadrants are considered, please refer to
-                      the 'How to Observe' page;
+                      S points to the Southern Hemisphere;
                     </p>
                   </div>
                   <div class="resp-path">
@@ -581,7 +580,7 @@
                 one has a more complex logic behind it, and it will return
                 instructions about how and where to look to observe said star,
                 and it is based upon location. The third and fourth ones are
-                fairly similar and the return a response of the closest or the
+                fairly similar and they return a response of the closest or the
                 brightest stars in the sky. The admin only route provides a
                 complete list of all the stars in the database.
               </p>
@@ -783,7 +782,9 @@
                 <br /><br />
                 <p>
                   GET request:
-                  <code>/astropy/api/v1/where-to-look?s=hamal&city=London</code>
+                  <code
+                    >/astropy/api/v1/where-to-look?s=hamal&city=London&appid=YOUR_API_KEY</code
+                  >
                 </p>
                 <br />
                 <p>Response:</p>
@@ -817,7 +818,7 @@
                   the time of daylight and its height above the horizon, stars
                   do not, not in human timespan at least. Considering a full 24
                   hours to go back to their original RA and 12 months to do so,
-                  every month the RA move ahead 2 hours. Again, I encourage you
+                  every month the RA move back 2 hours. Again, I encourage you
                   to read the dedicated section that further elaborate on this
                   aspect.
                 </p>

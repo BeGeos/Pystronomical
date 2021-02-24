@@ -62,7 +62,7 @@ li {
   border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 10px 10px 20px darkgrey;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
 .form-header {
@@ -87,8 +87,14 @@ li {
 }
 
 .form-field {
+  position: relative;
   width: 80%;
   margin: 0 auto;
+}
+
+.message-logpage {
+  text-align: end;
+  color: rgba(255, 0, 0, 0.7);
 }
 
 .form-field form {
@@ -113,6 +119,7 @@ li {
   border-radius: 1rem;
   transition: background 0.2s ease-in-out;
   cursor: pointer;
+  outline: none;
 }
 
 .form-field form button:hover {
@@ -137,17 +144,32 @@ main {
 }
 
 .message {
+  position: absolute;
+  right: 10px;
+  max-width: 50%;
   background: rgb(117, 185, 207, 0.5);
   padding: 20px 10px;
   border-radius: 0.3rem;
   margin-right: 1rem;
   color: rgb(30, 30, 177);
-  max-width: 20%;
-  float: right;
 }
 
-.message:nth-child {
-  margin-top: 0.5rem;
+.message button {
+  background: none;
+  border: none;
+  outline: none;
+  z-index: 3;
+  margin-left: 4rem;
+  cursor: pointer;
+}
+
+.message-profile {
+  margin-bottom: 0.5rem;
+  width: 100%;
+  background: rgb(117, 185, 207, 0.5);
+  padding: 20px 10px;
+  border-radius: 0.3rem;
+  color: rgb(30, 30, 177);
 }
 
 footer {
@@ -220,6 +242,7 @@ navbar {
   );
   color: white;
   align-items: center;
+  letter-spacing: 3px;
 }
 
 .nav-logo {
@@ -229,7 +252,7 @@ navbar {
 }
 
 .nav-links {
-  width: 70%;
+  margin-right: auto;
 }
 
 .nav-links ul {
@@ -237,7 +260,7 @@ navbar {
 }
 
 .nav-links a {
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
   text-decoration: none;
   color: white;
@@ -252,6 +275,7 @@ navbar {
 
 .nav-links ul li a {
   border-radius: 0.3rem;
+
   background: none;
   transition: background 0.2s ease-in-out;
 }
@@ -265,7 +289,7 @@ navbar {
 }
 
 .nav-user {
-  width: 20%;
+  float: right;
   margin-right: 1rem;
 }
 
@@ -294,34 +318,30 @@ navbar {
   font-weight: 400;
 }
 
+.main-wrapper {
+  margin-top: 6rem;
+}
+
 .profile {
   display: flex;
-  margin-top: 7rem;
+  /* margin-top: 7rem; */
   height: 100%;
 }
 
 .sidebar {
   width: 15%;
-  height: 60vh;
+  /* height: 60vh; */
   /*background: red;*/
-  text-align: center;
-  margin: 0 1rem;
-  margin-left: 5rem;
+  margin: 0 2rem;
+  font-weight: 700;
 }
 
 .sidebar-menu h2 {
   display: block;
-  background: rgb(58, 12, 163);
-  background: linear-gradient(
-    90deg,
-    rgba(58, 12, 163, 1) 0%,
-    rgba(63, 55, 201, 1) 53%,
-    rgba(72, 149, 239, 1) 93%
-  );
-  color: white;
-  margin: 0 auto;
-  padding: 1rem 0;
-  border-radius: 1rem;
+  background: rgba(72, 149, 239, 0.5);
+  text-align: center;
+  padding: 1rem;
+  border-radius: 0.3rem;
 }
 
 .sidebar-menu ul {
@@ -345,8 +365,10 @@ navbar {
 
 .central-menu {
   position: relative;
+  margin-top: 2rem;
   width: 60%;
-  height: 60vh;
+  /* height: 60vh; */
+  line-height: 1.6;
 }
 
 .central-info {
@@ -373,10 +395,11 @@ th {
 .central-info button {
   border: none;
   color: white;
-  border-radius: 0.5rem;
-  padding: 0.3rem 1rem;
+  border-radius: 0.3rem;
+  padding: 10px;
   background: #3f37c9;
   cursor: pointer;
+  width: 130px;
   transition: background 0.2s ease-in-out;
 }
 
@@ -422,7 +445,11 @@ th {
 }
 
 .central-description {
-  width: 100%;
+  max-width: 90%;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 0;
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .central-description a {
@@ -653,7 +680,19 @@ tr {
 
 .api-text {
   padding: 10px 30px;
+  margin-bottom: 2rem;
 }
+
+.instruction-text {
+  padding: 10px 30px;
+}
+
+/* #introduction {
+  padding: 30px 50px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+} */
 
 .JSON-response {
   background: #e8e9ea;
@@ -780,18 +819,25 @@ tr {
 
 .how-to-observe {
   width: 15rem;
-
   position: fixed;
 }
 
-.how-to-observe ul li a {
+.how-to-observe :not(.inner-list) {
   font-size: 18px;
-  line-height: 1.6;
+  line-height: 2;
   color: black;
 }
 
 .how-to-observe ul li:hover {
   background: rgba(72, 149, 239, 0.6);
+}
+
+.inner-list {
+  margin-left: 2rem;
+}
+
+.inner-list ul li a {
+  font-size: 14px;
 }
 
 .endpoints {
@@ -816,6 +862,41 @@ tr {
   height: 6rem;
   visibility: hidden;
   pointer-events: none;
+}
+
+.how-to-element * h3::before {
+  display: block;
+  content: " ";
+  margin-top: -6rem;
+  height: 6rem;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.quiz-text {
+  background: rgba(72, 149, 239, 0.3);
+  width: 100%;
+  padding: 10px;
+}
+
+.quiz-text button {
+  padding: 10px;
+  background: rgb(58, 12, 163);
+  color: white;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.question {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.question p {
+  font-size: 21px;
 }
 
 .endpoints h2 {
@@ -866,7 +947,7 @@ dt {
   top: 50%;
   left: 50%;
   transform: translateX(-50%);
-  box-shadow: 5px 5px 10px darkgrey;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .index button a {
@@ -916,6 +997,7 @@ dt {
   bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
+  line-height: 1.6;
 }
 
 .index-description h1 {

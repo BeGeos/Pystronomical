@@ -15,18 +15,28 @@
   </head>
   <body>
     <div class="container">
-      <img id="cloud-left" src="{% static 'img/clouds-left.svg' %}" alt="clouds-left" />
-      <img id="cloud-right" src="{% static 'img/clouds-right.svg' %}" alt="clouds-right" />
+      <img
+        id="cloud-left"
+        src="{% static 'img/clouds-left.svg' %}"
+        alt="clouds-left"
+      />
+      <img
+        id="cloud-right"
+        src="{% static 'img/clouds-right.svg' %}"
+        alt="clouds-right"
+      />
       <div class="form-box">
         <div class="form-header">
           <div class="logo">
-            <a href="#"><img src="{% static 'img/Logo.svg' %}" alt="Py" height="48" /></a>
+            <a href="#"
+              ><img src="{% static 'img/Logo.svg' %}" alt="Py" height="48"
+            /></a>
           </div>
         </div>
         <h2><i>Reset Password</i></h2>
         <div class="form-field">
           <form method="POST">
-              {% csrf_token %}
+            {% csrf_token %}
             <input
               type="password"
               placeholder="New Password"
@@ -38,7 +48,11 @@
               placeholder="Confirm New Password"
               name="confirm-new"
               required
+              style="margin-bottom: 0"
             />
+            {% if messages %} {% for message in messages %}
+            <div class="message-logpage"><small>*{{ message }}</small></div>
+            {% endfor %} {% endif %}
             <button class="form-button" type="submit">Reset</button>
           </form>
         </div>

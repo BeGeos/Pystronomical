@@ -109,3 +109,17 @@ matchStars.innerHTML = jsonStars;
 matchWhere.innerHTML = jsonWhere;
 matchWhere2.innerHTML = jsonWhere2;
 matchWhere3.innerHTML = jsonWhere3;
+
+function reveal(){
+    var answer = document.getElementById('speed-light-answer');
+    if (answer.style.display === "none") {
+        answer.style.display = "block";
+    } else {
+        answer.style.display = "none";
+    }
+}
+
+function closeMessage() {
+    var message = document.querySelector(".message");
+    message.style.display = "none";
+}

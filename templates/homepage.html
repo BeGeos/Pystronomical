@@ -29,34 +29,45 @@
         </div>
         <div class="nav-user">
           {% if request.user.is_authenticated %}
-            <ul>
-            <li><a class="login-user" href="{% url 'main-profile' %}">{{ request.user.username }}</a></li>
+          <ul>
+            <li>
+              <a class="login-user" href="{% url 'main-profile' %}"
+                >{{ request.user.username }}</a
+              >
+            </li>
             <li><a class="sign-up" href="{% url 'logout' %}">Logout</a></li>
           </ul>
-            {% else %}
+          {% else %}
           <ul>
             <li><a class="login-user" href="{% url 'login' %}">Login</a></li>
-            <li><a class="sign-up" href="{% url 'create-user' %}">Sign Up</a></li>
+            <li>
+              <a class="sign-up" href="{% url 'create-user' %}">Sign Up</a>
+            </li>
           </ul>
-            {% endif %}
+          {% endif %}
         </div>
       </div>
     </navbar>
     <main>
-        {% if messages %}
-        {% for message in messages %}
-      <div class="message"><p>{{ message }}</p></div>
-        {% endfor %}
-        {% endif %}
+      {% if messages %} {% for message in messages %}
+      <div class="message" style="display: flex">
+        <p>{{ message }}</p>
+        <button onclick="closeMessage()">
+          <img src="{% static 'img/x-circle.svg' %}" alt="exit" />
+        </button>
+      </div>
+      {% endfor %} {% endif %}
       <div class="container-main">
         <div class="img-home">
           <div class="title">
             <h1><i>Welcome,</i></h1>
-            <h3><i>Thank you for visiting this website</i></h3>
-            <p>
-              It was made for sky enthusiasts and for beginners who would like
-              to learn and move their first steps into stargazing, and
-              astronomy.
+            <h3><i>Thank you for visiting my website</i></h3>
+            <p style="color: rgba(0, 0, 0, 0.5)">
+              If you wanted to contribute to this project, feel free to visit
+              the feedback page where you can send me your thoughts and ideas.
+              Or if you were a developer, visit my Github page where you'll find
+              the entire source code for this project. <br /><br />
+              @BeGeos
             </p>
           </div>
 
@@ -65,18 +76,38 @@
         <div class="page-home">
           <h1 class="center-title"><i>Did you know?</i></h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-            nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
-            volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-            consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate
-            velit esse molestie consequat, vel illum dolore eu feugiat nulla
-            facilisis at vero eros et accumsan et iusto odio dignissim qui
-            blandit praesent luptatum zzril delenit augue duis dolore te feugait
-            nulla facilisi. Now, before starting to explore the sky it is
-            paramount that you know what a constellations and stars are, plus
-            some technical stuff that will help you in your observation and
-            overall comprehension.
+            Astronomy, as well as astronomical observation, have been around for
+            a very long time. It has shaped our culture more than we'd like to
+            accept but the curiosity of the first humans to wonder about the
+            mysteries of the Sky brought us to develop newer and more creative
+            ways to look at the stars. We discovered galaxies, other stars in
+            those galaxies and even new planets around those stars. <br /><br />
+            Records have been found of Supernovas 5000 years before Christ, by
+            tribes in India. Supernovas are huge explosions of stars that can be
+            seen to great distance since their luminosity increases
+            exponentially. At that time, such an event was unknown and it
+            probably lit up the Sky as if it was day. They must have thought it
+            was some sort of sign by the Gods, gave it special meaning and
+            superstition came along. Who knows religion might have started
+            thanks to some peculiar event in the Sky. <br /><br />
+            One thing is for sure, WE came from the stars, and I don't mean from
+            aliens, I mean the material tha makes us, the elements Oxygen and
+            Carbon, Nitrogen, Iron and so on they were all made in stars. You
+            see one interesting way to look at stars is considering them as
+            crucible for "baking" fundamental elements. Most of them are made of
+            Hydrogen, very few up to Iron. Where do all the other elements come
+            from then? Well, Supernovas helped to populate the entire periodic
+            table. <br /><br />
+            There is no element is the Universe that is not present in us, even
+            if in very small quantities, we are not chemically different from
+            the matter that populates the Universe. So the next time you look at
+            yourself think that you are made of matter forged in stars and the
+            Oxygen, Nitrogen, and Argon running in you, are billions of years
+            old.
+            <br /><br />
+            We are connected to all the things inhabiting this Universe,
+            therefore it is only natural to seek answers about our origins in
+            the Sky.
             <br /><br />
           </p>
           <hr />
@@ -227,9 +258,9 @@
             Orion (the Giant). You look around and see 2 very bright stars, one
             is brighter than the other and red, the second is blue. You know
             Rigel is in there and it is extremely bright, you also know that it
-            emits blueish light, hence it must be the bottom right one you saw (in
-            the Southern Hemisphere Orion appears upside down, Rigel would be on
-            the upper left corner then). That saved you the humiliation to
+            emits blueish light, hence it must be the bottom right one you saw
+            (in the Southern Hemisphere Orion appears upside down, Rigel would
+            be on the upper left corner then). That saved you the humiliation to
             mistake Betelgeuse (the giant's shoulder) with Rigel (the giant's
             foot). As you can see, color is quite important.
             <br /><br />Finally, probably the most important aspect to consider
@@ -287,5 +318,6 @@
         </div>
       </footer>
     </main>
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
   </body>
 </html>

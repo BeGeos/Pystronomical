@@ -15,8 +15,16 @@
   </head>
   <body>
     <div class="container">
-      <img id="cloud-left" src="{% static 'img/clouds-left.svg' %}" alt="clouds-left" />
-      <img id="cloud-right" src="{% static 'img/clouds-right.svg' %}" alt="clouds-right" />
+      <img
+        id="cloud-left"
+        src="{% static 'img/clouds-left.svg' %}"
+        alt="clouds-left"
+      />
+      <img
+        id="cloud-right"
+        src="{% static 'img/clouds-right.svg' %}"
+        alt="clouds-right"
+      />
       <div class="form-box">
         <div class="form-header">
           <div class="logo">
@@ -28,8 +36,16 @@
         <h2><i>Request New Password</i></h2>
         <div class="form-field">
           <form method="POST">
-              {% csrf_token %}
-            <input type="text" placeholder="Email Address" name="email" />
+            {% csrf_token %}
+            <input
+              type="text"
+              placeholder="Email Address"
+              name="email"
+              style="margin-bottom: 0"
+            />
+            {% if messages %} {% for message in messages %}
+            <div class="message-logpage"><small>*{{ message }}</small></div>
+            {% endfor %} {% endif %}
 
             <button class="form-button" type="submit">Send</button>
           </form>
