@@ -28,5 +28,7 @@ urlpatterns = [
     path('explore/', user_views.explore_view, name='explore'),
     path('explore/constellation/<str:constellation>', user_views.single_constellation, name='constellation-detail'),
     path('explore/star/<str:s>', user_views.single_star, name='star-detail'),
-    path('api/', user_views.api_view, name='api')
+    path('api/', user_views.api_view, name='api'),
+    path('feedback/', user_views.feedback_view, name='feedback'),
+    path('feedback/<slug>', user_views.feedback_success_view, name='feedback-success')
 ]

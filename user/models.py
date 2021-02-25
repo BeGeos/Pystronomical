@@ -86,3 +86,14 @@ class Image(models.Model):
 
     def __str__(self):
         return self.constellation_id.name
+
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=64, null=True, blank=True)
+    email_address = models.CharField(max_length=64, null=True, blank=True)
+    feedback = models.TextField()
+    created_on = models.DateField(auto_now_add=True)
+    slug = models.SlugField()
+
+    def __str__(self):
+        return f'{self.name} Feedback - at {self.email_address}'

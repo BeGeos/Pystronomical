@@ -1,19 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
-from .models import UserStatus, User, AuthKeys, SecurityCodes, Recovery, Constellation
-from .forms import UserRegisterForm, EmailUpdateForm
-import requests, string, random
-from datetime import datetime, timedelta
+
+from .models import UserStatus, User, AuthKeys, SecurityCodes, Recovery, Constellation, Feedback
 from Pystronomical.env import secret_keys
 from Pystronomical.functions import verification_email, recovery_email
-import smtplib
-from email.message import EmailMessage
+
+import requests, string, random
+from datetime import datetime, timedelta
 
 
 # Main functions to talk to API for database updates
@@ -62,7 +60,7 @@ def update_call_count(request):
 
 
 # Key/codes generators
-def key_generator(num=24):
+def key_generator(num=24):  # for API keys
     alphanumeric = string.ascii_letters + string.digits
     key = ''
     for _ in range(num):
@@ -70,7 +68,7 @@ def key_generator(num=24):
     return key
 
 
-def security_code_generator(num=6):
+def security_code_generator(num=6):  # for User registration
     numbers = string.digits
     code = ''
     for _ in range(num):
@@ -78,12 +76,20 @@ def security_code_generator(num=6):
     return code
 
 
-def ext_generator(num=24):
+def ext_generator(num=24):  # for URLs recovery links
     alphabet = string.ascii_letters
     extension = ''
     for _ in range(num):
         extension += random.choice(alphabet)
     return extension
+
+
+def feedback_slug(num=8):
+    alphanumeric = string.ascii_letters + string.digits
+    slug = ''
+    for _ in range(num):
+        slug += random.choice(alphanumeric)
+    return slug
 
 
 # User registration logic
@@ -442,3 +448,20 @@ def update_email(request):
 
         return render(request, 'change-email-profile.html')
     return redirect('login')
+
+
+def feedback_view(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('feedback')
+        slug = feedback_slug()
+        Feedback.objects.create(name=name, email_address=email,
+                                feedback=message, slug=slug)
+        return redirect('feedback-success', slug=slug)
+    return render(request, 'feedback.html')
+
+
+def feedback_success_view(request, slug):
+    check = get_object_or_404(Feedback, slug=slug)
+    return render(request, 'feedback-success.html')

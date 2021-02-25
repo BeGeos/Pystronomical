@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <title>Profile</title>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,600;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <navbar>
+        <div class="nav">
+          <div class="nav-logo">
+            <img src="{% static 'img/Logo.svg' %}" alt="Logo" height="70" />
+          </div>
+          <div class="nav-links">
+            <ul>
+              <li><a href="{% url 'homepage' %}">Home</a></li>
+              <li><a href="{% url 'explore' %}">Explore</a></li>
+              <li><a href="{% url 'how-to-observe' %}">How to Observe</a></li>
+              <li><a href="{% url 'api' %}">API</a></li>
+            </ul>
+          </div>
+          <div class="nav-user">
+            {% if request.user.is_authenticated %}
+            <ul>
+              <li>
+                <a class="login-user" href="{% url 'main-profile' %}"
+                  >{{ request.user.username }}</a
+                >
+              </li>
+              <li><a class="sign-up" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+            {% else %}
+            <ul>
+              <li><a class="login-user" href="{% url 'login' %}">Login</a></li>
+              <li>
+                <a class="sign-up" href="{% url 'create-user' %}">Sign Up</a>
+              </li>
+            </ul>
+            {% endif %}
+          </div>
+        </div>
+      </navbar>
+    <main class="main-subordinate">
+      <div class="green">
+        <div class="feedback-intro">
+          <h2>Feedbacks</h2>
+
+          <p>
+            This section is meant for leaving feedbacks about the website. To
+            help it improve and provide better services. If you had any
+            suggestions or ideas feel free to share it here. I might be able to
+            answer personally to each one, although I don't guarantee it, but I
+            can guarantee that your feedback will not go wasted. In addition, if
+            you were a developer, you can collaborate to this project by
+            following the link to my Github account. There I am open to accept
+            pull requests to the Pystronomical and Astropy projects. <br />Thank
+            you very much, <br />@BeGeos <br /><br>
+            <hr />
+          </p>
+        </div>
+
+        <div class="feedback-form">
+          <form id="feedback-form-id" method="POST">
+            {% csrf_token %}
+            {% if request.user.is_authenticated %}
+                <input type="text" name="name" value="{{ request.user.username }}" />
+                <input
+                  type="text"
+                  name="email"
+                  value="{{ request.user.email }}"
+                />
+            {% else %}
+            <input type="text" name="name" placeholder="Enter a name" />
+            <input
+              type="text"
+              name="email"
+              placeholder="Enter an email address"
+            />
+          </form>
+          {% endif %}
+          <textarea
+            name="feedback"
+            form="feedback-form-id"
+            cols="30"
+            rows="12"
+            maxlength="1500"
+            placeholder="Max 1500 characters"
+          ></textarea>
+          <button type="submit" form="feedback-form-id">Send</button>
+        </div>
+      </div>
+    </main>
+    <footer class="login-footer">
+      <div class="bottom-footer">
+        <div class="resources">
+          <p>@Pystronomical</p>
+          <a href="#">Feedbacks</a>
+        </div>
+        <div class="top-footer">
+          <a href=""><img src="img/twitter.svg" height="23" /></a>
+          <a href=""><img src="img/github.svg" alt="@BeGeos" height="23" /></a>
+          <a href=""
+            ><img src="img/facebook.svg" alt="@BeGeos" height="23"
+          /></a>
+          <a href=""
+            ><img src="img/instagram.svg" alt="@BeGeos" height="23"
+          /></a>
+          <a href=""><img src="img/youtube.svg" alt="@BeGeos" height="23" /></a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
