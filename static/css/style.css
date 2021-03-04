@@ -221,6 +221,30 @@ footer {
   bottom: 0;
 }
 
+.feedback-top-footer {
+  height: 40%;
+  background: #3f37c9;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.feedback-top-footer img {
+  padding: 0 15px;
+}
+
+.feedback-bottom-footer {
+  background: #3a0ca3;
+  height: 100%;
+  position: relative;
+}
+
+.feedback-bottom-footer a {
+  text-decoration: none;
+  color: white;
+}
+
 navbar {
   position: fixed;
   width: 100%;
@@ -558,8 +582,8 @@ th {
 }
 
 .page-content {
-  margin: 2rem 7rem;
-
+  max-width: 80%;
+  margin: 2rem auto;
   line-height: 1.6;
 }
 
@@ -568,16 +592,20 @@ th {
 }
 
 .page-content table {
-  width: 80%;
+  width: 100%;
   margin-top: 1rem;
   margin-bottom: 3rem;
 }
 
 .page-content td,
 tr {
-  border-bottom: 1px solid #ddd;
+  /*border-bottom: 1px solid #ddd;*/
   text-align: left;
   padding: 8px;
+}
+
+.page-content tbody tr:nth-child(odd) {
+  background-color: #e8e8e8;
 }
 
 .general-sidebar {
@@ -601,7 +629,8 @@ tr {
 }
 
 .search-bar-first {
-  margin-left: 7rem;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .search-bar {
@@ -667,6 +696,33 @@ tr {
 .single-element {
   display: flex;
   margin: 0 3rem;
+  min-height: calc(100vh - 7rem);
+}
+
+.element-text {
+  flex: 0 1 50%;
+  line-height: 1.6;
+}
+
+.element-img {
+  flex: 2 1 300px;
+}
+
+.element-img img {
+  width: 100%;
+}
+
+.element-text table {
+  width: 100%;
+  text-align: left;
+}
+
+.element-text tr td {
+  padding: 0 8px;
+}
+
+.element-text tbody tr:nth-child(odd) {
+  background-color: #e8e8e8;
 }
 
 .how-to-element {
@@ -1008,13 +1064,13 @@ dt {
 /* Styling for feedback page */
 
 .main-subordinate {
-  height: 100%;
+  height: calc(100vh - 232px);
   margin-top: 7rem;
 }
 
 .green {
   width: 45rem;
-  height: 35rem;
+  max-height: 100%;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid rgba(0, 0, 0, 0.3);
@@ -1023,7 +1079,7 @@ dt {
 }
 
 .green p {
-  font-size: 14px;
+  font-size: 12px;
   color: rgba(0, 0, 0, 0.4);
 }
 
@@ -1035,6 +1091,12 @@ dt {
   margin: 1rem;
   display: grid;
   /* grid-row-gap: 20px; */
+}
+
+.feedback-textarea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #feedback-form-id {

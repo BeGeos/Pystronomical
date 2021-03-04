@@ -29,16 +29,22 @@
         </div>
         <div class="nav-user">
           {% if request.user.is_authenticated %}
-            <ul>
-            <li><a class="login-user" href="{% url 'main-profile' %}">{{ request.user.username }}</a></li>
+          <ul>
+            <li>
+              <a class="login-user" href="{% url 'main-profile' %}"
+                >{{ request.user.username }}</a
+              >
+            </li>
             <li><a class="sign-up" href="{% url 'logout' %}">Logout</a></li>
           </ul>
-            {% else %}
+          {% else %}
           <ul>
             <li><a class="login-user" href="{% url 'login' %}">Login</a></li>
-            <li><a class="sign-up" href="{% url 'create-user' %}">Sign Up</a></li>
+            <li>
+              <a class="sign-up" href="{% url 'create-user' %}">Sign Up</a>
+            </li>
           </ul>
-            {% endif %}
+          {% endif %}
         </div>
       </div>
     </navbar>
@@ -68,32 +74,58 @@
           <div class="help-sidebar">
             <h2>Constellations</h2>
             <ul>
-              <li><a href="">Ursa Minor</a></li>
-              <li><a href="">Aries</a></li>
-              <li><a href="">Orion</a></li>
-              <li><a href="">Taurus</a></li>
-              <li><a href="">Andromeda</a></li>
-              <li><a href="">Scorpio</a></li>
-              <li><a href="">Cassiopea</a></li>
-              <li><a href="">Aquarius</a></li>
-              <li><a href="">Canis Major</a></li>
-              <li><a href="">Canis Minor</a></li>
-              <li><a href="">Pegasus</a></li>
-              <li><a href="">Swan</a></li>
-              <li><a href="">Eagle</a></li>
-              <li><a href="">Centaurus</a></li>
-              <li><a href="">Twins</a></li>
+              {% for each in list %}
+              <li>
+                <a href="/explore/constellation/{{ each.name }}"
+                  >{{ each.name|title }}</a
+                >
+              </li>
+              {% endfor %}
             </ul>
           </div>
         </div>
 
         <div class="content">
-          <h1>{{ constellation.name|title }}</h1>
+          <h1>{{ name|title }}</h1>
           <br />
           <div class="single-element">
-            <p>Alias: {{ constellation.alias }}</p>
-            <p>Description: {{ constellation.description }}</p>
-            <img src="{{ andromeda.image.image.url }}" alt="ursamajor" max-width="400" />
+            <div class="element-text">
+              <p><strong>Abbreviation:</strong> {{ abbreviation }}</p>
+              <p><strong>Alias:</strong> {{ alias|title }}</p>
+              <p><strong>Max Latitude:</strong> {{ max_latitude }}</p>
+              <p><strong>Min Latitude:</strong> {{ min_latitude }}</p>
+              <p><strong>Quadrant</strong>: {{ quadrant }}</p>
+              <p><strong>Declination:</strong> {{ declination }}</p>
+              <p><strong>Right Ascension:</strong> {{ right_ascension }}</p>
+              <p><strong>Description:</strong> {{ data.description }}</p>
+              <br />
+              <p><strong>Main Stars:</strong> <br /></p>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col" colspan="1">Name</th>
+                    <th scope="col" colspan="1">Apparent Magnitude</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for each in main_stars %}
+                  <tr>
+                    <td>
+                      <a
+                        href="{% url 'star-detail' each.name %}"
+                        style="color: #668cff; text-decoration: underline"
+                        >{{ each.name|title }}</a
+                      >
+                    </td>
+                    <td>{{ each.apparent_magnitude }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <div class="element-img">
+              <img src="{{ data.image.image.url }}" alt="{{ data.name }}" />
+            </div>
           </div>
         </div>
       </div>
@@ -105,18 +137,37 @@
             <a href="">Resources</a>
           </div>
           <div class="top-footer">
-            <a href=""><img src="img/twitter.svg" height="23" /></a>
-            <a href=""
-              ><img src="img/github.svg" alt="@BeGeos" height="23"
+            <a href="https://twitter.com/BeGeosDev" target="_blank"
+              ><img
+                src="{% static 'img/twitter.svg' %}"
+                alt="twitter"
+                height="23"
             /></a>
-            <a href=""
-              ><img src="img/facebook.svg" alt="@BeGeos" height="23"
+            <a href="https://github.com/BeGeos" target="_blank"
+              ><img
+                src="{% static 'img/github.svg' %}"
+                alt="GitHub"
+                height="23"
             /></a>
-            <a href=""
-              ><img src="img/instagram.svg" alt="@BeGeos" height="23"
+            <a href="#"
+              ><img
+                src="{% static 'img/facebook.svg' %}"
+                alt="facebook"
+                height="23"
             /></a>
-            <a href=""
-              ><img src="img/youtube.svg" alt="@BeGeos" height="23"
+            <a href="https://www.instagram.com/begeosdev/" target="_blank"
+              ><img
+                src="{% static 'img/instagram.svg' %}"
+                alt="instagram"
+                height="23"
+            /></a>
+            <a
+              href="https://www.youtube.com/channel/UCu4BKIihXPSRxCz6kEUK56g"
+              target="_blank"
+              ><img
+                src="{% static 'img/youtube.svg' %}"
+                alt="YouTube"
+                height="23"
             /></a>
           </div>
         </div>

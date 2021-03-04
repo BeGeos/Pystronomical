@@ -162,7 +162,7 @@
                 <p><b>Where to look:</b> 11° to the North and 35° to East</p>
               </div>
               {% else %}
-              <small
+              <small style="font-size: 12px; color: rgba(0, 0, 0, 0.4)"
                 >Based on latitude and longitude, a star can be found in the sky
                 using the principles of right ascension and declination. You
                 could enter a city and discover where to point your telescope
@@ -174,35 +174,42 @@
         </div>
 
         <div class="content">
-          <h1>{{ star|title }}</h1>
+          <h1>{{ name|title }}</h1>
           <br />
           <div class="single-element">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis pariatur asperiores exercitationem laborum repellendus
-              minima numquam tempora? Dignissimos quisquam eaque fugit, laborum
-              fuga incidunt. Quas nobis, inventore ratione id deleniti maiores
-              ipsam a in rerum possimus officia, natus atque minima voluptate
-              quis, sit corrupti accusantium. Rem ratione ea in autem minus,
-              aspernatur quis voluptatum placeat maxime dicta alias velit
-              quibusdam vel assumenda enim asperiores reprehenderit dolore non
-              quod! Quaerat, natus adipisci omnis cum fuga illo architecto
-              exercitationem aperiam sapiente reprehenderit quisquam. Odit
-              aliquid alias, quas numquam sint ut corporis at nemo, facere
-              omnis, libero cupiditate ad! Eveniet amet cupiditate blanditiis?
+            <div class="element-text">
+              <p><strong>Right Ascension: </strong>{{ right_ascension }}</p>
+              <p><strong>Declination: </strong>{{ declination }}</p>
+              <p>
+                <strong>Apparent Magnitude: </strong>{{ apparent_magnitude }}
+              </p>
+              <p><strong>Distance (in ly): </strong>{{ distance }}</p>
+              <p><strong>Spectral Type: </strong>{{ spectral_type }}</p>
+              <p>
+                <strong>Constellation: </strong
+                ><a href="{% url 'constellation-detail' constellation %}"
+                  >{{ constellation|title }}</a
+                >
+              </p>
               <br />
-              <br />
+
               <small
                 >Go back to
                 <a href="{% url 'explore' %}">Constellations</a></small
+              ><br /><br />
+              <small style="font-size: 12px; color: rgba(0, 0, 0, 0.4)"
+                >Don't know what any of this means? Make sure to check this
+                <a href="{% url 'how-to-observe' %}">page</a> for nomenclature,
+                guides and clarification</small
               >
-            </p>
+            </div>
 
-            <img
-              src="{% static 'img/ursa_major.jpg' %}"
-              alt="ursamajor"
-              width="400"
-            />
+            <div class="element-img">
+              <img
+                src="{{ picture.image.image.url }}"
+                alt="{{ picture.name }}"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -214,18 +221,37 @@
             <a href="">Resources</a>
           </div>
           <div class="top-footer">
-            <a href=""><img src="img/twitter.svg" height="23" /></a>
-            <a href=""
-              ><img src="img/github.svg" alt="@BeGeos" height="23"
+            <a href="https://twitter.com/BeGeosDev" target="_blank"
+              ><img
+                src="{% static 'img/twitter.svg' %}"
+                alt="twitter"
+                height="23"
             /></a>
-            <a href=""
-              ><img src="img/facebook.svg" alt="@BeGeos" height="23"
+            <a href="https://github.com/BeGeos" target="_blank"
+              ><img
+                src="{% static 'img/github.svg' %}"
+                alt="GitHub"
+                height="23"
             /></a>
-            <a href=""
-              ><img src="img/instagram.svg" alt="@BeGeos" height="23"
+            <a href="#"
+              ><img
+                src="{% static 'img/facebook.svg' %}"
+                alt="facebook"
+                height="23"
             /></a>
-            <a href=""
-              ><img src="img/youtube.svg" alt="@BeGeos" height="23"
+            <a href="https://www.instagram.com/begeosdev/" target="_blank"
+              ><img
+                src="{% static 'img/instagram.svg' %}"
+                alt="instagram"
+                height="23"
+            /></a>
+            <a
+              href="https://www.youtube.com/channel/UCu4BKIihXPSRxCz6kEUK56g"
+              target="_blank"
+              ><img
+                src="{% static 'img/youtube.svg' %}"
+                alt="YouTube"
+                height="23"
             /></a>
           </div>
         </div>

@@ -86,34 +86,60 @@
             />
           </form>
           {% endif %}
-          <textarea
+          <div class="feedback-textarea">
+            <textarea
             name="feedback"
             form="feedback-form-id"
             cols="30"
             rows="12"
             maxlength="1500"
-            placeholder="Max 1500 characters"
+            placeholder="Max 1500 characters..."
+            style="width: 65ch;"
           ></textarea>
-          <button type="submit" form="feedback-form-id">Send</button>
+          <button style="width: 65ch;" type="submit" form="feedback-form-id">Send</button>
+          </div>
         </div>
       </div>
     </main>
-    <footer class="login-footer">
-      <div class="bottom-footer">
+    <footer class="feedback-footer">
+      <div class="feedback-bottom-footer">
         <div class="resources">
           <p>@Pystronomical</p>
           <a href="#">Feedbacks</a>
         </div>
-        <div class="top-footer">
-          <a href=""><img src="img/twitter.svg" height="23" /></a>
-          <a href=""><img src="img/github.svg" alt="@BeGeos" height="23" /></a>
-          <a href=""
-            ><img src="img/facebook.svg" alt="@BeGeos" height="23"
-          /></a>
-          <a href=""
-            ><img src="img/instagram.svg" alt="@BeGeos" height="23"
-          /></a>
-          <a href=""><img src="img/youtube.svg" alt="@BeGeos" height="23" /></a>
+        <div class="feedback-top-footer">
+          <a href="https://twitter.com/BeGeosDev" target="_blank"
+              ><img
+                src="{% static 'img/twitter.svg' %}"
+                alt="twitter"
+                height="23"
+            /></a>
+            <a href="https://github.com/BeGeos" target="_blank"
+              ><img
+                src="{% static 'img/github.svg' %}"
+                alt="GitHub"
+                height="23"
+            /></a>
+            <a href="#"
+              ><img
+                src="{% static 'img/facebook.svg' %}"
+                alt="facebook"
+                height="23"
+            /></a>
+            <a href="https://www.instagram.com/begeosdev/" target="_blank"
+              ><img
+                src="{% static 'img/instagram.svg' %}"
+                alt="instagram"
+                height="23"
+            /></a>
+            <a
+              href="https://www.youtube.com/channel/UCu4BKIihXPSRxCz6kEUK56g"
+              target="_blank"
+              ><img
+                src="{% static 'img/youtube.svg' %}"
+                alt="YouTube"
+                height="23"
+            /></a>
         </div>
       </div>
     </footer>

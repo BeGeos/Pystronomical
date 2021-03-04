@@ -281,15 +281,15 @@
               <p>
                 As far as constellations are concerned 3 routes are provided
                 with different endpoints and parameters. <br /><br />
-                The first one is a basic get request to return the information
-                about a constellation, the second one it is a more advanced
-                query search that takes minimum and maximum latitude into
-                account, as well as the quadrant. If you don't know what these
-                are please refer to the 'How to Observe' page and you'll get
-                some insights. The third endpoint is an exclusive admin only
-                request to return all the constellations in the database. It
-                will be updated for special accounts, but it is not provided
-                yet, since all accounts have the same privileges.
+                The first one is a basic GET request to return the information
+                about a constellation, the second one is a more advanced query
+                search that takes minimum and maximum latitude into account, as
+                well as the quadrant. If you don't know what these are please
+                refer to the 'How to Observe' page and you'll get some insights.
+                The third endpoint is an exclusive admin only request to return
+                all the constellations in the database. It will be updated for
+                special accounts, but it is not provided yet, since all accounts
+                have the same privileges.
               </p>
               <br /><br />
               <hr />
@@ -339,7 +339,7 @@
                   </div>
                   <div class="resp-description">
                     <p>
-                      It provides the abbreviation code, as per IUA standards,
+                      It provides the abbreviation code, as per IAU standards,
                       of the constellation;
                     </p>
                   </div>
@@ -900,18 +900,37 @@
             <a href="">Resources</a>
           </div>
           <div class="top-footer">
-            <a href=""><img src="img/twitter.svg" height="23" /></a>
-            <a href=""
-              ><img src="img/github.svg" alt="@BeGeos" height="23"
+            <a href="https://twitter.com/BeGeosDev" target="_blank"
+              ><img
+                src="{% static 'img/twitter.svg' %}"
+                alt="twitter"
+                height="23"
             /></a>
-            <a href=""
-              ><img src="img/facebook.svg" alt="@BeGeos" height="23"
+            <a href="https://github.com/BeGeos" target="_blank"
+              ><img
+                src="{% static 'img/github.svg' %}"
+                alt="GitHub"
+                height="23"
             /></a>
-            <a href=""
-              ><img src="img/instagram.svg" alt="@BeGeos" height="23"
+            <a href="#"
+              ><img
+                src="{% static 'img/facebook.svg' %}"
+                alt="facebook"
+                height="23"
             /></a>
-            <a href=""
-              ><img src="img/youtube.svg" alt="@BeGeos" height="23"
+            <a href="https://www.instagram.com/begeosdev/" target="_blank"
+              ><img
+                src="{% static 'img/instagram.svg' %}"
+                alt="instagram"
+                height="23"
+            /></a>
+            <a
+              href="https://www.youtube.com/channel/UCu4BKIihXPSRxCz6kEUK56g"
+              target="_blank"
+              ><img
+                src="{% static 'img/youtube.svg' %}"
+                alt="YouTube"
+                height="23"
             /></a>
           </div>
         </div>

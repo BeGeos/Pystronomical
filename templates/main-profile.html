@@ -33,7 +33,12 @@
         </tr>
       </tbody>
     </table>
-    {% else %} {% if request.user.userstatus.confirmed %}
+    {% else %}
+    {% if request.user.is_superuser %}
+    <p>
+      You are a super user, no need for verification.
+    </p>
+    {% elif request.user.userstatus.confirmed %}
     <p>You don't have an API key, yet.</p>
     <button style="margin-top: 1rem; float: left; padding: 10px">
       <a href="{% url 'create-key' %}">Generate Key</a>
@@ -45,10 +50,11 @@
       verify your account. Either check your email for the verification code or
       request a new code here:
     </p>
-    <button style="margin-top: 1rem; float: left; padding: 10px">
-      <a href="">Request Verification Code</a>
+    <button style="margin-top: 1rem">
+      <a href="{% url 'new-code' %}">Request Verification Code</a>
     </button>
-    {% endif %} {% endif %}
+    {% endif %}
+    {% endif %}
     <div class="central-description">
       <small>
         Api keys enable you to use the astropy API. <br />For more information,
