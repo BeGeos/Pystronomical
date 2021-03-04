@@ -3,7 +3,8 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
+from json import JSONDecodeError
 from django.contrib.auth import update_session_auth_hash
 
 from .models import UserStatus, User, AuthKeys, SecurityCodes, Recovery, Constellation, Feedback
@@ -14,7 +15,7 @@ import requests, string, random
 from datetime import datetime, timedelta
 
 
-# Main functions to talk to API for database updates
+# Main functions to talk to astropy API for database updates
 def put_request(user_id, api_key, exp):
     url = 'http://localhost:5000/astropy/api/put-auth-key'
     payload = {'admin key': secret_keys['ADMIN_KEY'], 'user id': user_id,
@@ -40,6 +41,8 @@ def update_auth_status(user_id, api_key, status):
 
 
 # Callback from astropy API -- update user call count
+# TODO Rethink the process. Move the api keys in 1 database and requests will handle
+# TODO all the logic in one place. Flask API will receive True or False and n° of calls
 @csrf_exempt
 def update_call_count(request):
     if request.method != 'POST':
@@ -57,6 +60,45 @@ def update_call_count(request):
     status.calls -= 1
     status.save()
     return JsonResponse({'calls': status.calls})
+
+
+# API calls from website to astropy API
+def constellation_api_request(constellation):
+    url = f"http://localhost:5000/astropy/api/v1/constellation?c={constellation.lower()}"
+    payload = {'ADMIN_KEY': secret_keys['ADMIN_KEY']}
+    request = requests.post(url, json=payload)
+
+    api_data = request.json()['constellation']
+
+    response = {'abbreviation': api_data['abbreviation'],
+                'alias': api_data['alias'],
+                'max_latitude': api_data['max_latitude'],
+                'min_latitude': api_data['min_latitude'],
+                'quadrant': api_data['quadrant'],
+                'declination': api_data['declination'],
+                'right_ascension': api_data['right_ascension'],
+                'name': api_data['name'],
+                'main_stars': api_data['stars']}
+
+    return response
+
+
+def star_api_request(star):
+    url = f"http://localhost:5000/astropy/api/v1/star?s={star.lower()}"
+    payload = {'ADMIN_KEY': secret_keys['ADMIN_KEY']}
+    request = requests.post(url, json=payload)
+
+    api_data = request.json()['star']
+    # print(api_data)
+    response = {'apparent_magnitude': api_data['apparent_magnitude'],
+                'name': api_data['name'],
+                'distance': api_data['distance'],
+                'declination': api_data['declination'],
+                'right_ascension': api_data['right_ascension'],
+                'spectral_type': api_data['type'],
+                'constellation': api_data['constellation']['name']}
+
+    return response
 
 
 # Key/codes generators
@@ -145,16 +187,27 @@ def explore_view(request):
     if request.method == 'POST':
         star = request.POST.get('star')
         return redirect('star-detail', s=star)
-    return render(request, 'explore.html')
+
+    north = Constellation.objects.filter(hemisphere='N').order_by('name')
+    south = Constellation.objects.filter(hemisphere='S').order_by('name')
+    context = {
+        'north': north,
+        'south': south
+    }
+
+    return render(request, 'explore.html', context)
 
 
 def single_constellation(request, constellation):
     if request.method == 'POST':
         star = request.POST.get('star')
         return redirect('star-detail', s=star)
-    andromeda = Constellation.objects.filter(name='andromeda').first()
-    const = Constellation.objects.filter(name=constellation.lower()).first
-    context = {'constellation': const, 'andromeda': andromeda}
+
+    _list = Constellation.objects.all().order_by('name')
+    data = get_object_or_404(Constellation, name=constellation)
+    context = constellation_api_request(constellation)
+    context['list'] = _list
+    context['data'] = data
     return render(request, 'single-constellation.html', context)
 
 
@@ -164,10 +217,14 @@ def single_star(request, s):
         return redirect('star-detail', s=star)
     if request.method == 'GET':
         city = request.GET.get('city')
+        try:
+            context = star_api_request(s)
+            const_pic = Constellation.objects.filter(name=context['constellation']).first()
+            context['picture'] = const_pic
+        except JSONDecodeError:
+            raise Http404('Page does not exist')
         if city:
-            context = {'city': city, 'star': s}
-            return render(request, 'single-star.html', context)
-        context = {'star': s}
+            context['city'] = city
         return render(request, 'single-star.html', context)
 
 
@@ -305,7 +362,7 @@ def verification(request):
                     auth_key.active = True
                     auth_key.save()
                 ssc.delete()
-                messages.success(request, 'Thank you, you are now a verified user and can ask for api keys')
+                messages.success(request, 'Thank you for verifying your email address')
                 return redirect('main-profile')
             messages.error(request, 'The code is not valid')
             return redirect('verification')
@@ -464,4 +521,5 @@ def feedback_view(request):
 
 def feedback_success_view(request, slug):
     check = get_object_or_404(Feedback, slug=slug)
+    check.delete()
     return render(request, 'feedback-success.html')
