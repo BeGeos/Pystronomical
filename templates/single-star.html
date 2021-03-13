@@ -94,12 +94,13 @@
               {% if city %}
               <div class="city-data">
                 <h3>{{ city|title }}</h3>
+                {% if where_to_look.sunrise_at_location %}
                 <small
                   ><img src="{% static 'img/arrow-up.svg' %}" height="15" /><img
                     src="{% static 'img/sun-fill.svg' %}"
                     height="15"
                   />
-                  8:35</small
+                  {{ where_to_look.sunrise_at_location }}</small
                 >
                 <small
                   ><img
@@ -108,65 +109,51 @@
                   /><img
                     src="{% static 'img/sun-fill.svg' %}"
                     height="15"
-                  />17:45</small
+                  />{{ where_to_look.sunset_at_location }}</small
                 >
+                {% endif %}
               </div>
 
               <div class="weather">
-                <div class="weather-card">
-                  <img src="http://openweathermap.org/img/wn/01n.png" />
-                  <div class="time-card">
-                    <p>10 PM</p>
-                    <small>Vis: 80%</small>
-                  </div>
-                </div>
-                <div class="weather-card">
-                  <img src="http://openweathermap.org/img/wn/02n.png" />
-                  <div class="time-card">
-                    <p>12 PM</p>
-                    <small>Vis: 35%</small>
-                  </div>
-                </div>
-                <div class="weather-card">
-                  <img src="http://openweathermap.org/img/wn/02n.png" />
-                  <div class="time-card">
-                    <p>2 AM</p>
-                    <small>Vis: 65%</small>
-                  </div>
-                </div>
-                <div class="weather-card">
-                  <img src="http://openweathermap.org/img/wn/01n.png" />
-                  <div class="time-card">
-                    <p>4 AM</p>
-                    <small>Vis: 90%</small>
-                  </div>
-                </div>
+
+                  {% for hour, data in cloud_data.items %}
+                      <div class="weather-card">
+                        <img src="http://openweathermap.org/img/wn/{{ data.icon }}.png" />
+                        <div class="time-card">
+                          <p>{{ hour }}</p>
+                          <small>Clo: {{ data.clouds }}%</small>
+                        </div>
+                      </div>
+                  {% endfor %}
+
               </div>
               <div class="star-data">
                 <div class="star-time">
-                  <h3><b>Polaris</b></h3>
-                  <small>
-                    <img src="{% static 'img/arrow-up.svg' %}" height="15" />
-                    <img src="{% static 'img/star-fill.svg' %}" height="15" />
-                    21:30
-                  </small>
-                  <small>
-                    <img src="{% static 'img/star-fill.svg' %}" height="15" />
-                    <img src="{% static 'img/arrow-down.svg' %}" height="15" />
-                    9:30
-                  </small>
+                  <h3><b>{{ where_to_look.star|title }}</b></h3>
+
+<!--                  <small>-->
+<!--                    <img src="{% static 'img/arrow-up.svg' %}" height="15" />-->
+<!--                    <img src="{% static 'img/star-fill.svg' %}" height="15" />-->
+<!--                    21:30-->
+<!--                  </small>-->
+<!--                  <small>-->
+<!--                    <img src="{% static 'img/star-fill.svg' %}" height="15" />-->
+<!--                    <img src="{% static 'img/arrow-down.svg' %}" height="15" />-->
+<!--                    9:30-->
+<!--                  </small>-->
                 </div>
-                <p><b>Current Delay:</b> 23h 12m 23s</p>
-                <p><b>Location's Latitude:</b> 51° 07' 32''</p>
-                <p><b>Location's Longitude:</b> 0° 7' 45''</p>
-                <p><b>Where to look:</b> 11° to the North and 35° to East</p>
+                {% for key, value in where_to_look.items %}
+                  <p><strong>{{ key|capfirst }} : </strong> {{ value }}</p>
+                {% endfor %}
               </div>
               {% else %}
               <small style="font-size: 12px; color: rgba(0, 0, 0, 0.4)"
                 >Based on latitude and longitude, a star can be found in the sky
                 using the principles of right ascension and declination. You
                 could enter a city and discover where to point your telescope
-                from that location.
+                from that location. <br><br>
+                For a guide to observation click <a href="/how-to-observe/#guide-to"
+                                                    style="text-decoration: underline">here</a>
               </small>
               {% endif %}
             </div>
@@ -199,7 +186,7 @@
               ><br /><br />
               <small style="font-size: 12px; color: rgba(0, 0, 0, 0.4)"
                 >Don't know what any of this means? Make sure to check this
-                <a href="{% url 'how-to-observe' %}">page</a> for nomenclature,
+                <a href="/how-to-observe/#nomenclature">page</a> for nomenclature,
                 guides and clarification</small
               >
             </div>
@@ -218,7 +205,7 @@
           <div class="resources">
             <p>@Pystronomical</p>
 
-            <a href="">Resources</a>
+            <a href="{% url 'feedback' %}">Feedbacks</a>
           </div>
           <div class="top-footer">
             <a href="https://twitter.com/BeGeosDev" target="_blank"

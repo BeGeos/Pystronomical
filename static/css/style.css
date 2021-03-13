@@ -14,6 +14,7 @@ body {
 code {
   padding: 10px;
   background: #e8e9ea;
+  border-left: 5px solid purple;
 }
 
 p {
@@ -135,7 +136,7 @@ li {
 .form-footer {
   width: 100%;
   position: absolute;
-  bottom: 0.3rem;
+  bottom: 20px;
 }
 
 main {
@@ -146,6 +147,7 @@ main {
 .message {
   position: absolute;
   right: 10px;
+  top: 10px;
   max-width: 50%;
   background: rgb(117, 185, 207, 0.5);
   padding: 20px 10px;
@@ -261,12 +263,11 @@ navbar {
   background: linear-gradient(
     90deg,
     rgba(58, 12, 163, 1) 0%,
-    rgba(63, 55, 201, 1) 53%,
+    rgba(63, 55, 201, 1) 60%,
     rgba(72, 149, 239, 1) 93%
   );
   color: white;
   align-items: center;
-  letter-spacing: 3px;
 }
 
 .nav-logo {
@@ -319,6 +320,7 @@ navbar {
 
 .nav-user ul {
   display: flex;
+  align-items: center;
   float: right;
 }
 
@@ -517,7 +519,7 @@ th {
 .container-main {
   position: relative;
   min-height: 100%;
-  margin-top: 7rem;
+  margin-top: 5rem;
   width: 100%;
 }
 
@@ -629,17 +631,16 @@ tr {
 }
 
 .search-bar-first {
-  width: 80%;
-  margin: 0 auto;
+  max-width: 100%;
+  min-height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(58, 12, 163, 1);
 }
 
 .search-bar {
   margin-bottom: 2rem;
-}
-
-.search-star {
-  display: flex;
-  width: 100%;
 }
 
 .search-star input {
@@ -732,6 +733,18 @@ tr {
   margin-left: 21rem;
   padding: 0 5rem;
   line-height: 1.6;
+}
+
+@media screen and (max-width: 1400px) {
+    .single-element {
+        flex-direction: column;
+    }
+
+    .element-img {
+        order: -1;
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .api-text {

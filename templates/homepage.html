@@ -32,7 +32,7 @@
           <ul>
             <li>
               <a class="login-user" href="{% url 'main-profile' %}"
-                >{{ request.user.username }}</a
+                ><img src="{% static 'img/person-circle.svg' %}" ></a
               >
             </li>
             <li><a class="sign-up" href="{% url 'logout' %}">Logout</a></li>

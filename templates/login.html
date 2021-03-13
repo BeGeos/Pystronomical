@@ -28,7 +28,7 @@
       <div class="form-box">
         <div class="form-header">
           <div class="logo">
-            <a href="home.html"
+            <a href="{% url 'homepage' %}"
               ><img src="{% static 'img/Logo.svg' %}" alt="Py" height="48"
             /></a>
           </div>
@@ -57,7 +57,7 @@
             <button class="form-button" type="submit">Login</button>
           </form>
         </div>
-        <small style="padding: 2px 0; margin-right: 2rem; float: right"
+        <small style="padding: 5px 0; margin-right: 2rem; float: right"
           ><a href="{% url 'recovery-password' %}"
             >Forgot your Password?</a
           ></small
@@ -77,7 +77,7 @@
         <div class="resources">
           <p>@Pystronomical</p>
 
-          <a href="">Resources</a>
+          <a href="{% url 'feedback' %}">Feedbacks</a>
         </div>
         <div class="top-footer">
           <a href="https://twitter.com/BeGeosDev" target="_blank"

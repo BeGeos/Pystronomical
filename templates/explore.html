@@ -50,7 +50,8 @@
     </navbar>
     <main>
       <div class="container-main">
-        <div class="search-bar-first">
+
+          <div class="search-bar-first">
           <form class="search-star" method="post">
             {% csrf_token %}
             <input type="text" name="star" placeholder="Search for a Star" />
@@ -59,7 +60,7 @@
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
-                fill="currentColor"
+                fill="white"
                 class="bi bi-search"
                 viewBox="0 0 16 16"
               >
@@ -70,6 +71,13 @@
             </button>
           </form>
         </div>
+            {% if messages %}
+            {% for message in messages %}
+              <div class="message-profile"><p>{{ message }}</p></div>
+            {% endfor %}
+            {% endif %}
+
+
 
         <div class="page-content">
           <h1><i>Constellations</i></h1>
@@ -143,7 +151,7 @@
           <div class="resources">
             <p>@Pystronomical</p>
 
-            <a href="">Resources</a>
+            <a href="{% url 'feedback' %}">Feedbacks</a>
           </div>
           <div class="top-footer">
             <a href="https://twitter.com/BeGeosDev" target="_blank"

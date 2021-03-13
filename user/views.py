@@ -12,7 +12,8 @@ from Pystronomical.env import secret_keys
 from Pystronomical.functions import verification_email, recovery_email
 
 import requests, string, random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+import re
 
 
 # Main functions to talk to astropy API for database updates
@@ -99,6 +100,40 @@ def star_api_request(star):
                 'constellation': api_data['constellation']['name']}
 
     return response
+
+
+def where_to_look_api(star, city):
+    url = f'http://localhost:5000/astropy/api/v1/where-to-look?s={star}&city={city}'
+    payload = {'ADMIN_KEY': secret_keys['ADMIN_KEY']}
+    request = requests.post(url, json=payload)
+    data = request.json()
+
+    return data
+
+
+# Weather API one call for where-to-look visibility and cloudiness
+def vis_request_api(lat, lon):
+    api_key = secret_keys['OPEN_WEATHER_API_KEY']
+
+    url = 'https://api.openweathermap.org/data/2.5/onecall?'
+    excluded = "current,minutely,alerts"
+    payload = {'appid': api_key, 'lat': lat, 'lon': lon, 'exclude': excluded}
+    response = requests.get(url, params=payload)
+    data = response.json()
+
+    offset = data['timezone_offset']
+    hourly = data['hourly']
+    interval = [22, 0, 2, 4]
+    info = {}
+    for i in range(24):
+        local_time = hourly[i]['dt'] + offset
+        clock_24h = datetime.fromtimestamp(local_time, timezone.utc)
+        time = clock_24h.strftime('%H')
+        if int(time) in interval:
+            info[time] = {'clouds': hourly[i]['clouds'],
+                          'visibility': hourly[i]['visibility'],
+                          'icon': hourly[i]['weather'][0]['icon']}
+    return info
 
 
 # Key/codes generators
@@ -222,9 +257,17 @@ def single_star(request, s):
             const_pic = Constellation.objects.filter(name=context['constellation']).first()
             context['picture'] = const_pic
         except JSONDecodeError:
-            raise Http404('Page does not exist')
+            messages.error(request, f'{s} was not found!')
+            return redirect('explore')
         if city:
+            info = where_to_look_api(s, city)  # dict
+            lat = int(re.findall(r"([0-9]*)°", info['lat'])[0])
+            lon = int(re.findall(r"([0-9]*)°", info['lat'])[0])
+            cloud_data = vis_request_api(lat, lon)  # dict
+
             context['city'] = city
+            context['where_to_look'] = info
+            context['cloud_data'] = cloud_data
         return render(request, 'single-star.html', context)
 
 

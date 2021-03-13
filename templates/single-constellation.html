@@ -113,7 +113,7 @@
                     <td>
                       <a
                         href="{% url 'star-detail' each.name %}"
-                        style="color: #668cff; text-decoration: underline"
+                        style="color: rgba(63, 55, 201, 1); text-decoration: underline"
                         >{{ each.name|title }}</a
                       >
                     </td>
@@ -134,7 +134,7 @@
           <div class="resources">
             <p>@Pystronomical</p>
 
-            <a href="">Resources</a>
+            <a href="{% url 'feedback' %}">Feedbacks</a>
           </div>
           <div class="top-footer">
             <a href="https://twitter.com/BeGeosDev" target="_blank"
