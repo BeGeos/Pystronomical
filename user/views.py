@@ -221,6 +221,8 @@ def how_to_view(request):
 def explore_view(request):
     if request.method == 'POST':
         star = request.POST.get('star')
+        if star == '':
+            return redirect('explore')
         return redirect('star-detail', s=star)
 
     north = Constellation.objects.filter(hemisphere='N').order_by('name')
