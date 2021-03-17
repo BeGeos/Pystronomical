@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +9,7 @@
 body {
   /* height: 100%; */
   font-size: 16px;
-  font-family: "Arial", sans-serif;
+  font-family: 'Inter', sans-serif;
   overflow-x: hidden;
 }
 
@@ -1007,16 +1009,17 @@ dt {
 }
 
 .start-explore {
+    font-weight: 600;
   cursor: pointer;
   position: absolute;
-  padding: 10px 20px;
+  padding: 20px 40px;
   border-radius: 0.3rem;
   border: none;
   background: #3a0ca3;
   top: 50%;
   left: 50%;
   transform: translateX(-50%);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 .index button a {
